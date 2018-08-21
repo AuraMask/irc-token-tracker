@@ -4,7 +4,7 @@ A JS module for tracking Ethereum tokens and their values over time.
 
 ## Installation
 
-`npm install eth-token-tracker -S`
+`npm install irc-token-tracker -S`
 
 ## Usage
 
