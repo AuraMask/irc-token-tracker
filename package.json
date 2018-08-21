@@ -2,7 +2,7 @@
   "name": "irc-token-tracker",
   "version": "0.0.1",
   "description": "A module for tracking IrChain token balances over block changes.",
-  "main": "lib\/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "compile": "babel --plugins transform-runtime -d dist/ lib/",
     "buildSample": "browserify example/index.js -o bundle.js"
@@ -29,7 +29,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-runtime": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0"
   },
   "directories": {
     "example": "example",
