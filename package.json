@@ -4,7 +4,7 @@
   "description": "A module for tracking IrChain token balances over block changes.",
   "main": "dist/index.js",
   "scripts": {
-    "compile": "babel --plugins transform-runtime -d dist/ lib/",
+    "compile": "babel --presets es2015,stage-3 --plugins transform-runtime -d dist/ lib/",
     "buildSample": "browserify example/index.js -o bundle.js"
   },
   "repository": {
@@ -27,9 +27,11 @@
     "human-standard-token-abi": "^1.0.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-runtime": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0"
+    "babel-cli": "^7.0.0-beta.3",
+    "babel-runtime": "^7.0.0-beta.3",
+    "babel-preset-es2015": "^7.0.0-beta.3",
+    "babel-preset-stage-3": "^7.0.0-beta.3",
+    "babel-plugin-transform-runtime": "^7.0.0-beta.3"
   },
   "directories": {
     "example": "example",
