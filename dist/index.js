@@ -109,7 +109,7 @@ function (_EventEmitter) {
     key: "stop",
     value: function stop() {
       this.running = false;
-      this.blockTracker.stop();
+      this.blockTracker.removeAllListeners();
     }
   }]);
 

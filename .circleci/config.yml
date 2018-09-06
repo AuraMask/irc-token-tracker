@@ -1,0 +1,14 @@
+version: 2
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
