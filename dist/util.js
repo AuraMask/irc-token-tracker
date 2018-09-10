@@ -18,7 +18,7 @@ module.exports = {
     var decimalIndex = len - decimals;
     var prefix = '';
 
-    if (decimalIndex < 0) {
+    if (decimalIndex <= 0) {
       while (prefix.length <= decimalIndex * -1) {
         prefix += '0';
         len++;

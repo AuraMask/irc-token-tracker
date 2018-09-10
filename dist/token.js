@@ -28,7 +28,7 @@ function () {
     this.name = name;
     this.symbol = symbol;
     this.balance = new BN('0', 16);
-    this.decimals = new BN('18', 16);
+    this.decimals = new BN('12', 16);
     this.owner = owner;
     this.contract = contract;
     this.update().catch(function (reason) {
@@ -56,6 +56,7 @@ function () {
   }, {
     key: "stringify",
     value: function stringify() {
+      console.log('this.decimals: ', this.decimals);
       return util.stringifyBalance(this.balance, this.decimals || new BN(0));
     }
   }, {
