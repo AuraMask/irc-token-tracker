@@ -1,6 +1,8 @@
-var BN = require('irc.js').BN;
+'use strict';
 
+var BN = require('irc.js').BN;
 var zero = new BN(0);
+
 module.exports = {
   stringifyBalance: function stringifyBalance(balance, bnDecimals) {
     if (balance.eq(zero)) {
@@ -8,7 +10,6 @@ module.exports = {
     }
 
     var decimals = parseInt(bnDecimals.toString());
-
     if (decimals === 0) {
       return balance.toString();
     }
@@ -23,11 +24,10 @@ module.exports = {
         prefix += '0';
         len++;
       }
-
       bal = prefix + bal;
       decimalIndex = 1;
     }
 
-    return "".concat(bal.substr(0, len - decimals), ".").concat(bal.substr(decimalIndex, 3));
+    return bal.substr(0, len - decimals) + '.' + bal.substr(decimalIndex, 3);
   }
 };
