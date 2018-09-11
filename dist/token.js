@@ -207,7 +207,7 @@ var Token = function () {
     key: 'updateValue',
     value: function () {
       var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(key) {
-        var methodName, args, result, _contract, val;
+        var methodName, args, result, _contract;
 
         return _regenerator2.default.wrap(function _callee5$(_context5) {
           while (1) {
@@ -253,19 +253,17 @@ var Token = function () {
 
               case 21:
                 if (!result) {
-                  _context5.next = 25;
+                  _context5.next = 24;
                   break;
                 }
 
-                val = result[0].value;
+                this[key] = result[0];
+                return _context5.abrupt('return', result[0]);
 
-                this[key] = val;
-                return _context5.abrupt('return', val);
-
-              case 25:
+              case 24:
                 return _context5.abrupt('return', this[key]);
 
-              case 26:
+              case 25:
               case 'end':
                 return _context5.stop();
             }
