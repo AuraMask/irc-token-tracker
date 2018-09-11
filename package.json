@@ -22,9 +22,9 @@
   "homepage": "https://github.com/AuraMask/irc-token-tracker#readme",
   "dependencies": {
     "deep-equal": "^1.0.1",
-    "irc.js": "git+https://github.com/ldcc/ircjs",
-    "irc-block-tracker": "^0.1.0",
-    "human-standard-token-abi": "^1.0.2"
+    "bn.js": "^4.11.8",
+    "irc.js": "git+https://github.com/ldcc/ircjs.git",
+    "irc-block-tracker": "^0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

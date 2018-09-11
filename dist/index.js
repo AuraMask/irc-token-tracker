@@ -38,7 +38,7 @@ var IrcQuery = require('irc.js').Query;
 var IrcContract = require('irc.js').Contract;
 var Token = require('./token');
 var BlockTracker = require('irc-block-tracker');
-var abi = require('human-standard-token-abi');
+var abi = require('irc.js').abi.stdTokenAbi;
 var EventEmitter = require('events').EventEmitter;
 var deepEqual = require('deep-equal');
 

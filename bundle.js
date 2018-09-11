@@ -39,7 +39,7 @@ var IrcQuery = require('irc.js').Query;
 var IrcContract = require('irc.js').Contract;
 var Token = require('./token');
 var BlockTracker = require('irc-block-tracker');
-var abi = require('human-standard-token-abi');
+var abi = require('irc.js').abi.stdTokenAbi;
 var EventEmitter = require('events').EventEmitter;
 var deepEqual = require('deep-equal');
 
@@ -147,7 +147,7 @@ var TokenTracker = function (_EventEmitter) {
 }(EventEmitter);
 
 module.exports = TokenTracker;
-},{"./token":2,"babel-runtime/core-js/object/get-prototype-of":8,"babel-runtime/core-js/promise":10,"babel-runtime/helpers/asyncToGenerator":13,"babel-runtime/helpers/classCallCheck":14,"babel-runtime/helpers/createClass":15,"babel-runtime/helpers/inherits":16,"babel-runtime/helpers/possibleConstructorReturn":17,"babel-runtime/regenerator":20,"deep-equal":119,"events":206,"human-standard-token-abi":122,"irc-block-tracker":124,"irc.js":178}],2:[function(require,module,exports){
+},{"./token":2,"babel-runtime/core-js/object/get-prototype-of":8,"babel-runtime/core-js/promise":10,"babel-runtime/helpers/asyncToGenerator":13,"babel-runtime/helpers/classCallCheck":14,"babel-runtime/helpers/createClass":15,"babel-runtime/helpers/inherits":16,"babel-runtime/helpers/possibleConstructorReturn":17,"babel-runtime/regenerator":20,"deep-equal":121,"events":206,"irc-block-tracker":157,"irc.js":165}],2:[function(require,module,exports){
 'use strict';
 
 var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
@@ -176,7 +176,7 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BN = require('irc.js').BN;
+var BN = require('bn.js');
 var util = require('./util');
 
 var Token = function () {
@@ -407,7 +407,7 @@ var Token = function () {
                   break;
                 }
 
-                val = result[0];
+                val = result[0].value;
 
                 this[key] = val;
                 return _context5.abrupt('return', val);
@@ -434,10 +434,10 @@ var Token = function () {
 }();
 
 module.exports = Token;
-},{"./util":3,"babel-runtime/core-js/promise":10,"babel-runtime/helpers/asyncToGenerator":13,"babel-runtime/helpers/classCallCheck":14,"babel-runtime/helpers/createClass":15,"babel-runtime/helpers/toConsumableArray":18,"babel-runtime/regenerator":20,"irc.js":178}],3:[function(require,module,exports){
+},{"./util":3,"babel-runtime/core-js/promise":10,"babel-runtime/helpers/asyncToGenerator":13,"babel-runtime/helpers/classCallCheck":14,"babel-runtime/helpers/createClass":15,"babel-runtime/helpers/toConsumableArray":18,"babel-runtime/regenerator":20,"bn.js":21}],3:[function(require,module,exports){
 'use strict';
 
-var BN = require('irc.js').BN;
+var BN = require('bn.js');
 var zero = new BN(0);
 
 module.exports = {
@@ -468,7 +468,7 @@ module.exports = {
     return bal.substr(0, len - decimals) + '.' + bal.substr(decimalIndex, 3);
   }
 };
-},{"irc.js":178}],4:[function(require,module,exports){
+},{"bn.js":21}],4:[function(require,module,exports){
 const TokenTracker = require('../');
 const Irc = require('irc.js');
 const irc = new Irc(new Irc.HttpProvider('http://localhost:8545'), null);
@@ -487,7 +487,7 @@ window.setInterval(() => {
   const balances = tokenTracker.serialize();
   console.log('serialized', balances);
   infoParagraph.innerText = JSON.stringify(balances);
-}, 10000);
+}, 1000);
 console.dir(tokenTracker);
 
 // You can also subscribe to updates
@@ -503,23 +503,23 @@ tokenTracker.on('error', reason => {
 });
 
 
-},{"../":1,"irc.js":178}],5:[function(require,module,exports){
+},{"../":1,"irc.js":165}],5:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/array/from"), __esModule: true };
-},{"core-js/library/fn/array/from":21}],6:[function(require,module,exports){
+},{"core-js/library/fn/array/from":23}],6:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/create"), __esModule: true };
-},{"core-js/library/fn/object/create":22}],7:[function(require,module,exports){
+},{"core-js/library/fn/object/create":24}],7:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/define-property"), __esModule: true };
-},{"core-js/library/fn/object/define-property":23}],8:[function(require,module,exports){
+},{"core-js/library/fn/object/define-property":25}],8:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/get-prototype-of"), __esModule: true };
-},{"core-js/library/fn/object/get-prototype-of":24}],9:[function(require,module,exports){
+},{"core-js/library/fn/object/get-prototype-of":26}],9:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/set-prototype-of"), __esModule: true };
-},{"core-js/library/fn/object/set-prototype-of":25}],10:[function(require,module,exports){
+},{"core-js/library/fn/object/set-prototype-of":27}],10:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/promise"), __esModule: true };
-},{"core-js/library/fn/promise":26}],11:[function(require,module,exports){
+},{"core-js/library/fn/promise":28}],11:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/symbol"), __esModule: true };
-},{"core-js/library/fn/symbol":27}],12:[function(require,module,exports){
+},{"core-js/library/fn/symbol":29}],12:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/symbol/iterator"), __esModule: true };
-},{"core-js/library/fn/symbol/iterator":28}],13:[function(require,module,exports){
+},{"core-js/library/fn/symbol/iterator":30}],13:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -695,2658 +695,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 },{"../core-js/symbol":11,"../core-js/symbol/iterator":12}],20:[function(require,module,exports){
 module.exports = require("regenerator-runtime");
 
-},{"regenerator-runtime":196}],21:[function(require,module,exports){
-require('../../modules/es6.string.iterator');
-require('../../modules/es6.array.from');
-module.exports = require('../../modules/_core').Array.from;
-
-},{"../../modules/_core":36,"../../modules/es6.array.from":104,"../../modules/es6.string.iterator":112}],22:[function(require,module,exports){
-require('../../modules/es6.object.create');
-var $Object = require('../../modules/_core').Object;
-module.exports = function create(P, D) {
-  return $Object.create(P, D);
-};
-
-},{"../../modules/_core":36,"../../modules/es6.object.create":106}],23:[function(require,module,exports){
-require('../../modules/es6.object.define-property');
-var $Object = require('../../modules/_core').Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-},{"../../modules/_core":36,"../../modules/es6.object.define-property":107}],24:[function(require,module,exports){
-require('../../modules/es6.object.get-prototype-of');
-module.exports = require('../../modules/_core').Object.getPrototypeOf;
-
-},{"../../modules/_core":36,"../../modules/es6.object.get-prototype-of":108}],25:[function(require,module,exports){
-require('../../modules/es6.object.set-prototype-of');
-module.exports = require('../../modules/_core').Object.setPrototypeOf;
-
-},{"../../modules/_core":36,"../../modules/es6.object.set-prototype-of":109}],26:[function(require,module,exports){
-require('../modules/es6.object.to-string');
-require('../modules/es6.string.iterator');
-require('../modules/web.dom.iterable');
-require('../modules/es6.promise');
-require('../modules/es7.promise.finally');
-require('../modules/es7.promise.try');
-module.exports = require('../modules/_core').Promise;
-
-},{"../modules/_core":36,"../modules/es6.object.to-string":110,"../modules/es6.promise":111,"../modules/es6.string.iterator":112,"../modules/es7.promise.finally":114,"../modules/es7.promise.try":115,"../modules/web.dom.iterable":118}],27:[function(require,module,exports){
-require('../../modules/es6.symbol');
-require('../../modules/es6.object.to-string');
-require('../../modules/es7.symbol.async-iterator');
-require('../../modules/es7.symbol.observable');
-module.exports = require('../../modules/_core').Symbol;
-
-},{"../../modules/_core":36,"../../modules/es6.object.to-string":110,"../../modules/es6.symbol":113,"../../modules/es7.symbol.async-iterator":116,"../../modules/es7.symbol.observable":117}],28:[function(require,module,exports){
-require('../../modules/es6.string.iterator');
-require('../../modules/web.dom.iterable');
-module.exports = require('../../modules/_wks-ext').f('iterator');
-
-},{"../../modules/_wks-ext":101,"../../modules/es6.string.iterator":112,"../../modules/web.dom.iterable":118}],29:[function(require,module,exports){
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
-
-},{}],30:[function(require,module,exports){
-module.exports = function () { /* empty */ };
-
-},{}],31:[function(require,module,exports){
-module.exports = function (it, Constructor, name, forbiddenField) {
-  if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
-    throw TypeError(name + ': incorrect invocation!');
-  } return it;
-};
-
-},{}],32:[function(require,module,exports){
-var isObject = require('./_is-object');
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-},{"./_is-object":56}],33:[function(require,module,exports){
-// false -> Array#indexOf
-// true  -> Array#includes
-var toIObject = require('./_to-iobject');
-var toLength = require('./_to-length');
-var toAbsoluteIndex = require('./_to-absolute-index');
-module.exports = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIObject($this);
-    var length = toLength(O.length);
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-},{"./_to-absolute-index":92,"./_to-iobject":94,"./_to-length":95}],34:[function(require,module,exports){
-// getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = require('./_cof');
-var TAG = require('./_wks')('toStringTag');
-// ES3 wrong here
-var ARG = cof(function () { return arguments; }()) == 'Arguments';
-
-// fallback for IE11 Script Access Denied error
-var tryGet = function (it, key) {
-  try {
-    return it[key];
-  } catch (e) { /* empty */ }
-};
-
-module.exports = function (it) {
-  var O, T, B;
-  return it === undefined ? 'Undefined' : it === null ? 'Null'
-    // @@toStringTag case
-    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-    // builtinTag case
-    : ARG ? cof(O)
-    // ES3 arguments fallback
-    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-};
-
-},{"./_cof":35,"./_wks":102}],35:[function(require,module,exports){
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-},{}],36:[function(require,module,exports){
-var core = module.exports = { version: '2.5.7' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-},{}],37:[function(require,module,exports){
-'use strict';
-var $defineProperty = require('./_object-dp');
-var createDesc = require('./_property-desc');
-
-module.exports = function (object, index, value) {
-  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
-  else object[index] = value;
-};
-
-},{"./_object-dp":68,"./_property-desc":81}],38:[function(require,module,exports){
-// optional / simple context binding
-var aFunction = require('./_a-function');
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-},{"./_a-function":29}],39:[function(require,module,exports){
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-},{}],40:[function(require,module,exports){
-// Thank's IE8 for his funny defineProperty
-module.exports = !require('./_fails')(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-},{"./_fails":45}],41:[function(require,module,exports){
-var isObject = require('./_is-object');
-var document = require('./_global').document;
-// typeof document.createElement is 'object' in old IE
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
-
-},{"./_global":47,"./_is-object":56}],42:[function(require,module,exports){
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-},{}],43:[function(require,module,exports){
-// all enumerable object keys, includes symbols
-var getKeys = require('./_object-keys');
-var gOPS = require('./_object-gops');
-var pIE = require('./_object-pie');
-module.exports = function (it) {
-  var result = getKeys(it);
-  var getSymbols = gOPS.f;
-  if (getSymbols) {
-    var symbols = getSymbols(it);
-    var isEnum = pIE.f;
-    var i = 0;
-    var key;
-    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
-  } return result;
-};
-
-},{"./_object-gops":73,"./_object-keys":76,"./_object-pie":77}],44:[function(require,module,exports){
-var global = require('./_global');
-var core = require('./_core');
-var ctx = require('./_ctx');
-var hide = require('./_hide');
-var has = require('./_has');
-var PROTOTYPE = 'prototype';
-
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && has(exports, key)) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library`
-module.exports = $export;
-
-},{"./_core":36,"./_ctx":38,"./_global":47,"./_has":48,"./_hide":49}],45:[function(require,module,exports){
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-},{}],46:[function(require,module,exports){
-var ctx = require('./_ctx');
-var call = require('./_iter-call');
-var isArrayIter = require('./_is-array-iter');
-var anObject = require('./_an-object');
-var toLength = require('./_to-length');
-var getIterFn = require('./core.get-iterator-method');
-var BREAK = {};
-var RETURN = {};
-var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
-  var iterFn = ITERATOR ? function () { return iterable; } : getIterFn(iterable);
-  var f = ctx(fn, that, entries ? 2 : 1);
-  var index = 0;
-  var length, step, iterator, result;
-  if (typeof iterFn != 'function') throw TypeError(iterable + ' is not iterable!');
-  // fast case for arrays with default iterator
-  if (isArrayIter(iterFn)) for (length = toLength(iterable.length); length > index; index++) {
-    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
-    if (result === BREAK || result === RETURN) return result;
-  } else for (iterator = iterFn.call(iterable); !(step = iterator.next()).done;) {
-    result = call(iterator, f, step.value, entries);
-    if (result === BREAK || result === RETURN) return result;
-  }
-};
-exports.BREAK = BREAK;
-exports.RETURN = RETURN;
-
-},{"./_an-object":32,"./_ctx":38,"./_is-array-iter":54,"./_iter-call":57,"./_to-length":95,"./core.get-iterator-method":103}],47:[function(require,module,exports){
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-},{}],48:[function(require,module,exports){
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-},{}],49:[function(require,module,exports){
-var dP = require('./_object-dp');
-var createDesc = require('./_property-desc');
-module.exports = require('./_descriptors') ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-},{"./_descriptors":40,"./_object-dp":68,"./_property-desc":81}],50:[function(require,module,exports){
-var document = require('./_global').document;
-module.exports = document && document.documentElement;
-
-},{"./_global":47}],51:[function(require,module,exports){
-module.exports = !require('./_descriptors') && !require('./_fails')(function () {
-  return Object.defineProperty(require('./_dom-create')('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-},{"./_descriptors":40,"./_dom-create":41,"./_fails":45}],52:[function(require,module,exports){
-// fast apply, http://jsperf.lnkit.com/fast-apply/5
-module.exports = function (fn, args, that) {
-  var un = that === undefined;
-  switch (args.length) {
-    case 0: return un ? fn()
-                      : fn.call(that);
-    case 1: return un ? fn(args[0])
-                      : fn.call(that, args[0]);
-    case 2: return un ? fn(args[0], args[1])
-                      : fn.call(that, args[0], args[1]);
-    case 3: return un ? fn(args[0], args[1], args[2])
-                      : fn.call(that, args[0], args[1], args[2]);
-    case 4: return un ? fn(args[0], args[1], args[2], args[3])
-                      : fn.call(that, args[0], args[1], args[2], args[3]);
-  } return fn.apply(that, args);
-};
-
-},{}],53:[function(require,module,exports){
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = require('./_cof');
-// eslint-disable-next-line no-prototype-builtins
-module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return cof(it) == 'String' ? it.split('') : Object(it);
-};
-
-},{"./_cof":35}],54:[function(require,module,exports){
-// check on default Array iterator
-var Iterators = require('./_iterators');
-var ITERATOR = require('./_wks')('iterator');
-var ArrayProto = Array.prototype;
-
-module.exports = function (it) {
-  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
-};
-
-},{"./_iterators":62,"./_wks":102}],55:[function(require,module,exports){
-// 7.2.2 IsArray(argument)
-var cof = require('./_cof');
-module.exports = Array.isArray || function isArray(arg) {
-  return cof(arg) == 'Array';
-};
-
-},{"./_cof":35}],56:[function(require,module,exports){
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-},{}],57:[function(require,module,exports){
-// call something on iterator step with safe closing on error
-var anObject = require('./_an-object');
-module.exports = function (iterator, fn, value, entries) {
-  try {
-    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-  // 7.4.6 IteratorClose(iterator, completion)
-  } catch (e) {
-    var ret = iterator['return'];
-    if (ret !== undefined) anObject(ret.call(iterator));
-    throw e;
-  }
-};
-
-},{"./_an-object":32}],58:[function(require,module,exports){
-'use strict';
-var create = require('./_object-create');
-var descriptor = require('./_property-desc');
-var setToStringTag = require('./_set-to-string-tag');
-var IteratorPrototype = {};
-
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-require('./_hide')(IteratorPrototype, require('./_wks')('iterator'), function () { return this; });
-
-module.exports = function (Constructor, NAME, next) {
-  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
-  setToStringTag(Constructor, NAME + ' Iterator');
-};
-
-},{"./_hide":49,"./_object-create":67,"./_property-desc":81,"./_set-to-string-tag":86,"./_wks":102}],59:[function(require,module,exports){
-'use strict';
-var LIBRARY = require('./_library');
-var $export = require('./_export');
-var redefine = require('./_redefine');
-var hide = require('./_hide');
-var Iterators = require('./_iterators');
-var $iterCreate = require('./_iter-create');
-var setToStringTag = require('./_set-to-string-tag');
-var getPrototypeOf = require('./_object-gpo');
-var ITERATOR = require('./_wks')('iterator');
-var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
-var FF_ITERATOR = '@@iterator';
-var KEYS = 'keys';
-var VALUES = 'values';
-
-var returnThis = function () { return this; };
-
-module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
-  $iterCreate(Constructor, NAME, next);
-  var getMethod = function (kind) {
-    if (!BUGGY && kind in proto) return proto[kind];
-    switch (kind) {
-      case KEYS: return function keys() { return new Constructor(this, kind); };
-      case VALUES: return function values() { return new Constructor(this, kind); };
-    } return function entries() { return new Constructor(this, kind); };
-  };
-  var TAG = NAME + ' Iterator';
-  var DEF_VALUES = DEFAULT == VALUES;
-  var VALUES_BUG = false;
-  var proto = Base.prototype;
-  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
-  var $default = $native || getMethod(DEFAULT);
-  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
-  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
-  var methods, key, IteratorPrototype;
-  // Fix native
-  if ($anyNative) {
-    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
-    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
-      // Set @@toStringTag to native iterators
-      setToStringTag(IteratorPrototype, TAG, true);
-      // fix for some old engines
-      if (!LIBRARY && typeof IteratorPrototype[ITERATOR] != 'function') hide(IteratorPrototype, ITERATOR, returnThis);
-    }
-  }
-  // fix Array#{values, @@iterator}.name in V8 / FF
-  if (DEF_VALUES && $native && $native.name !== VALUES) {
-    VALUES_BUG = true;
-    $default = function values() { return $native.call(this); };
-  }
-  // Define iterator
-  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
-    hide(proto, ITERATOR, $default);
-  }
-  // Plug for library
-  Iterators[NAME] = $default;
-  Iterators[TAG] = returnThis;
-  if (DEFAULT) {
-    methods = {
-      values: DEF_VALUES ? $default : getMethod(VALUES),
-      keys: IS_SET ? $default : getMethod(KEYS),
-      entries: $entries
-    };
-    if (FORCED) for (key in methods) {
-      if (!(key in proto)) redefine(proto, key, methods[key]);
-    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
-  }
-  return methods;
-};
-
-},{"./_export":44,"./_hide":49,"./_iter-create":58,"./_iterators":62,"./_library":63,"./_object-gpo":74,"./_redefine":83,"./_set-to-string-tag":86,"./_wks":102}],60:[function(require,module,exports){
-var ITERATOR = require('./_wks')('iterator');
-var SAFE_CLOSING = false;
-
-try {
-  var riter = [7][ITERATOR]();
-  riter['return'] = function () { SAFE_CLOSING = true; };
-  // eslint-disable-next-line no-throw-literal
-  Array.from(riter, function () { throw 2; });
-} catch (e) { /* empty */ }
-
-module.exports = function (exec, skipClosing) {
-  if (!skipClosing && !SAFE_CLOSING) return false;
-  var safe = false;
-  try {
-    var arr = [7];
-    var iter = arr[ITERATOR]();
-    iter.next = function () { return { done: safe = true }; };
-    arr[ITERATOR] = function () { return iter; };
-    exec(arr);
-  } catch (e) { /* empty */ }
-  return safe;
-};
-
-},{"./_wks":102}],61:[function(require,module,exports){
-module.exports = function (done, value) {
-  return { value: value, done: !!done };
-};
-
-},{}],62:[function(require,module,exports){
-module.exports = {};
-
-},{}],63:[function(require,module,exports){
-module.exports = true;
-
-},{}],64:[function(require,module,exports){
-var META = require('./_uid')('meta');
-var isObject = require('./_is-object');
-var has = require('./_has');
-var setDesc = require('./_object-dp').f;
-var id = 0;
-var isExtensible = Object.isExtensible || function () {
-  return true;
-};
-var FREEZE = !require('./_fails')(function () {
-  return isExtensible(Object.preventExtensions({}));
-});
-var setMeta = function (it) {
-  setDesc(it, META, { value: {
-    i: 'O' + ++id, // object ID
-    w: {}          // weak collections IDs
-  } });
-};
-var fastKey = function (it, create) {
-  // return primitive with prefix
-  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return 'F';
-    // not necessary to add metadata
-    if (!create) return 'E';
-    // add missing metadata
-    setMeta(it);
-  // return object ID
-  } return it[META].i;
-};
-var getWeak = function (it, create) {
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return true;
-    // not necessary to add metadata
-    if (!create) return false;
-    // add missing metadata
-    setMeta(it);
-  // return hash weak collections IDs
-  } return it[META].w;
-};
-// add metadata on freeze-family methods calling
-var onFreeze = function (it) {
-  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
-  return it;
-};
-var meta = module.exports = {
-  KEY: META,
-  NEED: false,
-  fastKey: fastKey,
-  getWeak: getWeak,
-  onFreeze: onFreeze
-};
-
-},{"./_fails":45,"./_has":48,"./_is-object":56,"./_object-dp":68,"./_uid":98}],65:[function(require,module,exports){
-var global = require('./_global');
-var macrotask = require('./_task').set;
-var Observer = global.MutationObserver || global.WebKitMutationObserver;
-var process = global.process;
-var Promise = global.Promise;
-var isNode = require('./_cof')(process) == 'process';
-
-module.exports = function () {
-  var head, last, notify;
-
-  var flush = function () {
-    var parent, fn;
-    if (isNode && (parent = process.domain)) parent.exit();
-    while (head) {
-      fn = head.fn;
-      head = head.next;
-      try {
-        fn();
-      } catch (e) {
-        if (head) notify();
-        else last = undefined;
-        throw e;
-      }
-    } last = undefined;
-    if (parent) parent.enter();
-  };
-
-  // Node.js
-  if (isNode) {
-    notify = function () {
-      process.nextTick(flush);
-    };
-  // browsers with MutationObserver, except iOS Safari - https://github.com/zloirock/core-js/issues/339
-  } else if (Observer && !(global.navigator && global.navigator.standalone)) {
-    var toggle = true;
-    var node = document.createTextNode('');
-    new Observer(flush).observe(node, { characterData: true }); // eslint-disable-line no-new
-    notify = function () {
-      node.data = toggle = !toggle;
-    };
-  // environments with maybe non-completely correct, but existent Promise
-  } else if (Promise && Promise.resolve) {
-    // Promise.resolve without an argument throws an error in LG WebOS 2
-    var promise = Promise.resolve(undefined);
-    notify = function () {
-      promise.then(flush);
-    };
-  // for other environments - macrotask based on:
-  // - setImmediate
-  // - MessageChannel
-  // - window.postMessag
-  // - onreadystatechange
-  // - setTimeout
-  } else {
-    notify = function () {
-      // strange IE + webpack dev server bug - use .call(global)
-      macrotask.call(global, flush);
-    };
-  }
-
-  return function (fn) {
-    var task = { fn: fn, next: undefined };
-    if (last) last.next = task;
-    if (!head) {
-      head = task;
-      notify();
-    } last = task;
-  };
-};
-
-},{"./_cof":35,"./_global":47,"./_task":91}],66:[function(require,module,exports){
-'use strict';
-// 25.4.1.5 NewPromiseCapability(C)
-var aFunction = require('./_a-function');
-
-function PromiseCapability(C) {
-  var resolve, reject;
-  this.promise = new C(function ($$resolve, $$reject) {
-    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
-    resolve = $$resolve;
-    reject = $$reject;
-  });
-  this.resolve = aFunction(resolve);
-  this.reject = aFunction(reject);
-}
-
-module.exports.f = function (C) {
-  return new PromiseCapability(C);
-};
-
-},{"./_a-function":29}],67:[function(require,module,exports){
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = require('./_an-object');
-var dPs = require('./_object-dps');
-var enumBugKeys = require('./_enum-bug-keys');
-var IE_PROTO = require('./_shared-key')('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = require('./_dom-create')('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  require('./_html').appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-},{"./_an-object":32,"./_dom-create":41,"./_enum-bug-keys":42,"./_html":50,"./_object-dps":69,"./_shared-key":87}],68:[function(require,module,exports){
-var anObject = require('./_an-object');
-var IE8_DOM_DEFINE = require('./_ie8-dom-define');
-var toPrimitive = require('./_to-primitive');
-var dP = Object.defineProperty;
-
-exports.f = require('./_descriptors') ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-},{"./_an-object":32,"./_descriptors":40,"./_ie8-dom-define":51,"./_to-primitive":97}],69:[function(require,module,exports){
-var dP = require('./_object-dp');
-var anObject = require('./_an-object');
-var getKeys = require('./_object-keys');
-
-module.exports = require('./_descriptors') ? Object.defineProperties : function defineProperties(O, Properties) {
-  anObject(O);
-  var keys = getKeys(Properties);
-  var length = keys.length;
-  var i = 0;
-  var P;
-  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
-  return O;
-};
-
-},{"./_an-object":32,"./_descriptors":40,"./_object-dp":68,"./_object-keys":76}],70:[function(require,module,exports){
-var pIE = require('./_object-pie');
-var createDesc = require('./_property-desc');
-var toIObject = require('./_to-iobject');
-var toPrimitive = require('./_to-primitive');
-var has = require('./_has');
-var IE8_DOM_DEFINE = require('./_ie8-dom-define');
-var gOPD = Object.getOwnPropertyDescriptor;
-
-exports.f = require('./_descriptors') ? gOPD : function getOwnPropertyDescriptor(O, P) {
-  O = toIObject(O);
-  P = toPrimitive(P, true);
-  if (IE8_DOM_DEFINE) try {
-    return gOPD(O, P);
-  } catch (e) { /* empty */ }
-  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
-};
-
-},{"./_descriptors":40,"./_has":48,"./_ie8-dom-define":51,"./_object-pie":77,"./_property-desc":81,"./_to-iobject":94,"./_to-primitive":97}],71:[function(require,module,exports){
-// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = require('./_to-iobject');
-var gOPN = require('./_object-gopn').f;
-var toString = {}.toString;
-
-var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
-  ? Object.getOwnPropertyNames(window) : [];
-
-var getWindowNames = function (it) {
-  try {
-    return gOPN(it);
-  } catch (e) {
-    return windowNames.slice();
-  }
-};
-
-module.exports.f = function getOwnPropertyNames(it) {
-  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
-};
-
-},{"./_object-gopn":72,"./_to-iobject":94}],72:[function(require,module,exports){
-// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = require('./_object-keys-internal');
-var hiddenKeys = require('./_enum-bug-keys').concat('length', 'prototype');
-
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return $keys(O, hiddenKeys);
-};
-
-},{"./_enum-bug-keys":42,"./_object-keys-internal":75}],73:[function(require,module,exports){
-exports.f = Object.getOwnPropertySymbols;
-
-},{}],74:[function(require,module,exports){
-// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = require('./_has');
-var toObject = require('./_to-object');
-var IE_PROTO = require('./_shared-key')('IE_PROTO');
-var ObjectProto = Object.prototype;
-
-module.exports = Object.getPrototypeOf || function (O) {
-  O = toObject(O);
-  if (has(O, IE_PROTO)) return O[IE_PROTO];
-  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
-
-},{"./_has":48,"./_shared-key":87,"./_to-object":96}],75:[function(require,module,exports){
-var has = require('./_has');
-var toIObject = require('./_to-iobject');
-var arrayIndexOf = require('./_array-includes')(false);
-var IE_PROTO = require('./_shared-key')('IE_PROTO');
-
-module.exports = function (object, names) {
-  var O = toIObject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (has(O, key = names[i++])) {
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
-
-},{"./_array-includes":33,"./_has":48,"./_shared-key":87,"./_to-iobject":94}],76:[function(require,module,exports){
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = require('./_object-keys-internal');
-var enumBugKeys = require('./_enum-bug-keys');
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-},{"./_enum-bug-keys":42,"./_object-keys-internal":75}],77:[function(require,module,exports){
-exports.f = {}.propertyIsEnumerable;
-
-},{}],78:[function(require,module,exports){
-// most Object methods by ES6 should accept primitives
-var $export = require('./_export');
-var core = require('./_core');
-var fails = require('./_fails');
-module.exports = function (KEY, exec) {
-  var fn = (core.Object || {})[KEY] || Object[KEY];
-  var exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
-};
-
-},{"./_core":36,"./_export":44,"./_fails":45}],79:[function(require,module,exports){
-module.exports = function (exec) {
-  try {
-    return { e: false, v: exec() };
-  } catch (e) {
-    return { e: true, v: e };
-  }
-};
-
-},{}],80:[function(require,module,exports){
-var anObject = require('./_an-object');
-var isObject = require('./_is-object');
-var newPromiseCapability = require('./_new-promise-capability');
-
-module.exports = function (C, x) {
-  anObject(C);
-  if (isObject(x) && x.constructor === C) return x;
-  var promiseCapability = newPromiseCapability.f(C);
-  var resolve = promiseCapability.resolve;
-  resolve(x);
-  return promiseCapability.promise;
-};
-
-},{"./_an-object":32,"./_is-object":56,"./_new-promise-capability":66}],81:[function(require,module,exports){
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-},{}],82:[function(require,module,exports){
-var hide = require('./_hide');
-module.exports = function (target, src, safe) {
-  for (var key in src) {
-    if (safe && target[key]) target[key] = src[key];
-    else hide(target, key, src[key]);
-  } return target;
-};
-
-},{"./_hide":49}],83:[function(require,module,exports){
-module.exports = require('./_hide');
-
-},{"./_hide":49}],84:[function(require,module,exports){
-// Works with __proto__ only. Old v8 can't work with null proto objects.
-/* eslint-disable no-proto */
-var isObject = require('./_is-object');
-var anObject = require('./_an-object');
-var check = function (O, proto) {
-  anObject(O);
-  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
-};
-module.exports = {
-  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
-    function (test, buggy, set) {
-      try {
-        set = require('./_ctx')(Function.call, require('./_object-gopd').f(Object.prototype, '__proto__').set, 2);
-        set(test, []);
-        buggy = !(test instanceof Array);
-      } catch (e) { buggy = true; }
-      return function setPrototypeOf(O, proto) {
-        check(O, proto);
-        if (buggy) O.__proto__ = proto;
-        else set(O, proto);
-        return O;
-      };
-    }({}, false) : undefined),
-  check: check
-};
-
-},{"./_an-object":32,"./_ctx":38,"./_is-object":56,"./_object-gopd":70}],85:[function(require,module,exports){
-'use strict';
-var global = require('./_global');
-var core = require('./_core');
-var dP = require('./_object-dp');
-var DESCRIPTORS = require('./_descriptors');
-var SPECIES = require('./_wks')('species');
-
-module.exports = function (KEY) {
-  var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
-  if (DESCRIPTORS && C && !C[SPECIES]) dP.f(C, SPECIES, {
-    configurable: true,
-    get: function () { return this; }
-  });
-};
-
-},{"./_core":36,"./_descriptors":40,"./_global":47,"./_object-dp":68,"./_wks":102}],86:[function(require,module,exports){
-var def = require('./_object-dp').f;
-var has = require('./_has');
-var TAG = require('./_wks')('toStringTag');
-
-module.exports = function (it, tag, stat) {
-  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
-};
-
-},{"./_has":48,"./_object-dp":68,"./_wks":102}],87:[function(require,module,exports){
-var shared = require('./_shared')('keys');
-var uid = require('./_uid');
-module.exports = function (key) {
-  return shared[key] || (shared[key] = uid(key));
-};
-
-},{"./_shared":88,"./_uid":98}],88:[function(require,module,exports){
-var core = require('./_core');
-var global = require('./_global');
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || (global[SHARED] = {});
-
-(module.exports = function (key, value) {
-  return store[key] || (store[key] = value !== undefined ? value : {});
-})('versions', []).push({
-  version: core.version,
-  mode: require('./_library') ? 'pure' : 'global',
-  copyright: '© 2018 Denis Pushkarev (zloirock.ru)'
-});
-
-},{"./_core":36,"./_global":47,"./_library":63}],89:[function(require,module,exports){
-// 7.3.20 SpeciesConstructor(O, defaultConstructor)
-var anObject = require('./_an-object');
-var aFunction = require('./_a-function');
-var SPECIES = require('./_wks')('species');
-module.exports = function (O, D) {
-  var C = anObject(O).constructor;
-  var S;
-  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
-};
-
-},{"./_a-function":29,"./_an-object":32,"./_wks":102}],90:[function(require,module,exports){
-var toInteger = require('./_to-integer');
-var defined = require('./_defined');
-// true  -> String#at
-// false -> String#codePointAt
-module.exports = function (TO_STRING) {
-  return function (that, pos) {
-    var s = String(defined(that));
-    var i = toInteger(pos);
-    var l = s.length;
-    var a, b;
-    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
-    a = s.charCodeAt(i);
-    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
-      ? TO_STRING ? s.charAt(i) : a
-      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
-  };
-};
-
-},{"./_defined":39,"./_to-integer":93}],91:[function(require,module,exports){
-var ctx = require('./_ctx');
-var invoke = require('./_invoke');
-var html = require('./_html');
-var cel = require('./_dom-create');
-var global = require('./_global');
-var process = global.process;
-var setTask = global.setImmediate;
-var clearTask = global.clearImmediate;
-var MessageChannel = global.MessageChannel;
-var Dispatch = global.Dispatch;
-var counter = 0;
-var queue = {};
-var ONREADYSTATECHANGE = 'onreadystatechange';
-var defer, channel, port;
-var run = function () {
-  var id = +this;
-  // eslint-disable-next-line no-prototype-builtins
-  if (queue.hasOwnProperty(id)) {
-    var fn = queue[id];
-    delete queue[id];
-    fn();
-  }
-};
-var listener = function (event) {
-  run.call(event.data);
-};
-// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
-if (!setTask || !clearTask) {
-  setTask = function setImmediate(fn) {
-    var args = [];
-    var i = 1;
-    while (arguments.length > i) args.push(arguments[i++]);
-    queue[++counter] = function () {
-      // eslint-disable-next-line no-new-func
-      invoke(typeof fn == 'function' ? fn : Function(fn), args);
-    };
-    defer(counter);
-    return counter;
-  };
-  clearTask = function clearImmediate(id) {
-    delete queue[id];
-  };
-  // Node.js 0.8-
-  if (require('./_cof')(process) == 'process') {
-    defer = function (id) {
-      process.nextTick(ctx(run, id, 1));
-    };
-  // Sphere (JS game engine) Dispatch API
-  } else if (Dispatch && Dispatch.now) {
-    defer = function (id) {
-      Dispatch.now(ctx(run, id, 1));
-    };
-  // Browsers with MessageChannel, includes WebWorkers
-  } else if (MessageChannel) {
-    channel = new MessageChannel();
-    port = channel.port2;
-    channel.port1.onmessage = listener;
-    defer = ctx(port.postMessage, port, 1);
-  // Browsers with postMessage, skip WebWorkers
-  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
-  } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
-    defer = function (id) {
-      global.postMessage(id + '', '*');
-    };
-    global.addEventListener('message', listener, false);
-  // IE8-
-  } else if (ONREADYSTATECHANGE in cel('script')) {
-    defer = function (id) {
-      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function () {
-        html.removeChild(this);
-        run.call(id);
-      };
-    };
-  // Rest old browsers
-  } else {
-    defer = function (id) {
-      setTimeout(ctx(run, id, 1), 0);
-    };
-  }
-}
-module.exports = {
-  set: setTask,
-  clear: clearTask
-};
-
-},{"./_cof":35,"./_ctx":38,"./_dom-create":41,"./_global":47,"./_html":50,"./_invoke":52}],92:[function(require,module,exports){
-var toInteger = require('./_to-integer');
-var max = Math.max;
-var min = Math.min;
-module.exports = function (index, length) {
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-},{"./_to-integer":93}],93:[function(require,module,exports){
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-},{}],94:[function(require,module,exports){
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = require('./_iobject');
-var defined = require('./_defined');
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-},{"./_defined":39,"./_iobject":53}],95:[function(require,module,exports){
-// 7.1.15 ToLength
-var toInteger = require('./_to-integer');
-var min = Math.min;
-module.exports = function (it) {
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-},{"./_to-integer":93}],96:[function(require,module,exports){
-// 7.1.13 ToObject(argument)
-var defined = require('./_defined');
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-},{"./_defined":39}],97:[function(require,module,exports){
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = require('./_is-object');
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-},{"./_is-object":56}],98:[function(require,module,exports){
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-},{}],99:[function(require,module,exports){
-var global = require('./_global');
-var navigator = global.navigator;
-
-module.exports = navigator && navigator.userAgent || '';
-
-},{"./_global":47}],100:[function(require,module,exports){
-var global = require('./_global');
-var core = require('./_core');
-var LIBRARY = require('./_library');
-var wksExt = require('./_wks-ext');
-var defineProperty = require('./_object-dp').f;
-module.exports = function (name) {
-  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
-  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
-};
-
-},{"./_core":36,"./_global":47,"./_library":63,"./_object-dp":68,"./_wks-ext":101}],101:[function(require,module,exports){
-exports.f = require('./_wks');
-
-},{"./_wks":102}],102:[function(require,module,exports){
-var store = require('./_shared')('wks');
-var uid = require('./_uid');
-var Symbol = require('./_global').Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-},{"./_global":47,"./_shared":88,"./_uid":98}],103:[function(require,module,exports){
-var classof = require('./_classof');
-var ITERATOR = require('./_wks')('iterator');
-var Iterators = require('./_iterators');
-module.exports = require('./_core').getIteratorMethod = function (it) {
-  if (it != undefined) return it[ITERATOR]
-    || it['@@iterator']
-    || Iterators[classof(it)];
-};
-
-},{"./_classof":34,"./_core":36,"./_iterators":62,"./_wks":102}],104:[function(require,module,exports){
-'use strict';
-var ctx = require('./_ctx');
-var $export = require('./_export');
-var toObject = require('./_to-object');
-var call = require('./_iter-call');
-var isArrayIter = require('./_is-array-iter');
-var toLength = require('./_to-length');
-var createProperty = require('./_create-property');
-var getIterFn = require('./core.get-iterator-method');
-
-$export($export.S + $export.F * !require('./_iter-detect')(function (iter) { Array.from(iter); }), 'Array', {
-  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
-  from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
-    var O = toObject(arrayLike);
-    var C = typeof this == 'function' ? this : Array;
-    var aLen = arguments.length;
-    var mapfn = aLen > 1 ? arguments[1] : undefined;
-    var mapping = mapfn !== undefined;
-    var index = 0;
-    var iterFn = getIterFn(O);
-    var length, result, step, iterator;
-    if (mapping) mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
-    // if object isn't iterable or it's array with default iterator - use simple case
-    if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
-      for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
-        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
-      }
-    } else {
-      length = toLength(O.length);
-      for (result = new C(length); length > index; index++) {
-        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
-      }
-    }
-    result.length = index;
-    return result;
-  }
-});
-
-},{"./_create-property":37,"./_ctx":38,"./_export":44,"./_is-array-iter":54,"./_iter-call":57,"./_iter-detect":60,"./_to-length":95,"./_to-object":96,"./core.get-iterator-method":103}],105:[function(require,module,exports){
-'use strict';
-var addToUnscopables = require('./_add-to-unscopables');
-var step = require('./_iter-step');
-var Iterators = require('./_iterators');
-var toIObject = require('./_to-iobject');
-
-// 22.1.3.4 Array.prototype.entries()
-// 22.1.3.13 Array.prototype.keys()
-// 22.1.3.29 Array.prototype.values()
-// 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = require('./_iter-define')(Array, 'Array', function (iterated, kind) {
-  this._t = toIObject(iterated); // target
-  this._i = 0;                   // next index
-  this._k = kind;                // kind
-// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
-}, function () {
-  var O = this._t;
-  var kind = this._k;
-  var index = this._i++;
-  if (!O || index >= O.length) {
-    this._t = undefined;
-    return step(1);
-  }
-  if (kind == 'keys') return step(0, index);
-  if (kind == 'values') return step(0, O[index]);
-  return step(0, [index, O[index]]);
-}, 'values');
-
-// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
-Iterators.Arguments = Iterators.Array;
-
-addToUnscopables('keys');
-addToUnscopables('values');
-addToUnscopables('entries');
-
-},{"./_add-to-unscopables":30,"./_iter-define":59,"./_iter-step":61,"./_iterators":62,"./_to-iobject":94}],106:[function(require,module,exports){
-var $export = require('./_export');
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: require('./_object-create') });
-
-},{"./_export":44,"./_object-create":67}],107:[function(require,module,exports){
-var $export = require('./_export');
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !require('./_descriptors'), 'Object', { defineProperty: require('./_object-dp').f });
-
-},{"./_descriptors":40,"./_export":44,"./_object-dp":68}],108:[function(require,module,exports){
-// 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = require('./_to-object');
-var $getPrototypeOf = require('./_object-gpo');
-
-require('./_object-sap')('getPrototypeOf', function () {
-  return function getPrototypeOf(it) {
-    return $getPrototypeOf(toObject(it));
-  };
-});
-
-},{"./_object-gpo":74,"./_object-sap":78,"./_to-object":96}],109:[function(require,module,exports){
-// 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = require('./_export');
-$export($export.S, 'Object', { setPrototypeOf: require('./_set-proto').set });
-
-},{"./_export":44,"./_set-proto":84}],110:[function(require,module,exports){
-
-},{}],111:[function(require,module,exports){
-'use strict';
-var LIBRARY = require('./_library');
-var global = require('./_global');
-var ctx = require('./_ctx');
-var classof = require('./_classof');
-var $export = require('./_export');
-var isObject = require('./_is-object');
-var aFunction = require('./_a-function');
-var anInstance = require('./_an-instance');
-var forOf = require('./_for-of');
-var speciesConstructor = require('./_species-constructor');
-var task = require('./_task').set;
-var microtask = require('./_microtask')();
-var newPromiseCapabilityModule = require('./_new-promise-capability');
-var perform = require('./_perform');
-var userAgent = require('./_user-agent');
-var promiseResolve = require('./_promise-resolve');
-var PROMISE = 'Promise';
-var TypeError = global.TypeError;
-var process = global.process;
-var versions = process && process.versions;
-var v8 = versions && versions.v8 || '';
-var $Promise = global[PROMISE];
-var isNode = classof(process) == 'process';
-var empty = function () { /* empty */ };
-var Internal, newGenericPromiseCapability, OwnPromiseCapability, Wrapper;
-var newPromiseCapability = newGenericPromiseCapability = newPromiseCapabilityModule.f;
-
-var USE_NATIVE = !!function () {
-  try {
-    // correct subclassing with @@species support
-    var promise = $Promise.resolve(1);
-    var FakePromise = (promise.constructor = {})[require('./_wks')('species')] = function (exec) {
-      exec(empty, empty);
-    };
-    // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
-    return (isNode || typeof PromiseRejectionEvent == 'function')
-      && promise.then(empty) instanceof FakePromise
-      // v8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
-      // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
-      // we can't detect it synchronously, so just check versions
-      && v8.indexOf('6.6') !== 0
-      && userAgent.indexOf('Chrome/66') === -1;
-  } catch (e) { /* empty */ }
-}();
-
-// helpers
-var isThenable = function (it) {
-  var then;
-  return isObject(it) && typeof (then = it.then) == 'function' ? then : false;
-};
-var notify = function (promise, isReject) {
-  if (promise._n) return;
-  promise._n = true;
-  var chain = promise._c;
-  microtask(function () {
-    var value = promise._v;
-    var ok = promise._s == 1;
-    var i = 0;
-    var run = function (reaction) {
-      var handler = ok ? reaction.ok : reaction.fail;
-      var resolve = reaction.resolve;
-      var reject = reaction.reject;
-      var domain = reaction.domain;
-      var result, then, exited;
-      try {
-        if (handler) {
-          if (!ok) {
-            if (promise._h == 2) onHandleUnhandled(promise);
-            promise._h = 1;
-          }
-          if (handler === true) result = value;
-          else {
-            if (domain) domain.enter();
-            result = handler(value); // may throw
-            if (domain) {
-              domain.exit();
-              exited = true;
-            }
-          }
-          if (result === reaction.promise) {
-            reject(TypeError('Promise-chain cycle'));
-          } else if (then = isThenable(result)) {
-            then.call(result, resolve, reject);
-          } else resolve(result);
-        } else reject(value);
-      } catch (e) {
-        if (domain && !exited) domain.exit();
-        reject(e);
-      }
-    };
-    while (chain.length > i) run(chain[i++]); // variable length - can't use forEach
-    promise._c = [];
-    promise._n = false;
-    if (isReject && !promise._h) onUnhandled(promise);
-  });
-};
-var onUnhandled = function (promise) {
-  task.call(global, function () {
-    var value = promise._v;
-    var unhandled = isUnhandled(promise);
-    var result, handler, console;
-    if (unhandled) {
-      result = perform(function () {
-        if (isNode) {
-          process.emit('unhandledRejection', value, promise);
-        } else if (handler = global.onunhandledrejection) {
-          handler({ promise: promise, reason: value });
-        } else if ((console = global.console) && console.error) {
-          console.error('Unhandled promise rejection', value);
-        }
-      });
-      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
-      promise._h = isNode || isUnhandled(promise) ? 2 : 1;
-    } promise._a = undefined;
-    if (unhandled && result.e) throw result.v;
-  });
-};
-var isUnhandled = function (promise) {
-  return promise._h !== 1 && (promise._a || promise._c).length === 0;
-};
-var onHandleUnhandled = function (promise) {
-  task.call(global, function () {
-    var handler;
-    if (isNode) {
-      process.emit('rejectionHandled', promise);
-    } else if (handler = global.onrejectionhandled) {
-      handler({ promise: promise, reason: promise._v });
-    }
-  });
-};
-var $reject = function (value) {
-  var promise = this;
-  if (promise._d) return;
-  promise._d = true;
-  promise = promise._w || promise; // unwrap
-  promise._v = value;
-  promise._s = 2;
-  if (!promise._a) promise._a = promise._c.slice();
-  notify(promise, true);
-};
-var $resolve = function (value) {
-  var promise = this;
-  var then;
-  if (promise._d) return;
-  promise._d = true;
-  promise = promise._w || promise; // unwrap
-  try {
-    if (promise === value) throw TypeError("Promise can't be resolved itself");
-    if (then = isThenable(value)) {
-      microtask(function () {
-        var wrapper = { _w: promise, _d: false }; // wrap
-        try {
-          then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
-        } catch (e) {
-          $reject.call(wrapper, e);
-        }
-      });
-    } else {
-      promise._v = value;
-      promise._s = 1;
-      notify(promise, false);
-    }
-  } catch (e) {
-    $reject.call({ _w: promise, _d: false }, e); // wrap
-  }
-};
-
-// constructor polyfill
-if (!USE_NATIVE) {
-  // 25.4.3.1 Promise(executor)
-  $Promise = function Promise(executor) {
-    anInstance(this, $Promise, PROMISE, '_h');
-    aFunction(executor);
-    Internal.call(this);
-    try {
-      executor(ctx($resolve, this, 1), ctx($reject, this, 1));
-    } catch (err) {
-      $reject.call(this, err);
-    }
-  };
-  // eslint-disable-next-line no-unused-vars
-  Internal = function Promise(executor) {
-    this._c = [];             // <- awaiting reactions
-    this._a = undefined;      // <- checked in isUnhandled reactions
-    this._s = 0;              // <- state
-    this._d = false;          // <- done
-    this._v = undefined;      // <- value
-    this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
-    this._n = false;          // <- notify
-  };
-  Internal.prototype = require('./_redefine-all')($Promise.prototype, {
-    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
-    then: function then(onFulfilled, onRejected) {
-      var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
-      reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
-      reaction.fail = typeof onRejected == 'function' && onRejected;
-      reaction.domain = isNode ? process.domain : undefined;
-      this._c.push(reaction);
-      if (this._a) this._a.push(reaction);
-      if (this._s) notify(this, false);
-      return reaction.promise;
-    },
-    // 25.4.5.1 Promise.prototype.catch(onRejected)
-    'catch': function (onRejected) {
-      return this.then(undefined, onRejected);
-    }
-  });
-  OwnPromiseCapability = function () {
-    var promise = new Internal();
-    this.promise = promise;
-    this.resolve = ctx($resolve, promise, 1);
-    this.reject = ctx($reject, promise, 1);
-  };
-  newPromiseCapabilityModule.f = newPromiseCapability = function (C) {
-    return C === $Promise || C === Wrapper
-      ? new OwnPromiseCapability(C)
-      : newGenericPromiseCapability(C);
-  };
-}
-
-$export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-require('./_set-to-string-tag')($Promise, PROMISE);
-require('./_set-species')(PROMISE);
-Wrapper = require('./_core')[PROMISE];
-
-// statics
-$export($export.S + $export.F * !USE_NATIVE, PROMISE, {
-  // 25.4.4.5 Promise.reject(r)
-  reject: function reject(r) {
-    var capability = newPromiseCapability(this);
-    var $$reject = capability.reject;
-    $$reject(r);
-    return capability.promise;
-  }
-});
-$export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
-  // 25.4.4.6 Promise.resolve(x)
-  resolve: function resolve(x) {
-    return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
-  }
-});
-$export($export.S + $export.F * !(USE_NATIVE && require('./_iter-detect')(function (iter) {
-  $Promise.all(iter)['catch'](empty);
-})), PROMISE, {
-  // 25.4.4.1 Promise.all(iterable)
-  all: function all(iterable) {
-    var C = this;
-    var capability = newPromiseCapability(C);
-    var resolve = capability.resolve;
-    var reject = capability.reject;
-    var result = perform(function () {
-      var values = [];
-      var index = 0;
-      var remaining = 1;
-      forOf(iterable, false, function (promise) {
-        var $index = index++;
-        var alreadyCalled = false;
-        values.push(undefined);
-        remaining++;
-        C.resolve(promise).then(function (value) {
-          if (alreadyCalled) return;
-          alreadyCalled = true;
-          values[$index] = value;
-          --remaining || resolve(values);
-        }, reject);
-      });
-      --remaining || resolve(values);
-    });
-    if (result.e) reject(result.v);
-    return capability.promise;
-  },
-  // 25.4.4.4 Promise.race(iterable)
-  race: function race(iterable) {
-    var C = this;
-    var capability = newPromiseCapability(C);
-    var reject = capability.reject;
-    var result = perform(function () {
-      forOf(iterable, false, function (promise) {
-        C.resolve(promise).then(capability.resolve, reject);
-      });
-    });
-    if (result.e) reject(result.v);
-    return capability.promise;
-  }
-});
-
-},{"./_a-function":29,"./_an-instance":31,"./_classof":34,"./_core":36,"./_ctx":38,"./_export":44,"./_for-of":46,"./_global":47,"./_is-object":56,"./_iter-detect":60,"./_library":63,"./_microtask":65,"./_new-promise-capability":66,"./_perform":79,"./_promise-resolve":80,"./_redefine-all":82,"./_set-species":85,"./_set-to-string-tag":86,"./_species-constructor":89,"./_task":91,"./_user-agent":99,"./_wks":102}],112:[function(require,module,exports){
-'use strict';
-var $at = require('./_string-at')(true);
-
-// 21.1.3.27 String.prototype[@@iterator]()
-require('./_iter-define')(String, 'String', function (iterated) {
-  this._t = String(iterated); // target
-  this._i = 0;                // next index
-// 21.1.5.2.1 %StringIteratorPrototype%.next()
-}, function () {
-  var O = this._t;
-  var index = this._i;
-  var point;
-  if (index >= O.length) return { value: undefined, done: true };
-  point = $at(O, index);
-  this._i += point.length;
-  return { value: point, done: false };
-});
-
-},{"./_iter-define":59,"./_string-at":90}],113:[function(require,module,exports){
-'use strict';
-// ECMAScript 6 symbols shim
-var global = require('./_global');
-var has = require('./_has');
-var DESCRIPTORS = require('./_descriptors');
-var $export = require('./_export');
-var redefine = require('./_redefine');
-var META = require('./_meta').KEY;
-var $fails = require('./_fails');
-var shared = require('./_shared');
-var setToStringTag = require('./_set-to-string-tag');
-var uid = require('./_uid');
-var wks = require('./_wks');
-var wksExt = require('./_wks-ext');
-var wksDefine = require('./_wks-define');
-var enumKeys = require('./_enum-keys');
-var isArray = require('./_is-array');
-var anObject = require('./_an-object');
-var isObject = require('./_is-object');
-var toIObject = require('./_to-iobject');
-var toPrimitive = require('./_to-primitive');
-var createDesc = require('./_property-desc');
-var _create = require('./_object-create');
-var gOPNExt = require('./_object-gopn-ext');
-var $GOPD = require('./_object-gopd');
-var $DP = require('./_object-dp');
-var $keys = require('./_object-keys');
-var gOPD = $GOPD.f;
-var dP = $DP.f;
-var gOPN = gOPNExt.f;
-var $Symbol = global.Symbol;
-var $JSON = global.JSON;
-var _stringify = $JSON && $JSON.stringify;
-var PROTOTYPE = 'prototype';
-var HIDDEN = wks('_hidden');
-var TO_PRIMITIVE = wks('toPrimitive');
-var isEnum = {}.propertyIsEnumerable;
-var SymbolRegistry = shared('symbol-registry');
-var AllSymbols = shared('symbols');
-var OPSymbols = shared('op-symbols');
-var ObjectProto = Object[PROTOTYPE];
-var USE_NATIVE = typeof $Symbol == 'function';
-var QObject = global.QObject;
-// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
-var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
-
-// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
-var setSymbolDesc = DESCRIPTORS && $fails(function () {
-  return _create(dP({}, 'a', {
-    get: function () { return dP(this, 'a', { value: 7 }).a; }
-  })).a != 7;
-}) ? function (it, key, D) {
-  var protoDesc = gOPD(ObjectProto, key);
-  if (protoDesc) delete ObjectProto[key];
-  dP(it, key, D);
-  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
-} : dP;
-
-var wrap = function (tag) {
-  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
-  sym._k = tag;
-  return sym;
-};
-
-var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
-  return typeof it == 'symbol';
-} : function (it) {
-  return it instanceof $Symbol;
-};
-
-var $defineProperty = function defineProperty(it, key, D) {
-  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
-  anObject(it);
-  key = toPrimitive(key, true);
-  anObject(D);
-  if (has(AllSymbols, key)) {
-    if (!D.enumerable) {
-      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
-      it[HIDDEN][key] = true;
-    } else {
-      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
-      D = _create(D, { enumerable: createDesc(0, false) });
-    } return setSymbolDesc(it, key, D);
-  } return dP(it, key, D);
-};
-var $defineProperties = function defineProperties(it, P) {
-  anObject(it);
-  var keys = enumKeys(P = toIObject(P));
-  var i = 0;
-  var l = keys.length;
-  var key;
-  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
-  return it;
-};
-var $create = function create(it, P) {
-  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
-};
-var $propertyIsEnumerable = function propertyIsEnumerable(key) {
-  var E = isEnum.call(this, key = toPrimitive(key, true));
-  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
-  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
-};
-var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
-  it = toIObject(it);
-  key = toPrimitive(key, true);
-  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
-  var D = gOPD(it, key);
-  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
-  return D;
-};
-var $getOwnPropertyNames = function getOwnPropertyNames(it) {
-  var names = gOPN(toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-  while (names.length > i) {
-    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
-  } return result;
-};
-var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
-  var IS_OP = it === ObjectProto;
-  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-  while (names.length > i) {
-    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
-  } return result;
-};
-
-// 19.4.1.1 Symbol([description])
-if (!USE_NATIVE) {
-  $Symbol = function Symbol() {
-    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
-    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
-    var $set = function (value) {
-      if (this === ObjectProto) $set.call(OPSymbols, value);
-      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
-      setSymbolDesc(this, tag, createDesc(1, value));
-    };
-    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, { configurable: true, set: $set });
-    return wrap(tag);
-  };
-  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
-    return this._k;
-  });
-
-  $GOPD.f = $getOwnPropertyDescriptor;
-  $DP.f = $defineProperty;
-  require('./_object-gopn').f = gOPNExt.f = $getOwnPropertyNames;
-  require('./_object-pie').f = $propertyIsEnumerable;
-  require('./_object-gops').f = $getOwnPropertySymbols;
-
-  if (DESCRIPTORS && !require('./_library')) {
-    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
-  }
-
-  wksExt.f = function (name) {
-    return wrap(wks(name));
-  };
-}
-
-$export($export.G + $export.W + $export.F * !USE_NATIVE, { Symbol: $Symbol });
-
-for (var es6Symbols = (
-  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
-  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
-).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
-
-for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
-
-$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
-  // 19.4.2.1 Symbol.for(key)
-  'for': function (key) {
-    return has(SymbolRegistry, key += '')
-      ? SymbolRegistry[key]
-      : SymbolRegistry[key] = $Symbol(key);
-  },
-  // 19.4.2.5 Symbol.keyFor(sym)
-  keyFor: function keyFor(sym) {
-    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
-    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
-  },
-  useSetter: function () { setter = true; },
-  useSimple: function () { setter = false; }
-});
-
-$export($export.S + $export.F * !USE_NATIVE, 'Object', {
-  // 19.1.2.2 Object.create(O [, Properties])
-  create: $create,
-  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
-  defineProperty: $defineProperty,
-  // 19.1.2.3 Object.defineProperties(O, Properties)
-  defineProperties: $defineProperties,
-  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
-  // 19.1.2.7 Object.getOwnPropertyNames(O)
-  getOwnPropertyNames: $getOwnPropertyNames,
-  // 19.1.2.8 Object.getOwnPropertySymbols(O)
-  getOwnPropertySymbols: $getOwnPropertySymbols
-});
-
-// 24.3.2 JSON.stringify(value [, replacer [, space]])
-$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
-  var S = $Symbol();
-  // MS Edge converts symbol values to JSON as {}
-  // WebKit converts symbol values to JSON as null
-  // V8 throws on boxed symbols
-  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
-})), 'JSON', {
-  stringify: function stringify(it) {
-    var args = [it];
-    var i = 1;
-    var replacer, $replacer;
-    while (arguments.length > i) args.push(arguments[i++]);
-    $replacer = replacer = args[1];
-    if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
-    if (!isArray(replacer)) replacer = function (key, value) {
-      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
-      if (!isSymbol(value)) return value;
-    };
-    args[1] = replacer;
-    return _stringify.apply($JSON, args);
-  }
-});
-
-// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || require('./_hide')($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
-// 19.4.3.5 Symbol.prototype[@@toStringTag]
-setToStringTag($Symbol, 'Symbol');
-// 20.2.1.9 Math[@@toStringTag]
-setToStringTag(Math, 'Math', true);
-// 24.3.3 JSON[@@toStringTag]
-setToStringTag(global.JSON, 'JSON', true);
-
-},{"./_an-object":32,"./_descriptors":40,"./_enum-keys":43,"./_export":44,"./_fails":45,"./_global":47,"./_has":48,"./_hide":49,"./_is-array":55,"./_is-object":56,"./_library":63,"./_meta":64,"./_object-create":67,"./_object-dp":68,"./_object-gopd":70,"./_object-gopn":72,"./_object-gopn-ext":71,"./_object-gops":73,"./_object-keys":76,"./_object-pie":77,"./_property-desc":81,"./_redefine":83,"./_set-to-string-tag":86,"./_shared":88,"./_to-iobject":94,"./_to-primitive":97,"./_uid":98,"./_wks":102,"./_wks-define":100,"./_wks-ext":101}],114:[function(require,module,exports){
-// https://github.com/tc39/proposal-promise-finally
-'use strict';
-var $export = require('./_export');
-var core = require('./_core');
-var global = require('./_global');
-var speciesConstructor = require('./_species-constructor');
-var promiseResolve = require('./_promise-resolve');
-
-$export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
-  var C = speciesConstructor(this, core.Promise || global.Promise);
-  var isFunction = typeof onFinally == 'function';
-  return this.then(
-    isFunction ? function (x) {
-      return promiseResolve(C, onFinally()).then(function () { return x; });
-    } : onFinally,
-    isFunction ? function (e) {
-      return promiseResolve(C, onFinally()).then(function () { throw e; });
-    } : onFinally
-  );
-} });
-
-},{"./_core":36,"./_export":44,"./_global":47,"./_promise-resolve":80,"./_species-constructor":89}],115:[function(require,module,exports){
-'use strict';
-// https://github.com/tc39/proposal-promise-try
-var $export = require('./_export');
-var newPromiseCapability = require('./_new-promise-capability');
-var perform = require('./_perform');
-
-$export($export.S, 'Promise', { 'try': function (callbackfn) {
-  var promiseCapability = newPromiseCapability.f(this);
-  var result = perform(callbackfn);
-  (result.e ? promiseCapability.reject : promiseCapability.resolve)(result.v);
-  return promiseCapability.promise;
-} });
-
-},{"./_export":44,"./_new-promise-capability":66,"./_perform":79}],116:[function(require,module,exports){
-require('./_wks-define')('asyncIterator');
-
-},{"./_wks-define":100}],117:[function(require,module,exports){
-require('./_wks-define')('observable');
-
-},{"./_wks-define":100}],118:[function(require,module,exports){
-require('./es6.array.iterator');
-var global = require('./_global');
-var hide = require('./_hide');
-var Iterators = require('./_iterators');
-var TO_STRING_TAG = require('./_wks')('toStringTag');
-
-var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
-  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
-  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
-  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
-  'TextTrackList,TouchList').split(',');
-
-for (var i = 0; i < DOMIterables.length; i++) {
-  var NAME = DOMIterables[i];
-  var Collection = global[NAME];
-  var proto = Collection && Collection.prototype;
-  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
-
-},{"./_global":47,"./_hide":49,"./_iterators":62,"./_wks":102,"./es6.array.iterator":105}],119:[function(require,module,exports){
-var pSlice = Array.prototype.slice;
-var objectKeys = require('./lib/keys.js');
-var isArguments = require('./lib/is_arguments.js');
-
-var deepEqual = module.exports = function (actual, expected, opts) {
-  if (!opts) opts = {};
-  // 7.1. All identical values are equivalent, as determined by ===.
-  if (actual === expected) {
-    return true;
-
-  } else if (actual instanceof Date && expected instanceof Date) {
-    return actual.getTime() === expected.getTime();
-
-  // 7.3. Other pairs that do not both pass typeof value == 'object',
-  // equivalence is determined by ==.
-  } else if (!actual || !expected || typeof actual != 'object' && typeof expected != 'object') {
-    return opts.strict ? actual === expected : actual == expected;
-
-  // 7.4. For all other Object pairs, including Array objects, equivalence is
-  // determined by having the same number of owned properties (as verified
-  // with Object.prototype.hasOwnProperty.call), the same set of keys
-  // (although not necessarily the same order), equivalent values for every
-  // corresponding key, and an identical 'prototype' property. Note: this
-  // accounts for both named and indexed properties on Arrays.
-  } else {
-    return objEquiv(actual, expected, opts);
-  }
-}
-
-function isUndefinedOrNull(value) {
-  return value === null || value === undefined;
-}
-
-function isBuffer (x) {
-  if (!x || typeof x !== 'object' || typeof x.length !== 'number') return false;
-  if (typeof x.copy !== 'function' || typeof x.slice !== 'function') {
-    return false;
-  }
-  if (x.length > 0 && typeof x[0] !== 'number') return false;
-  return true;
-}
-
-function objEquiv(a, b, opts) {
-  var i, key;
-  if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
-    return false;
-  // an identical 'prototype' property.
-  if (a.prototype !== b.prototype) return false;
-  //~~~I've managed to break Object.keys through screwy arguments passing.
-  //   Converting to array solves the problem.
-  if (isArguments(a)) {
-    if (!isArguments(b)) {
-      return false;
-    }
-    a = pSlice.call(a);
-    b = pSlice.call(b);
-    return deepEqual(a, b, opts);
-  }
-  if (isBuffer(a)) {
-    if (!isBuffer(b)) {
-      return false;
-    }
-    if (a.length !== b.length) return false;
-    for (i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
-  }
-  try {
-    var ka = objectKeys(a),
-        kb = objectKeys(b);
-  } catch (e) {//happens when one is a string literal and the other isn't
-    return false;
-  }
-  // having the same number of owned properties (keys incorporates
-  // hasOwnProperty)
-  if (ka.length != kb.length)
-    return false;
-  //the same set of keys (although not necessarily the same order),
-  ka.sort();
-  kb.sort();
-  //~~~cheap key test
-  for (i = ka.length - 1; i >= 0; i--) {
-    if (ka[i] != kb[i])
-      return false;
-  }
-  //equivalent values for every corresponding key, and
-  //~~~possibly expensive deep test
-  for (i = ka.length - 1; i >= 0; i--) {
-    key = ka[i];
-    if (!deepEqual(a[key], b[key], opts)) return false;
-  }
-  return typeof a === typeof b;
-}
-
-},{"./lib/is_arguments.js":120,"./lib/keys.js":121}],120:[function(require,module,exports){
-var supportsArgumentsClass = (function(){
-  return Object.prototype.toString.call(arguments)
-})() == '[object Arguments]';
-
-exports = module.exports = supportsArgumentsClass ? supported : unsupported;
-
-exports.supported = supported;
-function supported(object) {
-  return Object.prototype.toString.call(object) == '[object Arguments]';
-};
-
-exports.unsupported = unsupported;
-function unsupported(object){
-  return object &&
-    typeof object == 'object' &&
-    typeof object.length == 'number' &&
-    Object.prototype.hasOwnProperty.call(object, 'callee') &&
-    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
-    false;
-};
-
-},{}],121:[function(require,module,exports){
-exports = module.exports = typeof Object.keys === 'function'
-  ? Object.keys : shim;
-
-exports.shim = shim;
-function shim (obj) {
-  var keys = [];
-  for (var key in obj) keys.push(key);
-  return keys;
-}
-
-},{}],122:[function(require,module,exports){
-module.exports = [
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "name",
-    "outputs": [
-      {
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_spender",
-        "type": "address"
-      },
-      {
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "approve",
-    "outputs": [
-      {
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferFrom",
-    "outputs": [
-      {
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "version",
-    "outputs": [
-      {
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "name": "balance",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
-      {
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "transfer",
-    "outputs": [
-      {
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_spender",
-        "type": "address"
-      },
-      {
-        "name": "_value",
-        "type": "uint256"
-      },
-      {
-        "name": "_extraData",
-        "type": "bytes"
-      }
-    ],
-    "name": "approveAndCall",
-    "outputs": [
-      {
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "name": "_spender",
-        "type": "address"
-      }
-    ],
-    "name": "allowance",
-    "outputs": [
-      {
-        "name": "remaining",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "name": "_initialAmount",
-        "type": "uint256"
-      },
-      {
-        "name": "_tokenName",
-        "type": "string"
-      },
-      {
-        "name": "_decimalUnits",
-        "type": "uint8"
-      },
-      {
-        "name": "_tokenSymbol",
-        "type": "string"
-      }
-    ],
-    "type": "constructor"
-  },
-  {
-    "payable": false,
-    "type": "fallback"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transfer",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_spender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "Approval",
-    "type": "event"
-  },
-]
-
-},{}],123:[function(require,module,exports){
-const EventEmitter = require('events');
-const calculateSum = (accumulator, currentValue) => accumulator + currentValue;
-const blockTrackerEvents = ['sync', 'latest'];
-const sec = 1000;
-
-class BaseBlockTracker extends EventEmitter {
-
-  // public
-  constructor(opts = {}) {
-    super();
-    // config
-    this._blockResetDuration = opts.blockResetDuration || 20 * sec;
-    // state
-    this._blockResetTimeout = null;
-    this._currentBlock = null;
-    this._isRunning = false;
-    // bind functions for internal use
-    this._onNewListener = this._onNewListener.bind(this);
-    this._onRemoveListener = this._onRemoveListener.bind(this);
-    this._resetCurrentBlock = this._resetCurrentBlock.bind(this);
-    // listen for handler changes
-    this._setupInternalEvents();
-  }
-
-  isRunning() {
-    return this._isRunning;
-  }
-
-  getCurrentBlock() {
-    return this._currentBlock;
-  }
-
-  async getLatestBlock() {
-    // return if available
-    if (this._currentBlock) return this._currentBlock;
-    // wait for a new latest block
-    const latestBlock = await new Promise(resolve => this.once('latest', resolve));
-    // return newly set current block
-    return latestBlock;
-  }
-
-  // dont allow module consumer to remove our internal event listeners
-  removeAllListeners(eventName) {
-    // perform default behavior, preserve fn arity
-    if (eventName) {
-      super.removeAllListeners(eventName);
-    } else {
-      super.removeAllListeners();
-    }
-    // re-add internal events
-    this._setupInternalEvents();
-    // trigger stop check just in case
-    this._onRemoveListener();
-  }
-
-  //
-  // to be implemented in subclass
-  //
-
-  _start() {
-    // default behavior is noop
-  }
-
-  _end() {
-    // default behavior is noop
-  }
-
-  //
-  // private
-  //
-
-  _setupInternalEvents() {
-    // first remove listeners for idempotence
-    this.removeListener('newListener', this._onNewListener);
-    this.removeListener('removeListener', this._onRemoveListener);
-    // then add them
-    this.on('newListener', this._onNewListener);
-    this.on('removeListener', this._onRemoveListener);
-  }
-
-  _onNewListener(eventName, handler) {
-    // `newListener` is called *before* the listener is added
-    if (!blockTrackerEvents.includes(eventName)) return;
-    this._maybeStart();
-  }
-
-  _onRemoveListener(eventName, handler) {
-    // `removeListener` is called *after* the listener is removed
-    if (this._getBlockTrackerEventCount() > 0) return;
-    this._maybeEnd();
-  }
-
-  _maybeStart() {
-    if (this._isRunning) return;
-    this._isRunning = true;
-    // cancel setting latest block to stale
-    this._cancelBlockResetTimeout();
-    this._start();
-  }
-
-  _maybeEnd() {
-    if (!this._isRunning) return;
-    this._isRunning = false;
-    this._setupBlockResetTimeout();
-    this._end();
-  }
-
-  _getBlockTrackerEventCount() {
-    return blockTrackerEvents
-        .map(eventName => this.listenerCount(eventName))
-        .reduce(calculateSum);
-  }
-
-  _newPotentialLatest(newBlock) {
-    const currentBlock = this._currentBlock;
-    // only update if blok number is higher
-    if (currentBlock && (hexToInt(newBlock) <= hexToInt(currentBlock))) return;
-    this._setCurrentBlock(newBlock);
-  }
-
-  _setCurrentBlock(newBlock) {
-    const oldBlock = this._currentBlock;
-    this._currentBlock = newBlock;
-    this.emit('latest', newBlock);
-    this.emit('sync', {oldBlock, newBlock});
-  }
-
-  _setupBlockResetTimeout() {
-    // clear any existing timeout
-    this._cancelBlockResetTimeout();
-    // clear latest block when stale
-    this._blockResetTimeout = setTimeout(this._resetCurrentBlock, this._blockResetDuration);
-    // nodejs - dont hold process open
-    if (this._blockResetTimeout.unref) {
-      this._blockResetTimeout.unref();
-    }
-  }
-
-  _cancelBlockResetTimeout() {
-    clearTimeout(this._blockResetTimeout);
-  }
-
-  _resetCurrentBlock() {
-    this._currentBlock = null;
-  }
-
-}
-
-module.exports = BaseBlockTracker;
-
-function hexToInt(hexInt) {
-  return Number.parseInt(hexInt, 16);
-}
-
-},{"events":206}],124:[function(require,module,exports){
-const IrcQuery = require('irc-query');
-const pify = require('pify');
-const BaseBlockTracker = require('./base');
-
-const sec = 1000;
-const min = 60 * sec;
-
-class PollingBlockTracker extends BaseBlockTracker {
-
-  constructor(opts = {}) {
-    // parse + validate args
-    if (!opts.provider) throw new Error('PollingBlockTracker - no provider specified.');
-    const pollingInterval = opts.pollingInterval || 20 * sec;
-    const keepEventLoopActive = opts.keepEventLoopActive !== undefined ? opts.keepEventLoopActive : true;
-    // BaseBlockTracker constructor
-    super(Object.assign({
-      blockResetDuration: pollingInterval,
-    }, opts));
-    // config
-    this._provider = opts.provider;
-    this._pollingInterval = pollingInterval;
-    this._keepEventLoopActive = keepEventLoopActive;
-    // util
-    this._query = new IrcQuery(this._provider);
-  }
-
-  //
-  // public
-  //
-
-  // trigger block polling
-  async checkForLatestBlock() {
-    await this._updateLatestBlock();
-    return await this.getLatestBlock();
-  }
-
-  //
-  // private
-  //
-
-  _start() {
-    this._performSync().catch(err => this.emit('error', err));
-  }
-
-  async _performSync() {
-    while (this._isRunning) {
-      try {
-        await this._updateLatestBlock();
-      } catch (err) {
-        this.emit('error', err);
-      }
-      await timeout(this._pollingInterval, !this._keepEventLoopActive);
-    }
-  }
-
-  async _updateLatestBlock() {
-    // fetch + set latest block
-    const latestBlock = await this._fetchLatestBlock();
-    this._newPotentialLatest(latestBlock);
-  }
-
-  async _fetchLatestBlock() {
-    return await pify(this._query.getBlockByNumber).call(this._query, 'latest', true);
-  }
-
-}
-
-module.exports = PollingBlockTracker;
-
-function timeout(duration, unref) {
-  return new Promise(resolve => {
-    const timoutRef = setTimeout(resolve, duration);
-    // don't keep process open
-    if (timoutRef.unref && unref) {
-      timoutRef.unref();
-    }
-  });
-}
-
-},{"./base":123,"irc-query":125,"pify":195}],125:[function(require,module,exports){
-const extend         = require('xtend');
-const createRandomId = require('json-rpc-random-id')();
-
-module.exports = IrcQuery;
-
-function IrcQuery(provider) {
-  const self           = this;
-  self.currentProvider = provider;
-}
-
-//
-// base queries
-//
-
-// default block
-IrcQuery.prototype.getBalance                          = generateFnWithDefaultBlockFor(2, 'irc_getBalance');
-IrcQuery.prototype.getCode                             = generateFnWithDefaultBlockFor(2, 'irc_getCode');
-IrcQuery.prototype.getTransactionCount                 = generateFnWithDefaultBlockFor(2, 'irc_getTransactionCount');
-IrcQuery.prototype.getStorageAt                        = generateFnWithDefaultBlockFor(3, 'irc_getStorageAt');
-IrcQuery.prototype.call                                = generateFnWithDefaultBlockFor(2, 'irc_call');
-// standard
-IrcQuery.prototype.protocolVersion                     = generateFnFor('irc_protocolVersion');
-IrcQuery.prototype.syncing                             = generateFnFor('irc_syncing');
-IrcQuery.prototype.coinbase                            = generateFnFor('irc_coinbase');
-IrcQuery.prototype.mining                              = generateFnFor('irc_mining');
-IrcQuery.prototype.hashrate                            = generateFnFor('irc_hashrate');
-IrcQuery.prototype.gasPrice                            = generateFnFor('irc_gasPrice');
-IrcQuery.prototype.accounts                            = generateFnFor('irc_accounts');
-IrcQuery.prototype.blockNumber                         = generateFnFor('irc_blockNumber');
-IrcQuery.prototype.getBlockTransactionCountByHash      = generateFnFor('irc_getBlockTransactionCountByHash');
-IrcQuery.prototype.getBlockTransactionCountByNumber    = generateFnFor('irc_getBlockTransactionCountByNumber');
-IrcQuery.prototype.getUncleCountByBlockHash            = generateFnFor('irc_getUncleCountByBlockHash');
-IrcQuery.prototype.getUncleCountByBlockNumber          = generateFnFor('irc_getUncleCountByBlockNumber');
-IrcQuery.prototype.sign                                = generateFnFor('irc_sign');
-IrcQuery.prototype.sendTransaction                     = generateFnFor('irc_sendTransaction');
-IrcQuery.prototype.sendRawTransaction                  = generateFnFor('irc_sendRawTransaction');
-IrcQuery.prototype.estimateGas                         = generateFnFor('irc_estimateGas');
-IrcQuery.prototype.getBlockByHash                      = generateFnFor('irc_getBlockByHash');
-IrcQuery.prototype.getBlockByNumber                    = generateFnFor('irc_getBlockByNumber');
-IrcQuery.prototype.getTransactionByHash                = generateFnFor('irc_getTransactionByHash');
-IrcQuery.prototype.getTransactionByBlockHashAndIndex   = generateFnFor('irc_getTransactionByBlockHashAndIndex');
-IrcQuery.prototype.getTransactionByBlockNumberAndIndex = generateFnFor('irc_getTransactionByBlockNumberAndIndex');
-IrcQuery.prototype.getTransactionReceipt               = generateFnFor('irc_getTransactionReceipt');
-IrcQuery.prototype.getUncleByBlockHashAndIndex         = generateFnFor('irc_getUncleByBlockHashAndIndex');
-IrcQuery.prototype.getUncleByBlockNumberAndIndex       = generateFnFor('irc_getUncleByBlockNumberAndIndex');
-IrcQuery.prototype.getCompilers                        = generateFnFor('irc_getCompilers');
-IrcQuery.prototype.compileLLL                          = generateFnFor('irc_compileLLL');
-IrcQuery.prototype.compileSolidity                     = generateFnFor('irc_compileSolidity');
-IrcQuery.prototype.compileSerpent                      = generateFnFor('irc_compileSerpent');
-IrcQuery.prototype.newFilter                           = generateFnFor('irc_newFilter');
-IrcQuery.prototype.newBlockFilter                      = generateFnFor('irc_newBlockFilter');
-IrcQuery.prototype.newPendingTransactionFilter         = generateFnFor('irc_newPendingTransactionFilter');
-IrcQuery.prototype.uninstallFilter                     = generateFnFor('irc_uninstallFilter');
-IrcQuery.prototype.getFilterChanges                    = generateFnFor('irc_getFilterChanges');
-IrcQuery.prototype.getFilterLogs                       = generateFnFor('irc_getFilterLogs');
-IrcQuery.prototype.getLogs                             = generateFnFor('irc_getLogs');
-IrcQuery.prototype.getWork                             = generateFnFor('irc_getWork');
-IrcQuery.prototype.submitWork                          = generateFnFor('irc_submitWork');
-IrcQuery.prototype.submitHashrate                      = generateFnFor('irc_submitHashrate');
-
-// network level
-
-IrcQuery.prototype.sendAsync = function(opts, cb) {
-  const self = this;
-  self.currentProvider.sendAsync(createPayload(opts), function(err, response) {
-    if (!err && response.error) err = new Error('IrcQuery - RPC Error - ' + response.error.message);
-    if (err) return cb(err);
-    cb(null, response.result);
-  });
-};
-
-// util
-
-function generateFnFor(methodName) {
-  return function() {
-    const self = this;
-    var args   = [].slice.call(arguments);
-    var cb     = args.pop();
-    self.sendAsync({
-      method: methodName,
-      params: args,
-    }, cb);
-  };
-}
-
-function generateFnWithDefaultBlockFor(argCount, methodName) {
-  return function() {
-    const self = this;
-    var args   = [].slice.call(arguments);
-    var cb     = args.pop();
-    // set optional default block param
-    if (args.length < argCount) args.push('latest');
-    self.sendAsync({
-      method: methodName,
-      params: args,
-    }, cb);
-  };
-}
-
-function createPayload(data) {
-  return extend({
-    // defaults
-    id: createRandomId(),
-    jsonrpc: '2.0',
-    params: [],
-    // user-specified
-  }, data);
-}
-
-},{"json-rpc-random-id":194,"xtend":198}],126:[function(require,module,exports){
+},{"regenerator-runtime":192}],21:[function(require,module,exports){
 (function (module, exports) {
   'use strict';
 
@@ -6775,7 +4124,7 @@ function createPayload(data) {
   };
 })(typeof module === 'undefined' || module, this);
 
-},{"buffer":204}],127:[function(require,module,exports){
+},{"buffer":204}],22:[function(require,module,exports){
 var r;
 
 module.exports = function rand(len) {
@@ -6842,7 +4191,2039 @@ if (typeof self === 'object') {
   }
 }
 
-},{"crypto":204}],128:[function(require,module,exports){
+},{"crypto":204}],23:[function(require,module,exports){
+require('../../modules/es6.string.iterator');
+require('../../modules/es6.array.from');
+module.exports = require('../../modules/_core').Array.from;
+
+},{"../../modules/_core":38,"../../modules/es6.array.from":106,"../../modules/es6.string.iterator":114}],24:[function(require,module,exports){
+require('../../modules/es6.object.create');
+var $Object = require('../../modules/_core').Object;
+module.exports = function create(P, D) {
+  return $Object.create(P, D);
+};
+
+},{"../../modules/_core":38,"../../modules/es6.object.create":108}],25:[function(require,module,exports){
+require('../../modules/es6.object.define-property');
+var $Object = require('../../modules/_core').Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
+
+},{"../../modules/_core":38,"../../modules/es6.object.define-property":109}],26:[function(require,module,exports){
+require('../../modules/es6.object.get-prototype-of');
+module.exports = require('../../modules/_core').Object.getPrototypeOf;
+
+},{"../../modules/_core":38,"../../modules/es6.object.get-prototype-of":110}],27:[function(require,module,exports){
+require('../../modules/es6.object.set-prototype-of');
+module.exports = require('../../modules/_core').Object.setPrototypeOf;
+
+},{"../../modules/_core":38,"../../modules/es6.object.set-prototype-of":111}],28:[function(require,module,exports){
+require('../modules/es6.object.to-string');
+require('../modules/es6.string.iterator');
+require('../modules/web.dom.iterable');
+require('../modules/es6.promise');
+require('../modules/es7.promise.finally');
+require('../modules/es7.promise.try');
+module.exports = require('../modules/_core').Promise;
+
+},{"../modules/_core":38,"../modules/es6.object.to-string":112,"../modules/es6.promise":113,"../modules/es6.string.iterator":114,"../modules/es7.promise.finally":116,"../modules/es7.promise.try":117,"../modules/web.dom.iterable":120}],29:[function(require,module,exports){
+require('../../modules/es6.symbol');
+require('../../modules/es6.object.to-string');
+require('../../modules/es7.symbol.async-iterator');
+require('../../modules/es7.symbol.observable');
+module.exports = require('../../modules/_core').Symbol;
+
+},{"../../modules/_core":38,"../../modules/es6.object.to-string":112,"../../modules/es6.symbol":115,"../../modules/es7.symbol.async-iterator":118,"../../modules/es7.symbol.observable":119}],30:[function(require,module,exports){
+require('../../modules/es6.string.iterator');
+require('../../modules/web.dom.iterable');
+module.exports = require('../../modules/_wks-ext').f('iterator');
+
+},{"../../modules/_wks-ext":103,"../../modules/es6.string.iterator":114,"../../modules/web.dom.iterable":120}],31:[function(require,module,exports){
+module.exports = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+
+},{}],32:[function(require,module,exports){
+module.exports = function () { /* empty */ };
+
+},{}],33:[function(require,module,exports){
+module.exports = function (it, Constructor, name, forbiddenField) {
+  if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
+    throw TypeError(name + ': incorrect invocation!');
+  } return it;
+};
+
+},{}],34:[function(require,module,exports){
+var isObject = require('./_is-object');
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+},{"./_is-object":58}],35:[function(require,module,exports){
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject = require('./_to-iobject');
+var toLength = require('./_to-length');
+var toAbsoluteIndex = require('./_to-absolute-index');
+module.exports = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+},{"./_to-absolute-index":94,"./_to-iobject":96,"./_to-length":97}],36:[function(require,module,exports){
+// getting tag from 19.1.3.6 Object.prototype.toString()
+var cof = require('./_cof');
+var TAG = require('./_wks')('toStringTag');
+// ES3 wrong here
+var ARG = cof(function () { return arguments; }()) == 'Arguments';
+
+// fallback for IE11 Script Access Denied error
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (e) { /* empty */ }
+};
+
+module.exports = function (it) {
+  var O, T, B;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    // @@toStringTag case
+    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+    // builtinTag case
+    : ARG ? cof(O)
+    // ES3 arguments fallback
+    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+};
+
+},{"./_cof":37,"./_wks":104}],37:[function(require,module,exports){
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+},{}],38:[function(require,module,exports){
+var core = module.exports = { version: '2.5.7' };
+if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+
+},{}],39:[function(require,module,exports){
+'use strict';
+var $defineProperty = require('./_object-dp');
+var createDesc = require('./_property-desc');
+
+module.exports = function (object, index, value) {
+  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
+  else object[index] = value;
+};
+
+},{"./_object-dp":70,"./_property-desc":83}],40:[function(require,module,exports){
+// optional / simple context binding
+var aFunction = require('./_a-function');
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+},{"./_a-function":31}],41:[function(require,module,exports){
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+},{}],42:[function(require,module,exports){
+// Thank's IE8 for his funny defineProperty
+module.exports = !require('./_fails')(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+},{"./_fails":47}],43:[function(require,module,exports){
+var isObject = require('./_is-object');
+var document = require('./_global').document;
+// typeof document.createElement is 'object' in old IE
+var is = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+  return is ? document.createElement(it) : {};
+};
+
+},{"./_global":49,"./_is-object":58}],44:[function(require,module,exports){
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+},{}],45:[function(require,module,exports){
+// all enumerable object keys, includes symbols
+var getKeys = require('./_object-keys');
+var gOPS = require('./_object-gops');
+var pIE = require('./_object-pie');
+module.exports = function (it) {
+  var result = getKeys(it);
+  var getSymbols = gOPS.f;
+  if (getSymbols) {
+    var symbols = getSymbols(it);
+    var isEnum = pIE.f;
+    var i = 0;
+    var key;
+    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
+  } return result;
+};
+
+},{"./_object-gops":75,"./_object-keys":78,"./_object-pie":79}],46:[function(require,module,exports){
+var global = require('./_global');
+var core = require('./_core');
+var ctx = require('./_ctx');
+var hide = require('./_hide');
+var has = require('./_has');
+var PROTOTYPE = 'prototype';
+
+var $export = function (type, name, source) {
+  var IS_FORCED = type & $export.F;
+  var IS_GLOBAL = type & $export.G;
+  var IS_STATIC = type & $export.S;
+  var IS_PROTO = type & $export.P;
+  var IS_BIND = type & $export.B;
+  var IS_WRAP = type & $export.W;
+  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+  var expProto = exports[PROTOTYPE];
+  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
+  var key, own, out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && has(exports, key)) continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function (C) {
+      var F = function (a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0: return new C();
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export.F = 1;   // forced
+$export.G = 2;   // global
+$export.S = 4;   // static
+$export.P = 8;   // proto
+$export.B = 16;  // bind
+$export.W = 32;  // wrap
+$export.U = 64;  // safe
+$export.R = 128; // real proto method for `library`
+module.exports = $export;
+
+},{"./_core":38,"./_ctx":40,"./_global":49,"./_has":50,"./_hide":51}],47:[function(require,module,exports){
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+},{}],48:[function(require,module,exports){
+var ctx = require('./_ctx');
+var call = require('./_iter-call');
+var isArrayIter = require('./_is-array-iter');
+var anObject = require('./_an-object');
+var toLength = require('./_to-length');
+var getIterFn = require('./core.get-iterator-method');
+var BREAK = {};
+var RETURN = {};
+var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
+  var iterFn = ITERATOR ? function () { return iterable; } : getIterFn(iterable);
+  var f = ctx(fn, that, entries ? 2 : 1);
+  var index = 0;
+  var length, step, iterator, result;
+  if (typeof iterFn != 'function') throw TypeError(iterable + ' is not iterable!');
+  // fast case for arrays with default iterator
+  if (isArrayIter(iterFn)) for (length = toLength(iterable.length); length > index; index++) {
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if (result === BREAK || result === RETURN) return result;
+  } else for (iterator = iterFn.call(iterable); !(step = iterator.next()).done;) {
+    result = call(iterator, f, step.value, entries);
+    if (result === BREAK || result === RETURN) return result;
+  }
+};
+exports.BREAK = BREAK;
+exports.RETURN = RETURN;
+
+},{"./_an-object":34,"./_ctx":40,"./_is-array-iter":56,"./_iter-call":59,"./_to-length":97,"./core.get-iterator-method":105}],49:[function(require,module,exports){
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+},{}],50:[function(require,module,exports){
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+},{}],51:[function(require,module,exports){
+var dP = require('./_object-dp');
+var createDesc = require('./_property-desc');
+module.exports = require('./_descriptors') ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+},{"./_descriptors":42,"./_object-dp":70,"./_property-desc":83}],52:[function(require,module,exports){
+var document = require('./_global').document;
+module.exports = document && document.documentElement;
+
+},{"./_global":49}],53:[function(require,module,exports){
+module.exports = !require('./_descriptors') && !require('./_fails')(function () {
+  return Object.defineProperty(require('./_dom-create')('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+
+},{"./_descriptors":42,"./_dom-create":43,"./_fails":47}],54:[function(require,module,exports){
+// fast apply, http://jsperf.lnkit.com/fast-apply/5
+module.exports = function (fn, args, that) {
+  var un = that === undefined;
+  switch (args.length) {
+    case 0: return un ? fn()
+                      : fn.call(that);
+    case 1: return un ? fn(args[0])
+                      : fn.call(that, args[0]);
+    case 2: return un ? fn(args[0], args[1])
+                      : fn.call(that, args[0], args[1]);
+    case 3: return un ? fn(args[0], args[1], args[2])
+                      : fn.call(that, args[0], args[1], args[2]);
+    case 4: return un ? fn(args[0], args[1], args[2], args[3])
+                      : fn.call(that, args[0], args[1], args[2], args[3]);
+  } return fn.apply(that, args);
+};
+
+},{}],55:[function(require,module,exports){
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+var cof = require('./_cof');
+// eslint-disable-next-line no-prototype-builtins
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+
+},{"./_cof":37}],56:[function(require,module,exports){
+// check on default Array iterator
+var Iterators = require('./_iterators');
+var ITERATOR = require('./_wks')('iterator');
+var ArrayProto = Array.prototype;
+
+module.exports = function (it) {
+  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
+};
+
+},{"./_iterators":64,"./_wks":104}],57:[function(require,module,exports){
+// 7.2.2 IsArray(argument)
+var cof = require('./_cof');
+module.exports = Array.isArray || function isArray(arg) {
+  return cof(arg) == 'Array';
+};
+
+},{"./_cof":37}],58:[function(require,module,exports){
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+},{}],59:[function(require,module,exports){
+// call something on iterator step with safe closing on error
+var anObject = require('./_an-object');
+module.exports = function (iterator, fn, value, entries) {
+  try {
+    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
+  // 7.4.6 IteratorClose(iterator, completion)
+  } catch (e) {
+    var ret = iterator['return'];
+    if (ret !== undefined) anObject(ret.call(iterator));
+    throw e;
+  }
+};
+
+},{"./_an-object":34}],60:[function(require,module,exports){
+'use strict';
+var create = require('./_object-create');
+var descriptor = require('./_property-desc');
+var setToStringTag = require('./_set-to-string-tag');
+var IteratorPrototype = {};
+
+// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+require('./_hide')(IteratorPrototype, require('./_wks')('iterator'), function () { return this; });
+
+module.exports = function (Constructor, NAME, next) {
+  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
+  setToStringTag(Constructor, NAME + ' Iterator');
+};
+
+},{"./_hide":51,"./_object-create":69,"./_property-desc":83,"./_set-to-string-tag":88,"./_wks":104}],61:[function(require,module,exports){
+'use strict';
+var LIBRARY = require('./_library');
+var $export = require('./_export');
+var redefine = require('./_redefine');
+var hide = require('./_hide');
+var Iterators = require('./_iterators');
+var $iterCreate = require('./_iter-create');
+var setToStringTag = require('./_set-to-string-tag');
+var getPrototypeOf = require('./_object-gpo');
+var ITERATOR = require('./_wks')('iterator');
+var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
+var FF_ITERATOR = '@@iterator';
+var KEYS = 'keys';
+var VALUES = 'values';
+
+var returnThis = function () { return this; };
+
+module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+  $iterCreate(Constructor, NAME, next);
+  var getMethod = function (kind) {
+    if (!BUGGY && kind in proto) return proto[kind];
+    switch (kind) {
+      case KEYS: return function keys() { return new Constructor(this, kind); };
+      case VALUES: return function values() { return new Constructor(this, kind); };
+    } return function entries() { return new Constructor(this, kind); };
+  };
+  var TAG = NAME + ' Iterator';
+  var DEF_VALUES = DEFAULT == VALUES;
+  var VALUES_BUG = false;
+  var proto = Base.prototype;
+  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
+  var $default = $native || getMethod(DEFAULT);
+  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
+  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
+  var methods, key, IteratorPrototype;
+  // Fix native
+  if ($anyNative) {
+    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
+    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
+      // Set @@toStringTag to native iterators
+      setToStringTag(IteratorPrototype, TAG, true);
+      // fix for some old engines
+      if (!LIBRARY && typeof IteratorPrototype[ITERATOR] != 'function') hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  }
+  // fix Array#{values, @@iterator}.name in V8 / FF
+  if (DEF_VALUES && $native && $native.name !== VALUES) {
+    VALUES_BUG = true;
+    $default = function values() { return $native.call(this); };
+  }
+  // Define iterator
+  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
+    hide(proto, ITERATOR, $default);
+  }
+  // Plug for library
+  Iterators[NAME] = $default;
+  Iterators[TAG] = returnThis;
+  if (DEFAULT) {
+    methods = {
+      values: DEF_VALUES ? $default : getMethod(VALUES),
+      keys: IS_SET ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if (FORCED) for (key in methods) {
+      if (!(key in proto)) redefine(proto, key, methods[key]);
+    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+  return methods;
+};
+
+},{"./_export":46,"./_hide":51,"./_iter-create":60,"./_iterators":64,"./_library":65,"./_object-gpo":76,"./_redefine":85,"./_set-to-string-tag":88,"./_wks":104}],62:[function(require,module,exports){
+var ITERATOR = require('./_wks')('iterator');
+var SAFE_CLOSING = false;
+
+try {
+  var riter = [7][ITERATOR]();
+  riter['return'] = function () { SAFE_CLOSING = true; };
+  // eslint-disable-next-line no-throw-literal
+  Array.from(riter, function () { throw 2; });
+} catch (e) { /* empty */ }
+
+module.exports = function (exec, skipClosing) {
+  if (!skipClosing && !SAFE_CLOSING) return false;
+  var safe = false;
+  try {
+    var arr = [7];
+    var iter = arr[ITERATOR]();
+    iter.next = function () { return { done: safe = true }; };
+    arr[ITERATOR] = function () { return iter; };
+    exec(arr);
+  } catch (e) { /* empty */ }
+  return safe;
+};
+
+},{"./_wks":104}],63:[function(require,module,exports){
+module.exports = function (done, value) {
+  return { value: value, done: !!done };
+};
+
+},{}],64:[function(require,module,exports){
+module.exports = {};
+
+},{}],65:[function(require,module,exports){
+module.exports = true;
+
+},{}],66:[function(require,module,exports){
+var META = require('./_uid')('meta');
+var isObject = require('./_is-object');
+var has = require('./_has');
+var setDesc = require('./_object-dp').f;
+var id = 0;
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+var FREEZE = !require('./_fails')(function () {
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function (it) {
+  setDesc(it, META, { value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  } });
+};
+var fastKey = function (it, create) {
+  // return primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function (it, create) {
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY: META,
+  NEED: false,
+  fastKey: fastKey,
+  getWeak: getWeak,
+  onFreeze: onFreeze
+};
+
+},{"./_fails":47,"./_has":50,"./_is-object":58,"./_object-dp":70,"./_uid":100}],67:[function(require,module,exports){
+var global = require('./_global');
+var macrotask = require('./_task').set;
+var Observer = global.MutationObserver || global.WebKitMutationObserver;
+var process = global.process;
+var Promise = global.Promise;
+var isNode = require('./_cof')(process) == 'process';
+
+module.exports = function () {
+  var head, last, notify;
+
+  var flush = function () {
+    var parent, fn;
+    if (isNode && (parent = process.domain)) parent.exit();
+    while (head) {
+      fn = head.fn;
+      head = head.next;
+      try {
+        fn();
+      } catch (e) {
+        if (head) notify();
+        else last = undefined;
+        throw e;
+      }
+    } last = undefined;
+    if (parent) parent.enter();
+  };
+
+  // Node.js
+  if (isNode) {
+    notify = function () {
+      process.nextTick(flush);
+    };
+  // browsers with MutationObserver, except iOS Safari - https://github.com/zloirock/core-js/issues/339
+  } else if (Observer && !(global.navigator && global.navigator.standalone)) {
+    var toggle = true;
+    var node = document.createTextNode('');
+    new Observer(flush).observe(node, { characterData: true }); // eslint-disable-line no-new
+    notify = function () {
+      node.data = toggle = !toggle;
+    };
+  // environments with maybe non-completely correct, but existent Promise
+  } else if (Promise && Promise.resolve) {
+    // Promise.resolve without an argument throws an error in LG WebOS 2
+    var promise = Promise.resolve(undefined);
+    notify = function () {
+      promise.then(flush);
+    };
+  // for other environments - macrotask based on:
+  // - setImmediate
+  // - MessageChannel
+  // - window.postMessag
+  // - onreadystatechange
+  // - setTimeout
+  } else {
+    notify = function () {
+      // strange IE + webpack dev server bug - use .call(global)
+      macrotask.call(global, flush);
+    };
+  }
+
+  return function (fn) {
+    var task = { fn: fn, next: undefined };
+    if (last) last.next = task;
+    if (!head) {
+      head = task;
+      notify();
+    } last = task;
+  };
+};
+
+},{"./_cof":37,"./_global":49,"./_task":93}],68:[function(require,module,exports){
+'use strict';
+// 25.4.1.5 NewPromiseCapability(C)
+var aFunction = require('./_a-function');
+
+function PromiseCapability(C) {
+  var resolve, reject;
+  this.promise = new C(function ($$resolve, $$reject) {
+    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
+    resolve = $$resolve;
+    reject = $$reject;
+  });
+  this.resolve = aFunction(resolve);
+  this.reject = aFunction(reject);
+}
+
+module.exports.f = function (C) {
+  return new PromiseCapability(C);
+};
+
+},{"./_a-function":31}],69:[function(require,module,exports){
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject = require('./_an-object');
+var dPs = require('./_object-dps');
+var enumBugKeys = require('./_enum-bug-keys');
+var IE_PROTO = require('./_shared-key')('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = require('./_dom-create')('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  require('./_html').appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+},{"./_an-object":34,"./_dom-create":43,"./_enum-bug-keys":44,"./_html":52,"./_object-dps":71,"./_shared-key":89}],70:[function(require,module,exports){
+var anObject = require('./_an-object');
+var IE8_DOM_DEFINE = require('./_ie8-dom-define');
+var toPrimitive = require('./_to-primitive');
+var dP = Object.defineProperty;
+
+exports.f = require('./_descriptors') ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+},{"./_an-object":34,"./_descriptors":42,"./_ie8-dom-define":53,"./_to-primitive":99}],71:[function(require,module,exports){
+var dP = require('./_object-dp');
+var anObject = require('./_an-object');
+var getKeys = require('./_object-keys');
+
+module.exports = require('./_descriptors') ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var keys = getKeys(Properties);
+  var length = keys.length;
+  var i = 0;
+  var P;
+  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
+  return O;
+};
+
+},{"./_an-object":34,"./_descriptors":42,"./_object-dp":70,"./_object-keys":78}],72:[function(require,module,exports){
+var pIE = require('./_object-pie');
+var createDesc = require('./_property-desc');
+var toIObject = require('./_to-iobject');
+var toPrimitive = require('./_to-primitive');
+var has = require('./_has');
+var IE8_DOM_DEFINE = require('./_ie8-dom-define');
+var gOPD = Object.getOwnPropertyDescriptor;
+
+exports.f = require('./_descriptors') ? gOPD : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return gOPD(O, P);
+  } catch (e) { /* empty */ }
+  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
+};
+
+},{"./_descriptors":42,"./_has":50,"./_ie8-dom-define":53,"./_object-pie":79,"./_property-desc":83,"./_to-iobject":96,"./_to-primitive":99}],73:[function(require,module,exports){
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+var toIObject = require('./_to-iobject');
+var gOPN = require('./_object-gopn').f;
+var toString = {}.toString;
+
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function (it) {
+  try {
+    return gOPN(it);
+  } catch (e) {
+    return windowNames.slice();
+  }
+};
+
+module.exports.f = function getOwnPropertyNames(it) {
+  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
+};
+
+},{"./_object-gopn":74,"./_to-iobject":96}],74:[function(require,module,exports){
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys = require('./_object-keys-internal');
+var hiddenKeys = require('./_enum-bug-keys').concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
+
+},{"./_enum-bug-keys":44,"./_object-keys-internal":77}],75:[function(require,module,exports){
+exports.f = Object.getOwnPropertySymbols;
+
+},{}],76:[function(require,module,exports){
+// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+var has = require('./_has');
+var toObject = require('./_to-object');
+var IE_PROTO = require('./_shared-key')('IE_PROTO');
+var ObjectProto = Object.prototype;
+
+module.exports = Object.getPrototypeOf || function (O) {
+  O = toObject(O);
+  if (has(O, IE_PROTO)) return O[IE_PROTO];
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
+};
+
+},{"./_has":50,"./_shared-key":89,"./_to-object":98}],77:[function(require,module,exports){
+var has = require('./_has');
+var toIObject = require('./_to-iobject');
+var arrayIndexOf = require('./_array-includes')(false);
+var IE_PROTO = require('./_shared-key')('IE_PROTO');
+
+module.exports = function (object, names) {
+  var O = toIObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while (names.length > i) if (has(O, key = names[i++])) {
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+
+},{"./_array-includes":35,"./_has":50,"./_shared-key":89,"./_to-iobject":96}],78:[function(require,module,exports){
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = require('./_object-keys-internal');
+var enumBugKeys = require('./_enum-bug-keys');
+
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+
+},{"./_enum-bug-keys":44,"./_object-keys-internal":77}],79:[function(require,module,exports){
+exports.f = {}.propertyIsEnumerable;
+
+},{}],80:[function(require,module,exports){
+// most Object methods by ES6 should accept primitives
+var $export = require('./_export');
+var core = require('./_core');
+var fails = require('./_fails');
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
+};
+
+},{"./_core":38,"./_export":46,"./_fails":47}],81:[function(require,module,exports){
+module.exports = function (exec) {
+  try {
+    return { e: false, v: exec() };
+  } catch (e) {
+    return { e: true, v: e };
+  }
+};
+
+},{}],82:[function(require,module,exports){
+var anObject = require('./_an-object');
+var isObject = require('./_is-object');
+var newPromiseCapability = require('./_new-promise-capability');
+
+module.exports = function (C, x) {
+  anObject(C);
+  if (isObject(x) && x.constructor === C) return x;
+  var promiseCapability = newPromiseCapability.f(C);
+  var resolve = promiseCapability.resolve;
+  resolve(x);
+  return promiseCapability.promise;
+};
+
+},{"./_an-object":34,"./_is-object":58,"./_new-promise-capability":68}],83:[function(require,module,exports){
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+},{}],84:[function(require,module,exports){
+var hide = require('./_hide');
+module.exports = function (target, src, safe) {
+  for (var key in src) {
+    if (safe && target[key]) target[key] = src[key];
+    else hide(target, key, src[key]);
+  } return target;
+};
+
+},{"./_hide":51}],85:[function(require,module,exports){
+module.exports = require('./_hide');
+
+},{"./_hide":51}],86:[function(require,module,exports){
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+var isObject = require('./_is-object');
+var anObject = require('./_an-object');
+var check = function (O, proto) {
+  anObject(O);
+  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function (test, buggy, set) {
+      try {
+        set = require('./_ctx')(Function.call, require('./_object-gopd').f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) { buggy = true; }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy) O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+
+},{"./_an-object":34,"./_ctx":40,"./_is-object":58,"./_object-gopd":72}],87:[function(require,module,exports){
+'use strict';
+var global = require('./_global');
+var core = require('./_core');
+var dP = require('./_object-dp');
+var DESCRIPTORS = require('./_descriptors');
+var SPECIES = require('./_wks')('species');
+
+module.exports = function (KEY) {
+  var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
+  if (DESCRIPTORS && C && !C[SPECIES]) dP.f(C, SPECIES, {
+    configurable: true,
+    get: function () { return this; }
+  });
+};
+
+},{"./_core":38,"./_descriptors":42,"./_global":49,"./_object-dp":70,"./_wks":104}],88:[function(require,module,exports){
+var def = require('./_object-dp').f;
+var has = require('./_has');
+var TAG = require('./_wks')('toStringTag');
+
+module.exports = function (it, tag, stat) {
+  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
+};
+
+},{"./_has":50,"./_object-dp":70,"./_wks":104}],89:[function(require,module,exports){
+var shared = require('./_shared')('keys');
+var uid = require('./_uid');
+module.exports = function (key) {
+  return shared[key] || (shared[key] = uid(key));
+};
+
+},{"./_shared":90,"./_uid":100}],90:[function(require,module,exports){
+var core = require('./_core');
+var global = require('./_global');
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || (global[SHARED] = {});
+
+(module.exports = function (key, value) {
+  return store[key] || (store[key] = value !== undefined ? value : {});
+})('versions', []).push({
+  version: core.version,
+  mode: require('./_library') ? 'pure' : 'global',
+  copyright: '© 2018 Denis Pushkarev (zloirock.ru)'
+});
+
+},{"./_core":38,"./_global":49,"./_library":65}],91:[function(require,module,exports){
+// 7.3.20 SpeciesConstructor(O, defaultConstructor)
+var anObject = require('./_an-object');
+var aFunction = require('./_a-function');
+var SPECIES = require('./_wks')('species');
+module.exports = function (O, D) {
+  var C = anObject(O).constructor;
+  var S;
+  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+};
+
+},{"./_a-function":31,"./_an-object":34,"./_wks":104}],92:[function(require,module,exports){
+var toInteger = require('./_to-integer');
+var defined = require('./_defined');
+// true  -> String#at
+// false -> String#codePointAt
+module.exports = function (TO_STRING) {
+  return function (that, pos) {
+    var s = String(defined(that));
+    var i = toInteger(pos);
+    var l = s.length;
+    var a, b;
+    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
+    a = s.charCodeAt(i);
+    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+      ? TO_STRING ? s.charAt(i) : a
+      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+  };
+};
+
+},{"./_defined":41,"./_to-integer":95}],93:[function(require,module,exports){
+var ctx = require('./_ctx');
+var invoke = require('./_invoke');
+var html = require('./_html');
+var cel = require('./_dom-create');
+var global = require('./_global');
+var process = global.process;
+var setTask = global.setImmediate;
+var clearTask = global.clearImmediate;
+var MessageChannel = global.MessageChannel;
+var Dispatch = global.Dispatch;
+var counter = 0;
+var queue = {};
+var ONREADYSTATECHANGE = 'onreadystatechange';
+var defer, channel, port;
+var run = function () {
+  var id = +this;
+  // eslint-disable-next-line no-prototype-builtins
+  if (queue.hasOwnProperty(id)) {
+    var fn = queue[id];
+    delete queue[id];
+    fn();
+  }
+};
+var listener = function (event) {
+  run.call(event.data);
+};
+// Node.js 0.9+ & IE10+ has setImmediate, otherwise:
+if (!setTask || !clearTask) {
+  setTask = function setImmediate(fn) {
+    var args = [];
+    var i = 1;
+    while (arguments.length > i) args.push(arguments[i++]);
+    queue[++counter] = function () {
+      // eslint-disable-next-line no-new-func
+      invoke(typeof fn == 'function' ? fn : Function(fn), args);
+    };
+    defer(counter);
+    return counter;
+  };
+  clearTask = function clearImmediate(id) {
+    delete queue[id];
+  };
+  // Node.js 0.8-
+  if (require('./_cof')(process) == 'process') {
+    defer = function (id) {
+      process.nextTick(ctx(run, id, 1));
+    };
+  // Sphere (JS game engine) Dispatch API
+  } else if (Dispatch && Dispatch.now) {
+    defer = function (id) {
+      Dispatch.now(ctx(run, id, 1));
+    };
+  // Browsers with MessageChannel, includes WebWorkers
+  } else if (MessageChannel) {
+    channel = new MessageChannel();
+    port = channel.port2;
+    channel.port1.onmessage = listener;
+    defer = ctx(port.postMessage, port, 1);
+  // Browsers with postMessage, skip WebWorkers
+  // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
+  } else if (global.addEventListener && typeof postMessage == 'function' && !global.importScripts) {
+    defer = function (id) {
+      global.postMessage(id + '', '*');
+    };
+    global.addEventListener('message', listener, false);
+  // IE8-
+  } else if (ONREADYSTATECHANGE in cel('script')) {
+    defer = function (id) {
+      html.appendChild(cel('script'))[ONREADYSTATECHANGE] = function () {
+        html.removeChild(this);
+        run.call(id);
+      };
+    };
+  // Rest old browsers
+  } else {
+    defer = function (id) {
+      setTimeout(ctx(run, id, 1), 0);
+    };
+  }
+}
+module.exports = {
+  set: setTask,
+  clear: clearTask
+};
+
+},{"./_cof":37,"./_ctx":40,"./_dom-create":43,"./_global":49,"./_html":52,"./_invoke":54}],94:[function(require,module,exports){
+var toInteger = require('./_to-integer');
+var max = Math.max;
+var min = Math.min;
+module.exports = function (index, length) {
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+
+},{"./_to-integer":95}],95:[function(require,module,exports){
+// 7.1.4 ToInteger
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+
+},{}],96:[function(require,module,exports){
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = require('./_iobject');
+var defined = require('./_defined');
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+
+},{"./_defined":41,"./_iobject":55}],97:[function(require,module,exports){
+// 7.1.15 ToLength
+var toInteger = require('./_to-integer');
+var min = Math.min;
+module.exports = function (it) {
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+},{"./_to-integer":95}],98:[function(require,module,exports){
+// 7.1.13 ToObject(argument)
+var defined = require('./_defined');
+module.exports = function (it) {
+  return Object(defined(it));
+};
+
+},{"./_defined":41}],99:[function(require,module,exports){
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = require('./_is-object');
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+},{"./_is-object":58}],100:[function(require,module,exports){
+var id = 0;
+var px = Math.random();
+module.exports = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+},{}],101:[function(require,module,exports){
+var global = require('./_global');
+var navigator = global.navigator;
+
+module.exports = navigator && navigator.userAgent || '';
+
+},{"./_global":49}],102:[function(require,module,exports){
+var global = require('./_global');
+var core = require('./_core');
+var LIBRARY = require('./_library');
+var wksExt = require('./_wks-ext');
+var defineProperty = require('./_object-dp').f;
+module.exports = function (name) {
+  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
+};
+
+},{"./_core":38,"./_global":49,"./_library":65,"./_object-dp":70,"./_wks-ext":103}],103:[function(require,module,exports){
+exports.f = require('./_wks');
+
+},{"./_wks":104}],104:[function(require,module,exports){
+var store = require('./_shared')('wks');
+var uid = require('./_uid');
+var Symbol = require('./_global').Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+},{"./_global":49,"./_shared":90,"./_uid":100}],105:[function(require,module,exports){
+var classof = require('./_classof');
+var ITERATOR = require('./_wks')('iterator');
+var Iterators = require('./_iterators');
+module.exports = require('./_core').getIteratorMethod = function (it) {
+  if (it != undefined) return it[ITERATOR]
+    || it['@@iterator']
+    || Iterators[classof(it)];
+};
+
+},{"./_classof":36,"./_core":38,"./_iterators":64,"./_wks":104}],106:[function(require,module,exports){
+'use strict';
+var ctx = require('./_ctx');
+var $export = require('./_export');
+var toObject = require('./_to-object');
+var call = require('./_iter-call');
+var isArrayIter = require('./_is-array-iter');
+var toLength = require('./_to-length');
+var createProperty = require('./_create-property');
+var getIterFn = require('./core.get-iterator-method');
+
+$export($export.S + $export.F * !require('./_iter-detect')(function (iter) { Array.from(iter); }), 'Array', {
+  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
+  from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
+    var O = toObject(arrayLike);
+    var C = typeof this == 'function' ? this : Array;
+    var aLen = arguments.length;
+    var mapfn = aLen > 1 ? arguments[1] : undefined;
+    var mapping = mapfn !== undefined;
+    var index = 0;
+    var iterFn = getIterFn(O);
+    var length, result, step, iterator;
+    if (mapping) mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
+    // if object isn't iterable or it's array with default iterator - use simple case
+    if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
+      for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
+        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
+      }
+    } else {
+      length = toLength(O.length);
+      for (result = new C(length); length > index; index++) {
+        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
+      }
+    }
+    result.length = index;
+    return result;
+  }
+});
+
+},{"./_create-property":39,"./_ctx":40,"./_export":46,"./_is-array-iter":56,"./_iter-call":59,"./_iter-detect":62,"./_to-length":97,"./_to-object":98,"./core.get-iterator-method":105}],107:[function(require,module,exports){
+'use strict';
+var addToUnscopables = require('./_add-to-unscopables');
+var step = require('./_iter-step');
+var Iterators = require('./_iterators');
+var toIObject = require('./_to-iobject');
+
+// 22.1.3.4 Array.prototype.entries()
+// 22.1.3.13 Array.prototype.keys()
+// 22.1.3.29 Array.prototype.values()
+// 22.1.3.30 Array.prototype[@@iterator]()
+module.exports = require('./_iter-define')(Array, 'Array', function (iterated, kind) {
+  this._t = toIObject(iterated); // target
+  this._i = 0;                   // next index
+  this._k = kind;                // kind
+// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var kind = this._k;
+  var index = this._i++;
+  if (!O || index >= O.length) {
+    this._t = undefined;
+    return step(1);
+  }
+  if (kind == 'keys') return step(0, index);
+  if (kind == 'values') return step(0, O[index]);
+  return step(0, [index, O[index]]);
+}, 'values');
+
+// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+Iterators.Arguments = Iterators.Array;
+
+addToUnscopables('keys');
+addToUnscopables('values');
+addToUnscopables('entries');
+
+},{"./_add-to-unscopables":32,"./_iter-define":61,"./_iter-step":63,"./_iterators":64,"./_to-iobject":96}],108:[function(require,module,exports){
+var $export = require('./_export');
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+$export($export.S, 'Object', { create: require('./_object-create') });
+
+},{"./_export":46,"./_object-create":69}],109:[function(require,module,exports){
+var $export = require('./_export');
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !require('./_descriptors'), 'Object', { defineProperty: require('./_object-dp').f });
+
+},{"./_descriptors":42,"./_export":46,"./_object-dp":70}],110:[function(require,module,exports){
+// 19.1.2.9 Object.getPrototypeOf(O)
+var toObject = require('./_to-object');
+var $getPrototypeOf = require('./_object-gpo');
+
+require('./_object-sap')('getPrototypeOf', function () {
+  return function getPrototypeOf(it) {
+    return $getPrototypeOf(toObject(it));
+  };
+});
+
+},{"./_object-gpo":76,"./_object-sap":80,"./_to-object":98}],111:[function(require,module,exports){
+// 19.1.3.19 Object.setPrototypeOf(O, proto)
+var $export = require('./_export');
+$export($export.S, 'Object', { setPrototypeOf: require('./_set-proto').set });
+
+},{"./_export":46,"./_set-proto":86}],112:[function(require,module,exports){
+
+},{}],113:[function(require,module,exports){
+'use strict';
+var LIBRARY = require('./_library');
+var global = require('./_global');
+var ctx = require('./_ctx');
+var classof = require('./_classof');
+var $export = require('./_export');
+var isObject = require('./_is-object');
+var aFunction = require('./_a-function');
+var anInstance = require('./_an-instance');
+var forOf = require('./_for-of');
+var speciesConstructor = require('./_species-constructor');
+var task = require('./_task').set;
+var microtask = require('./_microtask')();
+var newPromiseCapabilityModule = require('./_new-promise-capability');
+var perform = require('./_perform');
+var userAgent = require('./_user-agent');
+var promiseResolve = require('./_promise-resolve');
+var PROMISE = 'Promise';
+var TypeError = global.TypeError;
+var process = global.process;
+var versions = process && process.versions;
+var v8 = versions && versions.v8 || '';
+var $Promise = global[PROMISE];
+var isNode = classof(process) == 'process';
+var empty = function () { /* empty */ };
+var Internal, newGenericPromiseCapability, OwnPromiseCapability, Wrapper;
+var newPromiseCapability = newGenericPromiseCapability = newPromiseCapabilityModule.f;
+
+var USE_NATIVE = !!function () {
+  try {
+    // correct subclassing with @@species support
+    var promise = $Promise.resolve(1);
+    var FakePromise = (promise.constructor = {})[require('./_wks')('species')] = function (exec) {
+      exec(empty, empty);
+    };
+    // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+    return (isNode || typeof PromiseRejectionEvent == 'function')
+      && promise.then(empty) instanceof FakePromise
+      // v8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
+      // we can't detect it synchronously, so just check versions
+      && v8.indexOf('6.6') !== 0
+      && userAgent.indexOf('Chrome/66') === -1;
+  } catch (e) { /* empty */ }
+}();
+
+// helpers
+var isThenable = function (it) {
+  var then;
+  return isObject(it) && typeof (then = it.then) == 'function' ? then : false;
+};
+var notify = function (promise, isReject) {
+  if (promise._n) return;
+  promise._n = true;
+  var chain = promise._c;
+  microtask(function () {
+    var value = promise._v;
+    var ok = promise._s == 1;
+    var i = 0;
+    var run = function (reaction) {
+      var handler = ok ? reaction.ok : reaction.fail;
+      var resolve = reaction.resolve;
+      var reject = reaction.reject;
+      var domain = reaction.domain;
+      var result, then, exited;
+      try {
+        if (handler) {
+          if (!ok) {
+            if (promise._h == 2) onHandleUnhandled(promise);
+            promise._h = 1;
+          }
+          if (handler === true) result = value;
+          else {
+            if (domain) domain.enter();
+            result = handler(value); // may throw
+            if (domain) {
+              domain.exit();
+              exited = true;
+            }
+          }
+          if (result === reaction.promise) {
+            reject(TypeError('Promise-chain cycle'));
+          } else if (then = isThenable(result)) {
+            then.call(result, resolve, reject);
+          } else resolve(result);
+        } else reject(value);
+      } catch (e) {
+        if (domain && !exited) domain.exit();
+        reject(e);
+      }
+    };
+    while (chain.length > i) run(chain[i++]); // variable length - can't use forEach
+    promise._c = [];
+    promise._n = false;
+    if (isReject && !promise._h) onUnhandled(promise);
+  });
+};
+var onUnhandled = function (promise) {
+  task.call(global, function () {
+    var value = promise._v;
+    var unhandled = isUnhandled(promise);
+    var result, handler, console;
+    if (unhandled) {
+      result = perform(function () {
+        if (isNode) {
+          process.emit('unhandledRejection', value, promise);
+        } else if (handler = global.onunhandledrejection) {
+          handler({ promise: promise, reason: value });
+        } else if ((console = global.console) && console.error) {
+          console.error('Unhandled promise rejection', value);
+        }
+      });
+      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+      promise._h = isNode || isUnhandled(promise) ? 2 : 1;
+    } promise._a = undefined;
+    if (unhandled && result.e) throw result.v;
+  });
+};
+var isUnhandled = function (promise) {
+  return promise._h !== 1 && (promise._a || promise._c).length === 0;
+};
+var onHandleUnhandled = function (promise) {
+  task.call(global, function () {
+    var handler;
+    if (isNode) {
+      process.emit('rejectionHandled', promise);
+    } else if (handler = global.onrejectionhandled) {
+      handler({ promise: promise, reason: promise._v });
+    }
+  });
+};
+var $reject = function (value) {
+  var promise = this;
+  if (promise._d) return;
+  promise._d = true;
+  promise = promise._w || promise; // unwrap
+  promise._v = value;
+  promise._s = 2;
+  if (!promise._a) promise._a = promise._c.slice();
+  notify(promise, true);
+};
+var $resolve = function (value) {
+  var promise = this;
+  var then;
+  if (promise._d) return;
+  promise._d = true;
+  promise = promise._w || promise; // unwrap
+  try {
+    if (promise === value) throw TypeError("Promise can't be resolved itself");
+    if (then = isThenable(value)) {
+      microtask(function () {
+        var wrapper = { _w: promise, _d: false }; // wrap
+        try {
+          then.call(value, ctx($resolve, wrapper, 1), ctx($reject, wrapper, 1));
+        } catch (e) {
+          $reject.call(wrapper, e);
+        }
+      });
+    } else {
+      promise._v = value;
+      promise._s = 1;
+      notify(promise, false);
+    }
+  } catch (e) {
+    $reject.call({ _w: promise, _d: false }, e); // wrap
+  }
+};
+
+// constructor polyfill
+if (!USE_NATIVE) {
+  // 25.4.3.1 Promise(executor)
+  $Promise = function Promise(executor) {
+    anInstance(this, $Promise, PROMISE, '_h');
+    aFunction(executor);
+    Internal.call(this);
+    try {
+      executor(ctx($resolve, this, 1), ctx($reject, this, 1));
+    } catch (err) {
+      $reject.call(this, err);
+    }
+  };
+  // eslint-disable-next-line no-unused-vars
+  Internal = function Promise(executor) {
+    this._c = [];             // <- awaiting reactions
+    this._a = undefined;      // <- checked in isUnhandled reactions
+    this._s = 0;              // <- state
+    this._d = false;          // <- done
+    this._v = undefined;      // <- value
+    this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
+    this._n = false;          // <- notify
+  };
+  Internal.prototype = require('./_redefine-all')($Promise.prototype, {
+    // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
+    then: function then(onFulfilled, onRejected) {
+      var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
+      reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
+      reaction.fail = typeof onRejected == 'function' && onRejected;
+      reaction.domain = isNode ? process.domain : undefined;
+      this._c.push(reaction);
+      if (this._a) this._a.push(reaction);
+      if (this._s) notify(this, false);
+      return reaction.promise;
+    },
+    // 25.4.5.1 Promise.prototype.catch(onRejected)
+    'catch': function (onRejected) {
+      return this.then(undefined, onRejected);
+    }
+  });
+  OwnPromiseCapability = function () {
+    var promise = new Internal();
+    this.promise = promise;
+    this.resolve = ctx($resolve, promise, 1);
+    this.reject = ctx($reject, promise, 1);
+  };
+  newPromiseCapabilityModule.f = newPromiseCapability = function (C) {
+    return C === $Promise || C === Wrapper
+      ? new OwnPromiseCapability(C)
+      : newGenericPromiseCapability(C);
+  };
+}
+
+$export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
+require('./_set-to-string-tag')($Promise, PROMISE);
+require('./_set-species')(PROMISE);
+Wrapper = require('./_core')[PROMISE];
+
+// statics
+$export($export.S + $export.F * !USE_NATIVE, PROMISE, {
+  // 25.4.4.5 Promise.reject(r)
+  reject: function reject(r) {
+    var capability = newPromiseCapability(this);
+    var $$reject = capability.reject;
+    $$reject(r);
+    return capability.promise;
+  }
+});
+$export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
+  // 25.4.4.6 Promise.resolve(x)
+  resolve: function resolve(x) {
+    return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
+  }
+});
+$export($export.S + $export.F * !(USE_NATIVE && require('./_iter-detect')(function (iter) {
+  $Promise.all(iter)['catch'](empty);
+})), PROMISE, {
+  // 25.4.4.1 Promise.all(iterable)
+  all: function all(iterable) {
+    var C = this;
+    var capability = newPromiseCapability(C);
+    var resolve = capability.resolve;
+    var reject = capability.reject;
+    var result = perform(function () {
+      var values = [];
+      var index = 0;
+      var remaining = 1;
+      forOf(iterable, false, function (promise) {
+        var $index = index++;
+        var alreadyCalled = false;
+        values.push(undefined);
+        remaining++;
+        C.resolve(promise).then(function (value) {
+          if (alreadyCalled) return;
+          alreadyCalled = true;
+          values[$index] = value;
+          --remaining || resolve(values);
+        }, reject);
+      });
+      --remaining || resolve(values);
+    });
+    if (result.e) reject(result.v);
+    return capability.promise;
+  },
+  // 25.4.4.4 Promise.race(iterable)
+  race: function race(iterable) {
+    var C = this;
+    var capability = newPromiseCapability(C);
+    var reject = capability.reject;
+    var result = perform(function () {
+      forOf(iterable, false, function (promise) {
+        C.resolve(promise).then(capability.resolve, reject);
+      });
+    });
+    if (result.e) reject(result.v);
+    return capability.promise;
+  }
+});
+
+},{"./_a-function":31,"./_an-instance":33,"./_classof":36,"./_core":38,"./_ctx":40,"./_export":46,"./_for-of":48,"./_global":49,"./_is-object":58,"./_iter-detect":62,"./_library":65,"./_microtask":67,"./_new-promise-capability":68,"./_perform":81,"./_promise-resolve":82,"./_redefine-all":84,"./_set-species":87,"./_set-to-string-tag":88,"./_species-constructor":91,"./_task":93,"./_user-agent":101,"./_wks":104}],114:[function(require,module,exports){
+'use strict';
+var $at = require('./_string-at')(true);
+
+// 21.1.3.27 String.prototype[@@iterator]()
+require('./_iter-define')(String, 'String', function (iterated) {
+  this._t = String(iterated); // target
+  this._i = 0;                // next index
+// 21.1.5.2.1 %StringIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var index = this._i;
+  var point;
+  if (index >= O.length) return { value: undefined, done: true };
+  point = $at(O, index);
+  this._i += point.length;
+  return { value: point, done: false };
+});
+
+},{"./_iter-define":61,"./_string-at":92}],115:[function(require,module,exports){
+'use strict';
+// ECMAScript 6 symbols shim
+var global = require('./_global');
+var has = require('./_has');
+var DESCRIPTORS = require('./_descriptors');
+var $export = require('./_export');
+var redefine = require('./_redefine');
+var META = require('./_meta').KEY;
+var $fails = require('./_fails');
+var shared = require('./_shared');
+var setToStringTag = require('./_set-to-string-tag');
+var uid = require('./_uid');
+var wks = require('./_wks');
+var wksExt = require('./_wks-ext');
+var wksDefine = require('./_wks-define');
+var enumKeys = require('./_enum-keys');
+var isArray = require('./_is-array');
+var anObject = require('./_an-object');
+var isObject = require('./_is-object');
+var toIObject = require('./_to-iobject');
+var toPrimitive = require('./_to-primitive');
+var createDesc = require('./_property-desc');
+var _create = require('./_object-create');
+var gOPNExt = require('./_object-gopn-ext');
+var $GOPD = require('./_object-gopd');
+var $DP = require('./_object-dp');
+var $keys = require('./_object-keys');
+var gOPD = $GOPD.f;
+var dP = $DP.f;
+var gOPN = gOPNExt.f;
+var $Symbol = global.Symbol;
+var $JSON = global.JSON;
+var _stringify = $JSON && $JSON.stringify;
+var PROTOTYPE = 'prototype';
+var HIDDEN = wks('_hidden');
+var TO_PRIMITIVE = wks('toPrimitive');
+var isEnum = {}.propertyIsEnumerable;
+var SymbolRegistry = shared('symbol-registry');
+var AllSymbols = shared('symbols');
+var OPSymbols = shared('op-symbols');
+var ObjectProto = Object[PROTOTYPE];
+var USE_NATIVE = typeof $Symbol == 'function';
+var QObject = global.QObject;
+// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+
+// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+var setSymbolDesc = DESCRIPTORS && $fails(function () {
+  return _create(dP({}, 'a', {
+    get: function () { return dP(this, 'a', { value: 7 }).a; }
+  })).a != 7;
+}) ? function (it, key, D) {
+  var protoDesc = gOPD(ObjectProto, key);
+  if (protoDesc) delete ObjectProto[key];
+  dP(it, key, D);
+  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
+} : dP;
+
+var wrap = function (tag) {
+  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
+  sym._k = tag;
+  return sym;
+};
+
+var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  return it instanceof $Symbol;
+};
+
+var $defineProperty = function defineProperty(it, key, D) {
+  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
+  anObject(it);
+  key = toPrimitive(key, true);
+  anObject(D);
+  if (has(AllSymbols, key)) {
+    if (!D.enumerable) {
+      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
+      D = _create(D, { enumerable: createDesc(0, false) });
+    } return setSymbolDesc(it, key, D);
+  } return dP(it, key, D);
+};
+var $defineProperties = function defineProperties(it, P) {
+  anObject(it);
+  var keys = enumKeys(P = toIObject(P));
+  var i = 0;
+  var l = keys.length;
+  var key;
+  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
+  return it;
+};
+var $create = function create(it, P) {
+  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+};
+var $propertyIsEnumerable = function propertyIsEnumerable(key) {
+  var E = isEnum.call(this, key = toPrimitive(key, true));
+  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
+  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+};
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
+  it = toIObject(it);
+  key = toPrimitive(key, true);
+  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
+  var D = gOPD(it, key);
+  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
+  return D;
+};
+var $getOwnPropertyNames = function getOwnPropertyNames(it) {
+  var names = gOPN(toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
+  } return result;
+};
+var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
+  var IS_OP = it === ObjectProto;
+  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
+  } return result;
+};
+
+// 19.4.1.1 Symbol([description])
+if (!USE_NATIVE) {
+  $Symbol = function Symbol() {
+    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
+    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
+    var $set = function (value) {
+      if (this === ObjectProto) $set.call(OPSymbols, value);
+      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, createDesc(1, value));
+    };
+    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, { configurable: true, set: $set });
+    return wrap(tag);
+  };
+  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
+    return this._k;
+  });
+
+  $GOPD.f = $getOwnPropertyDescriptor;
+  $DP.f = $defineProperty;
+  require('./_object-gopn').f = gOPNExt.f = $getOwnPropertyNames;
+  require('./_object-pie').f = $propertyIsEnumerable;
+  require('./_object-gops').f = $getOwnPropertySymbols;
+
+  if (DESCRIPTORS && !require('./_library')) {
+    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+  }
+
+  wksExt.f = function (name) {
+    return wrap(wks(name));
+  };
+}
+
+$export($export.G + $export.W + $export.F * !USE_NATIVE, { Symbol: $Symbol });
+
+for (var es6Symbols = (
+  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
+).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
+
+for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
+
+$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
+  // 19.4.2.1 Symbol.for(key)
+  'for': function (key) {
+    return has(SymbolRegistry, key += '')
+      ? SymbolRegistry[key]
+      : SymbolRegistry[key] = $Symbol(key);
+  },
+  // 19.4.2.5 Symbol.keyFor(sym)
+  keyFor: function keyFor(sym) {
+    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
+    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
+  },
+  useSetter: function () { setter = true; },
+  useSimple: function () { setter = false; }
+});
+
+$export($export.S + $export.F * !USE_NATIVE, 'Object', {
+  // 19.1.2.2 Object.create(O [, Properties])
+  create: $create,
+  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+  defineProperty: $defineProperty,
+  // 19.1.2.3 Object.defineProperties(O, Properties)
+  defineProperties: $defineProperties,
+  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+  // 19.1.2.7 Object.getOwnPropertyNames(O)
+  getOwnPropertyNames: $getOwnPropertyNames,
+  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+  getOwnPropertySymbols: $getOwnPropertySymbols
+});
+
+// 24.3.2 JSON.stringify(value [, replacer [, space]])
+$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
+  var S = $Symbol();
+  // MS Edge converts symbol values to JSON as {}
+  // WebKit converts symbol values to JSON as null
+  // V8 throws on boxed symbols
+  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
+})), 'JSON', {
+  stringify: function stringify(it) {
+    var args = [it];
+    var i = 1;
+    var replacer, $replacer;
+    while (arguments.length > i) args.push(arguments[i++]);
+    $replacer = replacer = args[1];
+    if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
+    if (!isArray(replacer)) replacer = function (key, value) {
+      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
+      if (!isSymbol(value)) return value;
+    };
+    args[1] = replacer;
+    return _stringify.apply($JSON, args);
+  }
+});
+
+// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || require('./_hide')($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+// 19.4.3.5 Symbol.prototype[@@toStringTag]
+setToStringTag($Symbol, 'Symbol');
+// 20.2.1.9 Math[@@toStringTag]
+setToStringTag(Math, 'Math', true);
+// 24.3.3 JSON[@@toStringTag]
+setToStringTag(global.JSON, 'JSON', true);
+
+},{"./_an-object":34,"./_descriptors":42,"./_enum-keys":45,"./_export":46,"./_fails":47,"./_global":49,"./_has":50,"./_hide":51,"./_is-array":57,"./_is-object":58,"./_library":65,"./_meta":66,"./_object-create":69,"./_object-dp":70,"./_object-gopd":72,"./_object-gopn":74,"./_object-gopn-ext":73,"./_object-gops":75,"./_object-keys":78,"./_object-pie":79,"./_property-desc":83,"./_redefine":85,"./_set-to-string-tag":88,"./_shared":90,"./_to-iobject":96,"./_to-primitive":99,"./_uid":100,"./_wks":104,"./_wks-define":102,"./_wks-ext":103}],116:[function(require,module,exports){
+// https://github.com/tc39/proposal-promise-finally
+'use strict';
+var $export = require('./_export');
+var core = require('./_core');
+var global = require('./_global');
+var speciesConstructor = require('./_species-constructor');
+var promiseResolve = require('./_promise-resolve');
+
+$export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
+  var C = speciesConstructor(this, core.Promise || global.Promise);
+  var isFunction = typeof onFinally == 'function';
+  return this.then(
+    isFunction ? function (x) {
+      return promiseResolve(C, onFinally()).then(function () { return x; });
+    } : onFinally,
+    isFunction ? function (e) {
+      return promiseResolve(C, onFinally()).then(function () { throw e; });
+    } : onFinally
+  );
+} });
+
+},{"./_core":38,"./_export":46,"./_global":49,"./_promise-resolve":82,"./_species-constructor":91}],117:[function(require,module,exports){
+'use strict';
+// https://github.com/tc39/proposal-promise-try
+var $export = require('./_export');
+var newPromiseCapability = require('./_new-promise-capability');
+var perform = require('./_perform');
+
+$export($export.S, 'Promise', { 'try': function (callbackfn) {
+  var promiseCapability = newPromiseCapability.f(this);
+  var result = perform(callbackfn);
+  (result.e ? promiseCapability.reject : promiseCapability.resolve)(result.v);
+  return promiseCapability.promise;
+} });
+
+},{"./_export":46,"./_new-promise-capability":68,"./_perform":81}],118:[function(require,module,exports){
+require('./_wks-define')('asyncIterator');
+
+},{"./_wks-define":102}],119:[function(require,module,exports){
+require('./_wks-define')('observable');
+
+},{"./_wks-define":102}],120:[function(require,module,exports){
+require('./es6.array.iterator');
+var global = require('./_global');
+var hide = require('./_hide');
+var Iterators = require('./_iterators');
+var TO_STRING_TAG = require('./_wks')('toStringTag');
+
+var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
+  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
+  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
+  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
+  'TextTrackList,TouchList').split(',');
+
+for (var i = 0; i < DOMIterables.length; i++) {
+  var NAME = DOMIterables[i];
+  var Collection = global[NAME];
+  var proto = Collection && Collection.prototype;
+  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+
+},{"./_global":49,"./_hide":51,"./_iterators":64,"./_wks":104,"./es6.array.iterator":107}],121:[function(require,module,exports){
+var pSlice = Array.prototype.slice;
+var objectKeys = require('./lib/keys.js');
+var isArguments = require('./lib/is_arguments.js');
+
+var deepEqual = module.exports = function (actual, expected, opts) {
+  if (!opts) opts = {};
+  // 7.1. All identical values are equivalent, as determined by ===.
+  if (actual === expected) {
+    return true;
+
+  } else if (actual instanceof Date && expected instanceof Date) {
+    return actual.getTime() === expected.getTime();
+
+  // 7.3. Other pairs that do not both pass typeof value == 'object',
+  // equivalence is determined by ==.
+  } else if (!actual || !expected || typeof actual != 'object' && typeof expected != 'object') {
+    return opts.strict ? actual === expected : actual == expected;
+
+  // 7.4. For all other Object pairs, including Array objects, equivalence is
+  // determined by having the same number of owned properties (as verified
+  // with Object.prototype.hasOwnProperty.call), the same set of keys
+  // (although not necessarily the same order), equivalent values for every
+  // corresponding key, and an identical 'prototype' property. Note: this
+  // accounts for both named and indexed properties on Arrays.
+  } else {
+    return objEquiv(actual, expected, opts);
+  }
+}
+
+function isUndefinedOrNull(value) {
+  return value === null || value === undefined;
+}
+
+function isBuffer (x) {
+  if (!x || typeof x !== 'object' || typeof x.length !== 'number') return false;
+  if (typeof x.copy !== 'function' || typeof x.slice !== 'function') {
+    return false;
+  }
+  if (x.length > 0 && typeof x[0] !== 'number') return false;
+  return true;
+}
+
+function objEquiv(a, b, opts) {
+  var i, key;
+  if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
+    return false;
+  // an identical 'prototype' property.
+  if (a.prototype !== b.prototype) return false;
+  //~~~I've managed to break Object.keys through screwy arguments passing.
+  //   Converting to array solves the problem.
+  if (isArguments(a)) {
+    if (!isArguments(b)) {
+      return false;
+    }
+    a = pSlice.call(a);
+    b = pSlice.call(b);
+    return deepEqual(a, b, opts);
+  }
+  if (isBuffer(a)) {
+    if (!isBuffer(b)) {
+      return false;
+    }
+    if (a.length !== b.length) return false;
+    for (i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+  try {
+    var ka = objectKeys(a),
+        kb = objectKeys(b);
+  } catch (e) {//happens when one is a string literal and the other isn't
+    return false;
+  }
+  // having the same number of owned properties (keys incorporates
+  // hasOwnProperty)
+  if (ka.length != kb.length)
+    return false;
+  //the same set of keys (although not necessarily the same order),
+  ka.sort();
+  kb.sort();
+  //~~~cheap key test
+  for (i = ka.length - 1; i >= 0; i--) {
+    if (ka[i] != kb[i])
+      return false;
+  }
+  //equivalent values for every corresponding key, and
+  //~~~possibly expensive deep test
+  for (i = ka.length - 1; i >= 0; i--) {
+    key = ka[i];
+    if (!deepEqual(a[key], b[key], opts)) return false;
+  }
+  return typeof a === typeof b;
+}
+
+},{"./lib/is_arguments.js":122,"./lib/keys.js":123}],122:[function(require,module,exports){
+var supportsArgumentsClass = (function(){
+  return Object.prototype.toString.call(arguments)
+})() == '[object Arguments]';
+
+exports = module.exports = supportsArgumentsClass ? supported : unsupported;
+
+exports.supported = supported;
+function supported(object) {
+  return Object.prototype.toString.call(object) == '[object Arguments]';
+};
+
+exports.unsupported = unsupported;
+function unsupported(object){
+  return object &&
+    typeof object == 'object' &&
+    typeof object.length == 'number' &&
+    Object.prototype.hasOwnProperty.call(object, 'callee') &&
+    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
+    false;
+};
+
+},{}],123:[function(require,module,exports){
+exports = module.exports = typeof Object.keys === 'function'
+  ? Object.keys : shim;
+
+exports.shim = shim;
+function shim (obj) {
+  var keys = [];
+  for (var key in obj) keys.push(key);
+  return keys;
+}
+
+},{}],124:[function(require,module,exports){
 'use strict';
 
 var elliptic = exports;
@@ -6857,7 +6238,7 @@ elliptic.curves = require('./elliptic/curves');
 elliptic.ec = require('./elliptic/ec');
 elliptic.eddsa = require('./elliptic/eddsa');
 
-},{"../package.json":143,"./elliptic/curve":131,"./elliptic/curves":134,"./elliptic/ec":135,"./elliptic/eddsa":138,"./elliptic/utils":142,"brorand":127}],129:[function(require,module,exports){
+},{"../package.json":139,"./elliptic/curve":127,"./elliptic/curves":130,"./elliptic/ec":131,"./elliptic/eddsa":134,"./elliptic/utils":138,"brorand":22}],125:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -7234,7 +6615,7 @@ BasePoint.prototype.dblp = function dblp(k) {
   return r;
 };
 
-},{"../../elliptic":128,"bn.js":126}],130:[function(require,module,exports){
+},{"../../elliptic":124,"bn.js":21}],126:[function(require,module,exports){
 'use strict';
 
 var curve = require('../curve');
@@ -7669,7 +7050,7 @@ Point.prototype.eqXToP = function eqXToP(x) {
 Point.prototype.toP = Point.prototype.normalize;
 Point.prototype.mixedAdd = Point.prototype.add;
 
-},{"../../elliptic":128,"../curve":131,"bn.js":126,"inherits":159}],131:[function(require,module,exports){
+},{"../../elliptic":124,"../curve":127,"bn.js":21,"inherits":155}],127:[function(require,module,exports){
 'use strict';
 
 var curve = exports;
@@ -7679,7 +7060,7 @@ curve.short = require('./short');
 curve.mont = require('./mont');
 curve.edwards = require('./edwards');
 
-},{"./base":129,"./edwards":130,"./mont":132,"./short":133}],132:[function(require,module,exports){
+},{"./base":125,"./edwards":126,"./mont":128,"./short":129}],128:[function(require,module,exports){
 'use strict';
 
 var curve = require('../curve');
@@ -7861,7 +7242,7 @@ Point.prototype.getX = function getX() {
   return this.x.fromRed();
 };
 
-},{"../../elliptic":128,"../curve":131,"bn.js":126,"inherits":159}],133:[function(require,module,exports){
+},{"../../elliptic":124,"../curve":127,"bn.js":21,"inherits":155}],129:[function(require,module,exports){
 'use strict';
 
 var curve = require('../curve');
@@ -8800,7 +8181,7 @@ JPoint.prototype.isInfinity = function isInfinity() {
   return this.z.cmpn(0) === 0;
 };
 
-},{"../../elliptic":128,"../curve":131,"bn.js":126,"inherits":159}],134:[function(require,module,exports){
+},{"../../elliptic":124,"../curve":127,"bn.js":21,"inherits":155}],130:[function(require,module,exports){
 'use strict';
 
 var curves = exports;
@@ -9007,7 +8388,7 @@ defineCurve('secp256k1', {
   ]
 });
 
-},{"../elliptic":128,"./precomputed/secp256k1":141,"hash.js":144}],135:[function(require,module,exports){
+},{"../elliptic":124,"./precomputed/secp256k1":137,"hash.js":140}],131:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -9249,7 +8630,7 @@ EC.prototype.getKeyRecoveryParam = function(e, signature, Q, enc) {
   throw new Error('Unable to find valid recovery factor');
 };
 
-},{"../../elliptic":128,"./key":136,"./signature":137,"bn.js":126,"hmac-drbg":156}],136:[function(require,module,exports){
+},{"../../elliptic":124,"./key":132,"./signature":133,"bn.js":21,"hmac-drbg":152}],132:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -9370,7 +8751,7 @@ KeyPair.prototype.inspect = function inspect() {
          ' pub: ' + (this.pub && this.pub.inspect()) + ' >';
 };
 
-},{"../../elliptic":128,"bn.js":126}],137:[function(require,module,exports){
+},{"../../elliptic":124,"bn.js":21}],133:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -9507,7 +8888,7 @@ Signature.prototype.toDER = function toDER(enc) {
   return utils.encode(res, enc);
 };
 
-},{"../../elliptic":128,"bn.js":126}],138:[function(require,module,exports){
+},{"../../elliptic":124,"bn.js":21}],134:[function(require,module,exports){
 'use strict';
 
 var hash = require('hash.js');
@@ -9627,7 +9008,7 @@ EDDSA.prototype.isPoint = function isPoint(val) {
   return val instanceof this.pointClass;
 };
 
-},{"../../elliptic":128,"./key":139,"./signature":140,"hash.js":144}],139:[function(require,module,exports){
+},{"../../elliptic":124,"./key":135,"./signature":136,"hash.js":140}],135:[function(require,module,exports){
 'use strict';
 
 var elliptic = require('../../elliptic');
@@ -9725,7 +9106,7 @@ KeyPair.prototype.getPublic = function getPublic(enc) {
 
 module.exports = KeyPair;
 
-},{"../../elliptic":128}],140:[function(require,module,exports){
+},{"../../elliptic":124}],136:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -9793,7 +9174,7 @@ Signature.prototype.toHex = function toHex() {
 
 module.exports = Signature;
 
-},{"../../elliptic":128,"bn.js":126}],141:[function(require,module,exports){
+},{"../../elliptic":124,"bn.js":21}],137:[function(require,module,exports){
 module.exports = {
   doubles: {
     step: 4,
@@ -10575,7 +9956,7 @@ module.exports = {
   }
 };
 
-},{}],142:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 'use strict';
 
 var utils = exports;
@@ -10697,7 +10078,7 @@ function intFromLE(bytes) {
 utils.intFromLE = intFromLE;
 
 
-},{"bn.js":126,"minimalistic-assert":162,"minimalistic-crypto-utils":163}],143:[function(require,module,exports){
+},{"bn.js":21,"minimalistic-assert":185,"minimalistic-crypto-utils":186}],139:[function(require,module,exports){
 module.exports={
   "name": "elliptic",
   "version": "6.4.1",
@@ -10757,7 +10138,7 @@ module.exports={
   }
 }
 
-},{}],144:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 var hash = exports;
 
 hash.utils = require('./hash/utils');
@@ -10774,7 +10155,7 @@ hash.sha384 = hash.sha.sha384;
 hash.sha512 = hash.sha.sha512;
 hash.ripemd160 = hash.ripemd.ripemd160;
 
-},{"./hash/common":145,"./hash/hmac":146,"./hash/ripemd":147,"./hash/sha":148,"./hash/utils":155}],145:[function(require,module,exports){
+},{"./hash/common":141,"./hash/hmac":142,"./hash/ripemd":143,"./hash/sha":144,"./hash/utils":151}],141:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -10868,7 +10249,7 @@ BlockHash.prototype._pad = function pad() {
   return res;
 };
 
-},{"./utils":155,"minimalistic-assert":162}],146:[function(require,module,exports){
+},{"./utils":151,"minimalistic-assert":185}],142:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -10917,7 +10298,7 @@ Hmac.prototype.digest = function digest(enc) {
   return this.outer.digest(enc);
 };
 
-},{"./utils":155,"minimalistic-assert":162}],147:[function(require,module,exports){
+},{"./utils":151,"minimalistic-assert":185}],143:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -11065,7 +10446,7 @@ var sh = [
   8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11
 ];
 
-},{"./common":145,"./utils":155}],148:[function(require,module,exports){
+},{"./common":141,"./utils":151}],144:[function(require,module,exports){
 'use strict';
 
 exports.sha1 = require('./sha/1');
@@ -11074,7 +10455,7 @@ exports.sha256 = require('./sha/256');
 exports.sha384 = require('./sha/384');
 exports.sha512 = require('./sha/512');
 
-},{"./sha/1":149,"./sha/224":150,"./sha/256":151,"./sha/384":152,"./sha/512":153}],149:[function(require,module,exports){
+},{"./sha/1":145,"./sha/224":146,"./sha/256":147,"./sha/384":148,"./sha/512":149}],145:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -11150,7 +10531,7 @@ SHA1.prototype._digest = function digest(enc) {
     return utils.split32(this.h, 'big');
 };
 
-},{"../common":145,"../utils":155,"./common":154}],150:[function(require,module,exports){
+},{"../common":141,"../utils":151,"./common":150}],146:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -11182,7 +10563,7 @@ SHA224.prototype._digest = function digest(enc) {
 };
 
 
-},{"../utils":155,"./256":151}],151:[function(require,module,exports){
+},{"../utils":151,"./256":147}],147:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -11289,7 +10670,7 @@ SHA256.prototype._digest = function digest(enc) {
     return utils.split32(this.h, 'big');
 };
 
-},{"../common":145,"../utils":155,"./common":154,"minimalistic-assert":162}],152:[function(require,module,exports){
+},{"../common":141,"../utils":151,"./common":150,"minimalistic-assert":185}],148:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -11326,7 +10707,7 @@ SHA384.prototype._digest = function digest(enc) {
     return utils.split32(this.h.slice(0, 12), 'big');
 };
 
-},{"../utils":155,"./512":153}],153:[function(require,module,exports){
+},{"../utils":151,"./512":149}],149:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -11658,7 +11039,7 @@ function g1_512_lo(xh, xl) {
   return r;
 }
 
-},{"../common":145,"../utils":155,"minimalistic-assert":162}],154:[function(require,module,exports){
+},{"../common":141,"../utils":151,"minimalistic-assert":185}],150:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -11709,7 +11090,7 @@ function g1_256(x) {
 }
 exports.g1_256 = g1_256;
 
-},{"../utils":155}],155:[function(require,module,exports){
+},{"../utils":151}],151:[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -11964,7 +11345,7 @@ function shr64_lo(ah, al, num) {
 }
 exports.shr64_lo = shr64_lo;
 
-},{"inherits":159,"minimalistic-assert":162}],156:[function(require,module,exports){
+},{"inherits":155,"minimalistic-assert":185}],152:[function(require,module,exports){
 'use strict';
 
 var hash = require('hash.js');
@@ -12079,7 +11460,7 @@ HmacDRBG.prototype.generate = function generate(len, enc, add, addEnc) {
   return utils.encode(res, enc);
 };
 
-},{"hash.js":144,"minimalistic-assert":162,"minimalistic-crypto-utils":163}],157:[function(require,module,exports){
+},{"hash.js":140,"minimalistic-assert":185,"minimalistic-crypto-utils":186}],153:[function(require,module,exports){
 /* This file is generated from the Unicode IDNA table, using
    the build-unicode-tables.py script. Please edit that
    script instead of this file. */
@@ -12838,7 +12219,7 @@ return {
 };
 }));
 
-},{}],158:[function(require,module,exports){
+},{}],154:[function(require,module,exports){
 (function(root, factory) {
   /* istanbul ignore next */
   if (typeof define === 'function' && define.amd) {
@@ -12972,7 +12353,7 @@ return {
   };
 }));
 
-},{"./idna-map":157,"punycode":209}],159:[function(require,module,exports){
+},{"./idna-map":153,"punycode":209}],155:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -12997,7 +12378,3609 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],160:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
+const EventEmitter = require('events');
+const calculateSum = (accumulator, currentValue) => accumulator + currentValue;
+const blockTrackerEvents = ['sync', 'latest'];
+const sec = 1000;
+
+class BaseBlockTracker extends EventEmitter {
+
+  // public
+  constructor(opts = {}) {
+    super();
+    // config
+    this._blockResetDuration = opts.blockResetDuration || 20 * sec;
+    // state
+    this._blockResetTimeout = null;
+    this._currentBlock = null;
+    this._isRunning = false;
+    // bind functions for internal use
+    this._onNewListener = this._onNewListener.bind(this);
+    this._onRemoveListener = this._onRemoveListener.bind(this);
+    this._resetCurrentBlock = this._resetCurrentBlock.bind(this);
+    // listen for handler changes
+    this._setupInternalEvents();
+  }
+
+  isRunning() {
+    return this._isRunning;
+  }
+
+  getCurrentBlock() {
+    return this._currentBlock;
+  }
+
+  async getLatestBlock() {
+    // return if available
+    if (this._currentBlock) return this._currentBlock;
+    // wait for a new latest block
+    const latestBlock = await new Promise(resolve => this.once('latest', resolve));
+    // return newly set current block
+    return latestBlock;
+  }
+
+  // dont allow module consumer to remove our internal event listeners
+  removeAllListeners(eventName) {
+    // perform default behavior, preserve fn arity
+    if (eventName) {
+      super.removeAllListeners(eventName);
+    } else {
+      super.removeAllListeners();
+    }
+    // re-add internal events
+    this._setupInternalEvents();
+    // trigger stop check just in case
+    this._onRemoveListener();
+  }
+
+  //
+  // to be implemented in subclass
+  //
+
+  _start() {
+    // default behavior is noop
+  }
+
+  _end() {
+    // default behavior is noop
+  }
+
+  //
+  // private
+  //
+
+  _setupInternalEvents() {
+    // first remove listeners for idempotence
+    this.removeListener('newListener', this._onNewListener);
+    this.removeListener('removeListener', this._onRemoveListener);
+    // then add them
+    this.on('newListener', this._onNewListener);
+    this.on('removeListener', this._onRemoveListener);
+  }
+
+  _onNewListener(eventName, handler) {
+    // `newListener` is called *before* the listener is added
+    if (!blockTrackerEvents.includes(eventName)) return;
+    this._maybeStart();
+  }
+
+  _onRemoveListener(eventName, handler) {
+    // `removeListener` is called *after* the listener is removed
+    if (this._getBlockTrackerEventCount() > 0) return;
+    this._maybeEnd();
+  }
+
+  _maybeStart() {
+    if (this._isRunning) return;
+    this._isRunning = true;
+    // cancel setting latest block to stale
+    this._cancelBlockResetTimeout();
+    this._start();
+  }
+
+  _maybeEnd() {
+    if (!this._isRunning) return;
+    this._isRunning = false;
+    this._setupBlockResetTimeout();
+    this._end();
+  }
+
+  _getBlockTrackerEventCount() {
+    return blockTrackerEvents
+        .map(eventName => this.listenerCount(eventName))
+        .reduce(calculateSum);
+  }
+
+  _newPotentialLatest(newBlock) {
+    const currentBlock = this._currentBlock;
+    // only update if blok number is higher
+    if (currentBlock && (hexToInt(newBlock) <= hexToInt(currentBlock))) return;
+    this._setCurrentBlock(newBlock);
+  }
+
+  _setCurrentBlock(newBlock) {
+    const oldBlock = this._currentBlock;
+    this._currentBlock = newBlock;
+    this.emit('latest', newBlock);
+    this.emit('sync', {oldBlock, newBlock});
+  }
+
+  _setupBlockResetTimeout() {
+    // clear any existing timeout
+    this._cancelBlockResetTimeout();
+    // clear latest block when stale
+    this._blockResetTimeout = setTimeout(this._resetCurrentBlock, this._blockResetDuration);
+    // nodejs - dont hold process open
+    if (this._blockResetTimeout.unref) {
+      this._blockResetTimeout.unref();
+    }
+  }
+
+  _cancelBlockResetTimeout() {
+    clearTimeout(this._blockResetTimeout);
+  }
+
+  _resetCurrentBlock() {
+    this._currentBlock = null;
+  }
+
+}
+
+module.exports = BaseBlockTracker;
+
+function hexToInt(hexInt) {
+  return Number.parseInt(hexInt, 16);
+}
+
+},{"events":206}],157:[function(require,module,exports){
+const IrcQuery = require('irc-query');
+const pify = require('pify');
+const BaseBlockTracker = require('./base');
+
+const sec = 1000;
+const min = 60 * sec;
+
+class PollingBlockTracker extends BaseBlockTracker {
+
+  constructor(opts = {}) {
+    // parse + validate args
+    if (!opts.provider) throw new Error('PollingBlockTracker - no provider specified.');
+    const pollingInterval = opts.pollingInterval || 20 * sec;
+    const keepEventLoopActive = opts.keepEventLoopActive !== undefined ? opts.keepEventLoopActive : true;
+    // BaseBlockTracker constructor
+    super(Object.assign({
+      blockResetDuration: pollingInterval,
+    }, opts));
+    // config
+    this._provider = opts.provider;
+    this._pollingInterval = pollingInterval;
+    this._keepEventLoopActive = keepEventLoopActive;
+    // util
+    this._query = new IrcQuery(this._provider);
+  }
+
+  //
+  // public
+  //
+
+  // trigger block polling
+  async checkForLatestBlock() {
+    await this._updateLatestBlock();
+    return await this.getLatestBlock();
+  }
+
+  //
+  // private
+  //
+
+  _start() {
+    this._performSync().catch(err => this.emit('error', err));
+  }
+
+  async _performSync() {
+    while (this._isRunning) {
+      try {
+        await this._updateLatestBlock();
+      } catch (err) {
+        this.emit('error', err);
+      }
+      await timeout(this._pollingInterval, !this._keepEventLoopActive);
+    }
+  }
+
+  async _updateLatestBlock() {
+    // fetch + set latest block
+    const latestBlock = await this._fetchLatestBlock();
+    this._newPotentialLatest(latestBlock);
+  }
+
+  async _fetchLatestBlock() {
+    return await pify(this._query.getBlockByNumber).call(this._query, 'latest', true);
+  }
+
+}
+
+module.exports = PollingBlockTracker;
+
+function timeout(duration, unref) {
+  return new Promise(resolve => {
+    const timoutRef = setTimeout(resolve, duration);
+    // don't keep process open
+    if (timoutRef.unref && unref) {
+      timoutRef.unref();
+    }
+  });
+}
+
+},{"./base":156,"irc-query":158,"pify":187}],158:[function(require,module,exports){
+const extend         = require('xtend');
+const createRandomId = require('json-rpc-random-id')();
+
+module.exports = IrcQuery;
+
+function IrcQuery(provider) {
+  const self           = this;
+  self.currentProvider = provider;
+}
+
+//
+// base queries
+//
+
+// default block
+IrcQuery.prototype.getBalance                          = generateFnWithDefaultBlockFor(2, 'irc_getBalance');
+IrcQuery.prototype.getCode                             = generateFnWithDefaultBlockFor(2, 'irc_getCode');
+IrcQuery.prototype.getTransactionCount                 = generateFnWithDefaultBlockFor(2, 'irc_getTransactionCount');
+IrcQuery.prototype.getStorageAt                        = generateFnWithDefaultBlockFor(3, 'irc_getStorageAt');
+IrcQuery.prototype.call                                = generateFnWithDefaultBlockFor(2, 'irc_call');
+// standard
+IrcQuery.prototype.protocolVersion                     = generateFnFor('irc_protocolVersion');
+IrcQuery.prototype.syncing                             = generateFnFor('irc_syncing');
+IrcQuery.prototype.coinbase                            = generateFnFor('irc_coinbase');
+IrcQuery.prototype.mining                              = generateFnFor('irc_mining');
+IrcQuery.prototype.hashrate                            = generateFnFor('irc_hashrate');
+IrcQuery.prototype.gasPrice                            = generateFnFor('irc_gasPrice');
+IrcQuery.prototype.accounts                            = generateFnFor('irc_accounts');
+IrcQuery.prototype.blockNumber                         = generateFnFor('irc_blockNumber');
+IrcQuery.prototype.getBlockTransactionCountByHash      = generateFnFor('irc_getBlockTransactionCountByHash');
+IrcQuery.prototype.getBlockTransactionCountByNumber    = generateFnFor('irc_getBlockTransactionCountByNumber');
+IrcQuery.prototype.getUncleCountByBlockHash            = generateFnFor('irc_getUncleCountByBlockHash');
+IrcQuery.prototype.getUncleCountByBlockNumber          = generateFnFor('irc_getUncleCountByBlockNumber');
+IrcQuery.prototype.sign                                = generateFnFor('irc_sign');
+IrcQuery.prototype.sendTransaction                     = generateFnFor('irc_sendTransaction');
+IrcQuery.prototype.sendRawTransaction                  = generateFnFor('irc_sendRawTransaction');
+IrcQuery.prototype.estimateGas                         = generateFnFor('irc_estimateGas');
+IrcQuery.prototype.getBlockByHash                      = generateFnFor('irc_getBlockByHash');
+IrcQuery.prototype.getBlockByNumber                    = generateFnFor('irc_getBlockByNumber');
+IrcQuery.prototype.getTransactionByHash                = generateFnFor('irc_getTransactionByHash');
+IrcQuery.prototype.getTransactionByBlockHashAndIndex   = generateFnFor('irc_getTransactionByBlockHashAndIndex');
+IrcQuery.prototype.getTransactionByBlockNumberAndIndex = generateFnFor('irc_getTransactionByBlockNumberAndIndex');
+IrcQuery.prototype.getTransactionReceipt               = generateFnFor('irc_getTransactionReceipt');
+IrcQuery.prototype.getUncleByBlockHashAndIndex         = generateFnFor('irc_getUncleByBlockHashAndIndex');
+IrcQuery.prototype.getUncleByBlockNumberAndIndex       = generateFnFor('irc_getUncleByBlockNumberAndIndex');
+IrcQuery.prototype.getCompilers                        = generateFnFor('irc_getCompilers');
+IrcQuery.prototype.compileLLL                          = generateFnFor('irc_compileLLL');
+IrcQuery.prototype.compileSolidity                     = generateFnFor('irc_compileSolidity');
+IrcQuery.prototype.compileSerpent                      = generateFnFor('irc_compileSerpent');
+IrcQuery.prototype.newFilter                           = generateFnFor('irc_newFilter');
+IrcQuery.prototype.newBlockFilter                      = generateFnFor('irc_newBlockFilter');
+IrcQuery.prototype.newPendingTransactionFilter         = generateFnFor('irc_newPendingTransactionFilter');
+IrcQuery.prototype.uninstallFilter                     = generateFnFor('irc_uninstallFilter');
+IrcQuery.prototype.getFilterChanges                    = generateFnFor('irc_getFilterChanges');
+IrcQuery.prototype.getFilterLogs                       = generateFnFor('irc_getFilterLogs');
+IrcQuery.prototype.getLogs                             = generateFnFor('irc_getLogs');
+IrcQuery.prototype.getWork                             = generateFnFor('irc_getWork');
+IrcQuery.prototype.submitWork                          = generateFnFor('irc_submitWork');
+IrcQuery.prototype.submitHashrate                      = generateFnFor('irc_submitHashrate');
+
+// network level
+
+IrcQuery.prototype.sendAsync = function(opts, cb) {
+  const self = this;
+  self.currentProvider.sendAsync(createPayload(opts), function(err, response) {
+    if (!err && response.error) err = new Error('IrcQuery - RPC Error - ' + response.error.message);
+    if (err) return cb(err);
+    cb(null, response.result);
+  });
+};
+
+// util
+
+function generateFnFor(methodName) {
+  return function() {
+    const self = this;
+    var args   = [].slice.call(arguments);
+    var cb     = args.pop();
+    self.sendAsync({
+      method: methodName,
+      params: args,
+    }, cb);
+  };
+}
+
+function generateFnWithDefaultBlockFor(argCount, methodName) {
+  return function() {
+    const self = this;
+    var args   = [].slice.call(arguments);
+    var cb     = args.pop();
+    // set optional default block param
+    if (args.length < argCount) args.push('latest');
+    self.sendAsync({
+      method: methodName,
+      params: args,
+    }, cb);
+  };
+}
+
+function createPayload(data) {
+  return extend({
+    // defaults
+    id: createRandomId(),
+    jsonrpc: '2.0',
+    params: [],
+    // user-specified
+  }, data);
+}
+
+},{"json-rpc-random-id":184,"xtend":198}],159:[function(require,module,exports){
+(function (Buffer){
+const coder = require('./lib/abi-coder');
+const uint256Coder = coder.uint256Coder;
+const getParamCoder = coder.getParamCoder;
+const util = require('./utils');
+const stdTokenAbi = require('./res/ir-std-token-abi')['ir-token'];
+
+const state = {
+  savedABIs: stdTokenAbi,
+  signatureIDs: {},
+};
+
+stdTokenAbi.forEach((method) => {
+  if (method.name) {
+    const signatureId = method.type === 'event' ? eventSignature(method) : encodeSignature(method);
+    state.signatureIDs[signatureId.slice(2)] = method;
+  }
+});
+
+/// Encodes
+
+function encodeParams(types, values) {
+  if (types.length !== values.length) {
+    throw new Error(`while encoding params, Your contract requires ${types.length} types (arguments), and you passed in ${values.length}`);
+  }
+
+  const parts = [];
+
+  types.forEach(function(type, index) {
+    const coder = getParamCoder(type);
+    parts.push({dynamic: coder.dynamic, value: coder.encode(values[index])});
+  });
+
+  function alignSize(size) {
+    return parseInt(32 * Math.ceil(size / 32));
+  }
+
+  let staticSize = 0, dynamicSize = 0;
+  parts.forEach(function(part) {
+    if (part.dynamic) {
+      staticSize += 32;
+      dynamicSize += alignSize(part.value.length);
+    } else {
+      staticSize += alignSize(part.value.length);
+    }
+  });
+
+  let offset = 0, dynamicOffset = staticSize;
+  const data = Buffer.alloc(staticSize + dynamicSize);
+
+  parts.forEach(function(part) {
+    if (part.dynamic) {
+      uint256Coder.encode(dynamicOffset).copy(data, offset);
+      offset += 32;
+
+      part.value.copy(data, dynamicOffset);
+      dynamicOffset += alignSize(part.value.length);
+    } else {
+      part.value.copy(data, offset);
+      offset += alignSize(part.value.length);
+    }
+  });
+
+  return '0x' + data.toString('hex');
+}
+
+// create an encoded method signature from an ABI object
+function encodeSignature(method) {
+  const signature = `${method.name}(${util.getKeys(method.inputs, 'type').join(',')})`;
+  return '0x' + util.keccak256(signature).slice(0, 8);
+}
+
+function eventSignature(method) {
+  const signature = `${method.name}(${util.getKeys(method.inputs, 'type').join(',')})`;
+  return '0x' + util.keccak256(signature);
+}
+
+// encode method ABI object with values in an array, output bytecode
+function encodeMethod(method, values) {
+  const paramsEncoded = encodeParams(util.getKeys(method.inputs, 'type'), values).substring(2);
+  return encodeSignature(method) + paramsEncoded;
+}
+
+// decode method data bytecode, from method ABI object
+function encodeEvent(eventObject, values) {
+  return encodeMethod(eventObject, values);
+}
+
+/// Decodes
+
+// decode bytecode data from output names and types
+function decodeParams(names, types, data) {
+  // Names is optional, so shift over all the parameters if not provided
+  if (arguments.length < 3) {
+    data = types;
+    types = names;
+    names = [];
+  }
+
+  data = util.hexToBuffer(data);
+
+  let offset = 0;
+
+  return [...types.keys()].map(index => {
+    const coder = getParamCoder(types[index]);
+    let result;
+
+    if (coder.dynamic) {
+      const dynamicOffset = uint256Coder.decode(data, offset);
+      result = coder.decode(data, dynamicOffset.value.toNumber());
+      offset += dynamicOffset.consumed;
+    } else {
+      result = coder.decode(data, offset);
+      offset += result.consumed;
+    }
+
+    return {
+      name: names[index],
+      value: result.value,
+      type: types[index],
+    };
+  });
+}
+
+// decode method data bytecode, from method ABI object
+/** @namespace method.inputs */
+function decodeMethod(data) {
+  const method = state.signatureIDs[data.slice(2, 10)];
+  const inputNames = util.getKeys(method.inputs, 'name', true);
+  const inputTypes = util.getKeys(method.inputs, 'type');
+  return {
+    name: method.name,
+    params: decodeParams(inputNames, inputTypes, data),
+  };
+}
+
+/** @namespace method.outputs */
+function decodeCall(method, data) {
+  // const method = state.signatureIDs[data.slice(2, 10)];
+  const outputNames = util.getKeys(method.outputs, 'name', true);
+  const outputTypes = util.getKeys(method.outputs, 'type');
+  return decodeParams(outputNames, outputTypes, data);
+}
+
+// decode method data bytecode, from method ABI object
+function decodeEvent(data, topics) {
+  const eventObject = this.state.signatureIDs[data];
+  const nonIndexed = eventObject.inputs.filter((input) => !input.indexed);
+  const nonIndexedNames = util.getKeys(nonIndexed, 'name', true);
+  const nonIndexedTypes = util.getKeys(nonIndexed, 'type');
+  const event = decodeParams(nonIndexedNames, nonIndexedTypes, data);
+  const topicOffset = eventObject.anonymous ? 0 : 1;
+
+  eventObject.inputs.filter((input) => input.indexed).map((input, i) => {
+    const topic = Buffer.from(topics[i + topicOffset].slice(2), 'hex');
+    const coder = getParamCoder(input.type);
+    event[input.name] = coder.decode(topic, 0).value;
+  });
+  event._eventName = eventObject.name;
+  return event;
+}
+
+module.exports = {
+  stdTokenAbi,
+  encodeParams,
+  encodeMethod,
+  encodeEvent,
+  decodeParams,
+  decodeMethod,
+  decodeCall,
+  decodeEvent,
+};
+
+}).call(this,require("buffer").Buffer)
+},{"./lib/abi-coder":166,"./res/ir-std-token-abi":174,"./utils":181,"buffer":205}],160:[function(require,module,exports){
+(function (Buffer){
+const elliptic = require('elliptic');
+const keccak256 = require('js-sha3').keccak_256;
+const randomhex = require('randomhex');
+const secp256k1 = new (elliptic.ec)('secp256k1');
+const stripHexPrefix = require('./utils').stripHexPrefix;
+
+/**
+ * Get the address from a public key
+ *
+ * @method getAddress
+ * @param {String} addressInput
+ * @returns {String} output the string is a hex string
+ */
+function getAddress(addressInput) {
+  let address = addressInput;
+  let result = null;
+
+  if (typeof(address) !== 'string') { throw new Error(`invalid address value ${JSON.stringify(address)} not a valid hex string`); }
+
+  // Missing the 0x prefix
+  if (address.substring(0, 2) !== '0x' && address.substring(0, 2) !== 'XE') {
+    address = `0x${address}`;
+  }
+
+  if (address.match(/^(0x)?[0-9a-fA-F]{40}$/)) {
+    result = getChecksumAddress(address);
+
+    // It is a checksummed address with a bad checksum
+    if (address.match(/([A-F].*[a-f])|([a-f].*[A-F])/) && result !== address) {
+      throw new Error('invalid address checksum');
+    }
+
+    // Maybe ICAP? (we only support direct mode)
+  } else if (address.match(/^XE[0-9]{2}[0-9A-Za-z]{30,31}$/)) {
+    throw new Error('ICAP and IBAN addresses, not supported yet..');
+
+    /*
+    // It is an ICAP address with a bad checksum
+    if (address.substring(2, 4) !== ibanChecksum(address)) {
+      throw new Error('invalid address icap checksum');
+    }
+
+    result = (new BN(address.substring(4), 36)).toString(16);
+    while (result.length < 40) { result = '0' + result; }
+    result = getChecksumAddress('0x' + result);
+    */
+  } else {
+    throw new Error(`invalid address value ${JSON.stringify(address)} not a valid hex string`);
+  }
+
+  return result;
+}
+
+/**
+ * Returns the public key for this private key.
+ *
+ * @method privateToPublic
+ * @param {String} privateKey a valid private key hex
+ * @returns {Object} publicKey the sepk 160 byte public key for this private key
+ */
+function privateToPublic(privateKey) {
+  if (typeof privateKey !== 'string') { throw new Error(`private key must be type String, got ${typeof(privateKey)}`); }
+  if (!privateKey.match(/^(0x)?[0-9a-fA-F]{64}$/)) {
+    throw new Error('private key must be an alphanumeric hex string that is 32 bytes long.');
+  }
+
+  const privateKeyBuffer = Buffer.from(stripHexPrefix(privateKey), 'hex');
+  return (Buffer.from(secp256k1.keyFromPrivate(privateKeyBuffer).getPublic(false, 'hex'), 'hex')).slice(1);
+}
+
+/**
+ * Returns the IrcChain standard address of a public sepk key.
+ *
+ * @method publicToAddress
+ * @param {Object} publicKey a single public key Buffer object
+ * @returns {String} address the 20 byte IrChain address
+ */
+function publicToAddress(publicKey) {
+  if (!Buffer.isBuffer(publicKey)) {
+    throw new Error('public key must be a buffer object in order to get public key address');
+  }
+  return getAddress(keccak256(publicKey).slice(24));
+}
+
+/**
+ * Returns an IrChain account address, private and public key based on the public key.
+ *
+ * @method privateToAccount
+ * @param {String} privateKey a single string of entropy longer than 32 chars
+ * @returns {Object} output the IrChain account address, and keys as hex strings
+ */
+function privateToAccount(privateKey) {
+  const publicKey = privateToPublic(privateKey);
+
+  return {
+    privateKey: `0x${stripHexPrefix(privateKey)}`,
+    publicKey: `0x${publicKey.toString('hex')}`,
+    address: publicToAddress(publicKey),
+  };
+}
+
+/**
+ * Create a single IrChain account address, private and public key.
+ *
+ * @method generate
+ * @param {String} entropy a single string of entropy longer than 32 chars
+ * @returns {Object} output the IrChain account address, and keys
+ */
+function generate(entropy) {
+  if (typeof entropy !== 'string') { throw new Error(`while generating account, invalid input type: '${typeof(entropy)}' should be type 'String'.`); }
+  if (entropy.length < 32) { throw new Error(`while generating account, entropy value not random and long enough, should be at least 32 characters of random information, is only ${entropy.length}`); }
+
+  return privateToAccount(keccak256(`${randomhex(16)}${keccak256(`${randomhex(32)}${entropy}`)}${randomhex(32)}`));
+}
+
+/**
+ * Get the checksum address of a address value
+ *
+ * @method getChecksumAddress
+ * @param {String} addressInput
+ * @returns {String} output hex string value
+ */
+function getChecksumAddress(addressInput) {
+  var address = addressInput;
+
+  if (typeof(address) !== 'string' || !address.match(/^0x[0-9A-Fa-f]{40}$/)) {
+    throw new Error(`invalid address value ${JSON.stringify(address)} not a valid hex string`);
+  }
+
+  address = address.substring(2).toLowerCase();
+  const hashed = Buffer.from(keccak256(address), 'hex');
+
+  address = address.split('');
+  for (var i = 0; i < 40; i += 2) {
+    if ((hashed[i >> 1] >> 4) >= 8) {
+      address[i] = address[i].toUpperCase();
+    }
+    if ((hashed[i >> 1] & 0x0f) >= 8) {
+      address[i + 1] = address[i + 1].toUpperCase();
+    }
+  }
+  return `0x${address.join('')}`;
+}
+
+// exports
+module.exports = {
+  generate,
+  getAddress,
+  privateToAccount,
+  getChecksumAddress,
+  publicToAddress,
+  privateToPublic,
+};
+
+}).call(this,require("buffer").Buffer)
+},{"./utils":181,"buffer":205,"elliptic":124,"js-sha3":183,"randomhex":191}],161:[function(require,module,exports){
+const abi = require('./abi');
+const IrcFilter = require('./filter');
+const getKeys = require('./utils').getKeys;
+const keccak256 = require('js-sha3').keccak_256;
+const promiseToCallback = require('promise-to-callback');
+
+module.exports = IrcContract;
+
+function IrcContract(query) {
+  return function(abi, bytecode, defaultTx) {
+    // validate params
+    if (!Array.isArray(abi)) {
+      throw new Error(`Contract ABI must be type Array, got type ${typeof abi}`);
+    }
+    if (typeof bytecode !== 'undefined' && typeof bytecode !== 'string') {
+      throw new Error(`Contract bytecode must be type String, got type ${typeof bytecode}`);
+    }
+    if (typeof defaultTx !== 'undefined' && typeof defaultTx !== 'object') {
+      throw new Error(`Contract default tx object must be type Object, got type ${typeof abi}`);
+    }
+
+    // build contract object
+    return {
+      at: address => new Contract({address, query, bytecode, defaultTx, abi}),
+      new: () => {
+        const args = [].slice.call(arguments);
+        const callback = utils.popCallback(args);
+        const providedTx = hasTransactionObject(args) && args.pop();
+        const constructor = getConstructorFromABI(abi);
+        const assembleTx = Object.assign({}, defaultTx, providedTx);
+
+        // set contract deploy bytecode
+        if (bytecode) {
+          assembleTx.data = bytecode;
+        }
+        // append encoded constructor arguments
+        if (constructor) {
+          assembleTx.data += abi.encodeParams(getKeys(constructor.inputs, 'type'), args).substring(2);
+        }
+
+        return callback ? query.sendTransaction(assembleTx, callback) : query.sendTransaction(assembleTx);
+      },
+    };
+  };
+}
+
+function Contract(opts = {}) {
+  const self = this;
+  self.abi = opts.abi || [];
+  self.query = opts.query;
+  self.address = opts.address || '0x';
+  self.bytecode = opts.bytecode || '0x';
+  self.defaultTx = opts.defaultTx || {};
+  self.filters = new IrcFilter(self.query);
+
+  getCallableMethodsFromABI(self.abi).forEach((methodObject) => {
+    if (methodObject.type === 'function') {
+      self[methodObject.name] = createContractFunction(methodObject);
+    } else if (methodObject.type === 'event') {
+      self[methodObject.name] = createContractEvent(methodObject);
+    }
+  });
+
+  function createContractEvent(methodObject) {
+    return function contractEvent() {
+      const methodArgs = [].slice.call(arguments);
+
+      const filterInputTypes = getKeys(methodObject.inputs, 'type', false);
+      const filterTopic = `0x${keccak256(`${methodObject.name}(${filterInputTypes.join(',')})`)}`;
+      const filterTopics = [filterTopic];
+      const argsObject = Object.assign({}, methodArgs[0]) || {};
+
+      const defaultFilterObject = Object.assign({}, (methodArgs[0] || {}), {
+        to: self.address,
+        topics: filterTopics,
+      });
+      const filterOpts = Object.assign({}, argsObject, {
+        decoder: (logData) => abi.decodeEvent(logData, filterTopics),
+        defaultFilterObject,
+      });
+
+      return new self.filters.Filter(filterOpts);
+    };
+  }
+
+  function createContractFunction(methodObject) {
+    return function contractFunction() {
+      let methodCallback;
+      const methodArgs = [].slice.call(arguments);
+      if (typeof methodArgs[methodArgs.length - 1] === 'function') {
+        methodCallback = methodArgs.pop();
+      }
+
+      const promise = performCall({methodObject, methodArgs});
+
+      if (methodCallback) {
+        return promiseToCallback(promise)(methodCallback);
+      }
+
+      return promise;
+    };
+  }
+
+  async function performCall({methodObject, methodArgs}) {
+    let queryMethod = 'call';
+    let providedTxObject = {};
+
+    if (hasTransactionObject(methodArgs)) providedTxObject = methodArgs.pop();
+    const methodTxObject = Object.assign(
+      {},
+      self.defaultTx,
+      providedTxObject, {to: self.address});
+    methodTxObject.data = abi.encodeMethod(methodObject, methodArgs);
+
+    if (methodObject.constant === false) {
+      queryMethod = 'sendTransaction';
+    }
+    const queryResult = await self.query[queryMethod](methodTxObject);
+
+    if (queryMethod === 'call') {
+      // queryMethod is 'call', result is returned value
+      try {
+        return abi.decodeCall(methodObject, queryResult);
+      } catch (err) {
+        throw new Error(`while formatting incoming raw call data ${JSON.stringify(queryResult)} ${err}`);
+      }
+    }
+    // queryMethod is 'sendTransaction', result is txHash
+    return queryResult;
+  }
+}
+
+const txObjectProperties = ['from', 'to', 'data', 'value', 'gasPrice', 'gas'];
+
+const hasTransactionObject = function(args) {
+  // bad/empty args: bad
+  if (!Array.isArray(args) || args.length === 0) {
+    return false;
+  }
+  const lastArg = args[args.length - 1];
+  // missing or non-object: bad
+  if (!lastArg) return false;
+  if (typeof lastArg !== 'object') {
+    return false;
+  }
+  // empty object: good
+  if (Object.keys(lastArg).length === 0) {
+    return true;
+  }
+  // txParams object: good
+  const keys = Object.keys(lastArg);
+  const hasMatchingKeys = txObjectProperties.some((value) => keys.includes(value));
+  if (hasMatchingKeys) {
+    return true;
+  }
+  // no match
+  return false;
+};
+
+const getConstructorFromABI = function(abi) {
+  return abi.filter((json) => (json.type === 'constructor'))[0];
+};
+
+const getCallableMethodsFromABI = function(abi) {
+  return abi.filter((json) => ((json.type === 'function' || json.type === 'event') && json.name.length > 0));
+};
+},{"./abi":159,"./filter":163,"./utils":181,"js-sha3":183,"promise-to-callback":188}],162:[function(require,module,exports){
+// External Deps
+const IrcQuery = require('./query');
+const IrcContract = require('./contract');
+const namehash = require('./lib/ens-name-hash');
+
+// ABIs
+const registryAbi = require('./res/ens/registry.json');
+const resolverAbi = require('./res/ens/resolver.json');
+
+// var (
+// MainnetGenesisHash = common.HexToHash("0xf29c3da3e1710517cbb3a555ab20981ec2c9abacbbcb914ab91e8c23edfbf4d0")
+// TestnetGenesisHash = common.HexToHash("0x389d168191585e7a14b01a654c02058053abf3ca3d167efb69a51dec86d9cfbc")
+// )
+// Map network to known ENS registries
+const networkMap = require('./res/ens/network-map');
+const emptyHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
+const emptyAddr = '0x0000000000000000000000000000000000000000';
+
+const NotFoundError = new Error('ENS name not defined.');
+const BadCharacterError = new Error('Illegal Character for ENS.');
+
+class IrcEns {
+  static get networkMap() {return networkMap;} ;
+  static get namehash() {return namehash}
+
+  constructor(opts = {}) {
+    const {provider, network} = opts;
+    let {registryAddress} = opts;
+
+    // Validations
+    if (!provider) {
+      throw new Error('The IrcJsENS Constructor requires a provider.');
+    }
+
+    // Requires EITHER a network or a registryAddress
+    if (!network && !registryAddress) {
+      throw new Error('The IrcJsENS Constructor requires a network or registry address.');
+    }
+
+    this.provider = provider;
+    this.irc = new IrcQuery(this.provider);
+    this.contract = new IrcContract(this.irc);
+
+    // Link to Registry
+    this.Registry = this.contract(registryAbi);
+    if (!registryAddress && network) {
+      registryAddress = networkMap[network];
+    }
+    this.registry = this.Registry.at(registryAddress);
+
+    // Create Resolver class
+    this.Resolver = this.contract(resolverAbi);
+  }
+
+  lookup(name = '') {
+    return IrcEns.getNamehash(name)
+                 .then((node) => {
+                 if (node === emptyHash) {
+                   return Promise.reject(NotFoundError);
+                 }
+                 return this.resolveAddressForNode(node);
+               });
+  }
+
+  static getNamehash(name) {
+    try {
+      return Promise.resolve(namehash.hash(name));
+    } catch (e) {
+      return Promise.reject(BadCharacterError);
+    }
+  }
+
+  getOwner(name = '') {
+    return IrcEns.getNamehash(name)
+                 .then(node => this.getOwnerForNode(node));
+  }
+
+  getOwnerForNode(node) {
+    if (node === emptyHash) {
+      return Promise.reject(NotFoundError);
+    }
+    return this.registry.owner(node)
+               .then((result) => {
+                 const ownerAddress = result[0];
+                 if (ownerAddress === emptyAddr) {
+                   throw NotFoundError;
+                 }
+
+                 return ownerAddress;
+               });
+  }
+
+  getResolver(name = '') {
+    return IrcEns.getNamehash(name)
+                 .then(node => this.getResolverForNode(node));
+  }
+
+  getResolverAddress(name = '') {
+    return IrcEns.getNamehash(name)
+                 .then(node => this.getResolverAddressForNode(node));
+  }
+
+  getResolverForNode(node) {
+    if (!node.startsWith('0x')) {
+      node = `0x${node}`;
+    }
+
+    return this.getResolverAddressForNode(node)
+               .then((resolverAddress) => {
+                 return this.Resolver.at(resolverAddress);
+               });
+  }
+
+  getResolverAddressForNode(node) {
+    return this.registry.resolver(node)
+               .then((result) => {
+                 const resolverAddress = result[0];
+                 if (resolverAddress === emptyAddr) {
+                   throw NotFoundError;
+                 }
+                 return resolverAddress;
+               });
+  }
+
+  resolveAddressForNode(node) {
+    return this.getResolverForNode(node)
+               .then((resolver) => {
+                 return resolver.addr(node);
+               })
+               .then(result => result[0]);
+  }
+
+  reverse(address) {
+    if (!address) {
+      return Promise.reject(new Error('Must supply an address to reverse lookup.'));
+    }
+
+    if (address.startsWith('0x')) {
+      address = address.slice(2);
+    }
+
+    const name = `${address.toLowerCase()}.addr.reverse`;
+    const node = IrcEns.namehash(name);
+    return IrcEns.getNamehash(name)
+                 .then(node => this.getResolverForNode(node))
+                 .then(resolver => resolver.name(node))
+                 .then(results => results[0]);
+  }
+}
+
+module.exports = IrcEns;
+},{"./contract":161,"./lib/ens-name-hash":167,"./query":170,"./res/ens/network-map":171,"./res/ens/registry.json":172,"./res/ens/resolver.json":173}],163:[function(require,module,exports){
+function constructFilter(filterName, query) {
+  function Filter(options) {
+    const self = this;
+    self.filterId = null;
+    self.options = Object.assign({
+      delay: 300,
+      decoder: function decodeData(data) { return data; },
+      defaultFilterObject: {},
+    }, options || {});
+
+    self.watchers = {};
+    self.interval = setInterval(() => {
+      if (self.filterId !== null && Object.keys(self.watchers).length > 0) {
+        query.getFilterChanges(self.filterId, (changeError, changeResult) => {
+          const decodedChangeResults = [];
+          let decodingError = null;
+
+          if (!changeError) {
+            try {
+              changeResult.forEach((log, logIndex) => {
+                decodedChangeResults[logIndex] = changeResult[logIndex];
+                if (typeof changeResult[logIndex] === 'object') {
+                  decodedChangeResults[logIndex].data = self.options.decoder(decodedChangeResults[logIndex].data);
+                }
+              });
+            } catch (decodingErrorMesage) {
+              decodingError = new Error(`while decoding filter change event data from RPC '${JSON.stringify(decodedChangeResults)}': ${decodingErrorMesage}`);
+            }
+          }
+
+          Object.keys(self.watchers).forEach((id) => {
+            const watcher = self.watchers[id];
+            if (watcher.stop === true) {
+              delete self.watchers[id];
+              return;
+            }
+
+            if (decodingError) {
+              watcher.reject(decodingError);
+              watcher.callback(decodingError, null);
+            } else {
+              if (changeError) {
+                watcher.reject(changeError);
+              } else if (Array.isArray(decodedChangeResults) && changeResult.length > 0) {
+                watcher.resolve(decodedChangeResults);
+              }
+
+              watcher.callback(changeError, decodedChangeResults);
+            }
+          });
+        });
+      }
+    }, self.options.delay);
+  }
+
+  Filter.prototype.at = function atFilter(filterId) {
+    const self = this;
+    self.filterId = filterId;
+  };
+
+  Filter.prototype.watch = function watchFilter(watchCallbackInput) {
+    var callback = watchCallbackInput || function() {};
+    const self = this;
+    const id = Math.random().toString(36).substring(7);
+    const output = new Promise((resolve, reject) => {
+      self.watchers[id] = {resolve, reject, callback, stop: false};
+    });
+
+    output.stopWatching = function stopWatching() {
+      self.watchers[id].stop = true;
+    };
+
+    return output;
+  };
+
+  Filter.prototype.uninstall = function uninstallFilter(cb) {
+    const self = this;
+    const callback = cb || function emptyCallback() {};
+    self.watchers = Object.assign({});
+    clearInterval(self.interval);
+
+    return new Promise((resolve, reject) => {
+      query.uninstallFilter(self.filterId, (uninstallError, uninstallResilt) => {
+        if (uninstallError) {
+          reject(uninstallError);
+        } else {
+          resolve(uninstallResilt);
+        }
+
+        callback(uninstallError, uninstallResilt);
+      });
+    });
+  };
+
+  Filter.prototype.new = function newFilter() {
+    var callback = () => {};
+    const self = this;
+    const filterInputs = [];
+    const args = [].slice.call(arguments);
+    // pop callback if provided
+    if (typeof args[args.length - 1] === 'function') {
+      callback = args.pop();
+    }
+
+    // if a param object was presented, push that into the inputs
+    if (filterName === 'Filter') {
+      filterInputs.push(Object.assign(
+        self.options.defaultFilterObject,
+        (args[args.length - 1] || {})));
+    }
+
+    return new Promise((resolve, reject) => {
+      // add complex callback
+      filterInputs.push((setupError, filterId) => {
+        if (!setupError) {
+          self.filterId = filterId;
+          resolve(filterId);
+        } else {
+          reject(setupError);
+        }
+
+        callback(setupError, filterId);
+      });
+
+      // apply filter, call new.. filter method
+      query[`new${filterName}`].apply(query, filterInputs);
+    });
+  };
+
+  return Filter;
+}
+
+/**
+ * IrcFilter constructor, intakes a query, helps manage filter event polling
+ *
+ * @method IrcFilter
+ * @param {Object} query the `ircjs-query` or `irc-query` object
+ * @returns {Object} output an IrcFilter instance
+ * @throws error if new is not used
+ */
+function IrcFilter(query) {
+  const self = this;
+  if (!(self instanceof IrcFilter)) {
+    throw new Error('the IrcFilter object must be instantiated with `new` flag...');
+  }
+  if (typeof query !== 'object') {
+    throw new Error('the IrcFilter object must be instantiated with an IrcQuery instance.');
+  }
+
+  self.Filter = constructFilter('Filter', query);
+  self.BlockFilter = constructFilter('BlockFilter', query);
+  self.PendingTransactionFilter = constructFilter('PendingTransactionFilter', query);
+}
+
+// export IrcFilter
+module.exports = IrcFilter;
+
+},{}],164:[function(require,module,exports){
+const schema = require('./schema');
+const util = require('./utils');
+const toBN = util.toBN;
+const stripHexPrefix = util.stripHexPrefix;
+const BN = require('bn.js');
+const padToEven = util.padToEven;
+const arrayContainsArray = util.arrayContainsArray;
+const getBinarySize = util.getBinarySize;
+const ten = new BN('10', 10);
+
+/**
+ * Format quantity values, either encode to hex or decode to BigNumber
+ * should intake null, stringNumber, number, BN
+ *
+ * @method formatQuantity
+ * @param {String|BigNumber|Number} value quantity or tag to convert
+ * @param {Boolean} encode to hex or decode to BigNumber
+ * @param {Boolean} pad
+ * @returns {String|BigNumber|Number} output to BigNumber or string
+ * @throws error if value is a float
+ */
+function formatQuantity(value, encode, pad) {
+  if (['string', 'number', 'object'].indexOf(typeof value) === -1 || value === null) {
+    return value;
+  }
+
+  const numberValue = toBN(value);
+  const numPadding = numberValue.lt(ten) && pad === true && !numberValue.isZero() ? '0' : '';
+
+  if (toBN(value).isNeg()) {
+    throw new Error(`while formatting quantity '${numberValue.toString(10)}', invalid negative number. Number must be positive or zero.`);
+  }
+
+  return encode ? `0x${numPadding}${numberValue.toString(16)}` : numberValue;
+}
+
+/**
+ * Format quantity or tag, if tag bypass return, else format quantity
+ * should intake null, stringNumber, number, BN, string tag
+ *
+ * @method formatQuantityOrTag
+ * @param {String|BigNumber|Number} value quantity or tag to convert
+ * @param {Boolean} encode encode the number to hex or decode to BigNumber
+ * @returns {Object|String} output to BigNumber or string
+ * @throws error if value is a float
+ */
+function formatQuantityOrTag(value, encode) {
+  let output = value;
+
+  // if the value is a tag, bypass
+  if (schema.tags.indexOf(value) === -1) {
+    output = formatQuantity(value, encode, null);
+  }
+
+  return output;
+}
+
+/**
+ * FormatData under strict conditions hex prefix
+ *
+ * @method formatData
+ * @param {String} value the bytes data to be formatted
+ * @param {Number} byteLength the required byte length (usually 20 or 32)
+ * @returns {String} output output formatted data
+ * @throws error if minimum length isnt met
+ */
+function formatData(value, byteLength) {
+  var output = value;
+  var outputByteLength = 0;
+
+  // prefix only under strict conditions, else bypass
+  if (typeof value === 'string') {
+    output = `0x${padToEven(stripHexPrefix(value))}`;
+    outputByteLength = getBinarySize(output);
+  }
+
+  // format double padded zeros.
+  if (output === '0x00') { output = '0x0'; }
+
+  // throw if bytelength is not correct
+  if (typeof byteLength === 'number' && value !== null && output !== '0x' && output !== '0x0' // support empty values
+    && (!/^[0-9A-Fa-f]+$/.test(stripHexPrefix(output)) || outputByteLength !== 2 + byteLength * 2)) {
+    throw new Error(`hex string '${output}' must be an alphanumeric ${2 + byteLength * 2} utf8 byte hex (chars: a-fA-F) string, is ${outputByteLength} bytes`);
+  }
+
+  return output;
+}
+
+/**
+ * Format object, even with random RPC caviets
+ *
+ * @method formatObject
+ * @param {String|Array} formatter the unit to convert to, default ircer
+ * @param {Object} value the object value
+ * @param {Boolean} encode encode to hex or decode to BigNumber
+ * @returns {Object} output object
+ * @throws error if value is a float
+ */
+function formatObject(formatter, value, encode) {
+  var output = Object.assign({}, value);
+  var formatObject = null;
+
+  // if the object is a string flag, then retreive the object
+  if (typeof formatter === 'string') {
+    if (formatter === 'Boolean|IrcSyncing') {
+      formatObject = Object.assign({}, schema.objects.IrcSyncing);
+    } else if (formatter === 'DATA|Transaction') {
+      formatObject = Object.assign({}, schema.objects.Transaction);
+    } else {
+      formatObject = Object.assign({}, schema.objects[formatter]);
+    }
+  }
+
+  // check if all required data keys are fulfilled
+  if (!arrayContainsArray(Object.keys(value), formatObject.__required)) {
+    throw new Error(`object ${JSON.stringify(value)} must contain properties: ${formatObject.__required.join(', ')}`);
+  }
+
+  // assume formatObject is an object, go through keys and format each
+  Object.keys(formatObject).forEach((valueKey) => {
+    if (valueKey !== '__required' && typeof value[valueKey] !== 'undefined') {
+      output[valueKey] = format(formatObject[valueKey], value[valueKey], encode);
+    }
+  });
+
+  return output;
+}
+
+/**
+ * Format array
+ *
+ * @method formatArray
+ * @param {String|Array} formatter the unit to convert to, default ircer
+ * @param {Object} value the value in question
+ * @param {Boolean} encode encode to hex or decode to BigNumber
+ * @param {Number} lengthRequirement the required minimum array length
+ * @returns {Object} output object
+ * @throws error if minimum length isnt met
+ */
+function formatArray(formatter, value, encode, lengthRequirement) {
+  const output = value.slice();
+  let formatObject = formatter;
+
+  // if the formatter is an array or data, then make format object an array data
+  if (formatter === 'Array|DATA') {
+    formatObject = ['D'];
+  }
+
+  // if formatter is a FilterChange and acts like a BlockFilter
+  // or PendingTx change format object to tx hash array
+  if (formatter === 'FilterChange' && typeof value[0] === 'string') {
+    formatObject = ['D32'];
+  }
+
+  // enforce minimum value length requirements
+  if (encode === true
+    && typeof lengthRequirement === 'number'
+    && value.length < lengthRequirement) {
+    throw new Error(`array ${JSON.stringify(value)} must contain at least ${lengthRequirement} params, but only contains ${value.length}.`);
+  }
+
+  // make new array, avoid mutation
+  formatObject = formatObject.slice();
+
+  // assume formatObject is an object, go through keys and format each
+  value.forEach((valueKey, valueIndex) => {
+    // use key zero as formatter for all values, unless otherwise specified
+    let formatObjectKey = 0;
+
+    // if format array is exact, check each argument against formatter argument
+    if (formatObject.length > 1) {
+      formatObjectKey = valueIndex;
+    }
+
+    output[valueIndex] = format(formatObject[formatObjectKey], valueKey, encode, null);
+  });
+
+  return output;
+}
+
+/**
+ * Format various kinds of data to RPC spec or into digestable JS objects
+ *
+ * @method format
+ * @param {String|Array} formatter the data formatter
+ * @param {String|Array|Object|Null|Number} value the data value input
+ * @param {Boolean} encode encode to hex or decode to BigNumbers, Strings, Booleans, Null
+ * @param {Number} lengthRequirement the minimum data length requirement
+ * @throws error if minimum length isnt met
+ */
+function format(formatter, value, encode, lengthRequirement) {
+  let output = value;
+
+  // if formatter is quantity or quantity or tag
+  if (formatter === 'Q') {
+    output = formatQuantity(value, encode);
+  } else if (formatter === 'QP') {
+    output = formatQuantity(value, encode, true);
+  } else if (formatter === 'Q|T') {
+    output = formatQuantityOrTag(value, encode);
+  } else if (formatter === 'D') {
+    output = formatData(value); // dont format data flagged objects like compiler output
+  } else if (formatter === 'D20') {
+    output = formatData(value, 20); // dont format data flagged objects like compiler output
+  } else if (formatter === 'D32') {
+    output = formatData(value, 32); // dont format data flagged objects like compiler output
+  } else {
+    // if value is an object or array
+    if (typeof value === 'object'
+      && value !== null
+      && Array.isArray(value) === false) {
+      output = formatObject(formatter, value, encode);
+    } else if (Array.isArray(value)) {
+      output = formatArray(formatter, value, encode, lengthRequirement);
+    }
+  }
+
+  return output;
+}
+
+/**
+ * Format RPC inputs generally to the node or TestRPC
+ *
+ * @method formatInputs
+ * @param {Object} method the data formatter
+ * @param {Array} inputs the data inputs
+ * @returns {Array} output the formatted inputs array
+ * @throws error if minimum length isnt met
+ */
+function formatInputs(method, inputs) {
+  return format(schema.methods[method][0], inputs, true, schema.methods[method][2]);
+}
+
+/**
+ * Format RPC outputs generally from the node or TestRPC
+ *
+ * @method formatOutputs
+ * @param {Object} method the data formatter
+ * @param {Array|String|Null|Boolean|Object} outputs the data inputs
+ * @returns {Array|String|Null|Boolean|Object} output the formatted data
+ */
+function formatOutputs(method, outputs) {
+  return format(schema.methods[method][1], outputs, false, null);
+}
+
+// export formatters
+module.exports = {
+  schema,
+  formatQuantity,
+  formatQuantityOrTag,
+  formatObject,
+  formatArray,
+  format,
+  formatInputs,
+  formatOutputs,
+};
+
+},{"./schema":178,"./utils":181,"bn.js":21}],165:[function(require,module,exports){
+(function (Buffer){
+const IrcEns = require('./ens');
+const IrcQuery = require('./query');
+const IrcFilter = require('./filter');
+const IrcContract = require('./contract');
+const HttpProvider = require('./provider');
+const abi = require('./abi');
+const account = require('./account');
+const format = require('./format');
+const schema = require('./schema');
+const signer = require('./signer');
+const unit = require('./unit');
+const utils = require('./utils');
+const scanLink = require('./scan-link');
+const keccak256 = utils.keccak256;
+const BN = require('bn.js');
+const getTxSuccess = require('./lib/get-tx-success');
+
+module.exports = Irc;
+
+/**
+ * Returns the ircjs Irc instance.
+ *
+ * @method Irc
+ * @param {Object} provider the webu standard provider object
+ * @param {Object} options the Irc options object
+ * @returns {Object} irc Irc object instance
+ * @throws if the new flag is not used in construction
+ */
+
+function Irc(provider, options) {
+  if (!(this instanceof Irc)) { throw new Error('the Irc object requires you construct it with the "new" flag.'); }
+  const self = this;
+  self.options = options || {};
+  const query = new IrcQuery(provider, self.options.query);
+  Object.keys(Object.getPrototypeOf(query)).forEach(
+    method => self[method] = query[method].bind(query));
+  self.filter = new IrcFilter(query);
+  self.contract = abi => (new IrcContract(query))(abi); // parentheses for helping IDE to type inference
+  self.currentProvider = query.rpc.currentProvider;
+  self.setProvider = query.setProvider;
+  self.getTxSuccess = getTxSuccess(self);
+}
+
+Irc.abi = abi;
+Irc.account = account;
+Irc.format = format;
+Irc.schema = schema;
+Irc.signer = signer;
+Irc.scanLink = scanLink;
+Irc.HttpProvider = HttpProvider;
+Irc.Contract = IrcContract;
+Irc.Query = IrcQuery;
+Irc.ENS = IrcEns;
+Irc.isAddress = (val) => utils.isHexString(val, 20);
+Irc.keccak256 = (val) => `0x${keccak256(val)}`;
+Irc.BN = BN;
+Irc.Buffer = Buffer;
+Irc.isHexString = utils.isHexString;
+Irc.fromWei = unit.fromWei;
+Irc.toWei = unit.toWei;
+Irc.toBN = utils.toBN;
+Irc.fromAscii = utils.fromAscii;
+Irc.toAscii = utils.toAscii;
+Irc.fromUtf8 = utils.fromUtf8;
+Irc.toUtf8 = utils.toUtf8;
+
+}).call(this,require("buffer").Buffer)
+},{"./abi":159,"./account":160,"./contract":161,"./ens":162,"./filter":163,"./format":164,"./lib/get-tx-success":168,"./provider":169,"./query":170,"./scan-link":177,"./schema":178,"./signer":179,"./unit":180,"./utils":181,"bn.js":21,"buffer":205}],166:[function(require,module,exports){
+(function (Buffer){
+const BN = require('bn.js');
+const util = require('../utils');
+
+const uint256Coder = coderNumber(32, false);
+
+function coderNumber(size, signed) {
+  return {
+    encode: function encodeNumber(valueInput) {
+      let value = valueInput;
+
+      if (typeof value === 'object'
+        && value.toString
+        && (value.toTwos || value.dividedToIntegerBy)) {
+        value = (value.toString(10)).split('.')[0];
+      }
+
+      if (typeof value === 'string' || typeof value === 'number') {
+        value = String(value).split('.')[0];
+      }
+
+      value = util.toBN(value);
+      value = value.toTwos(size * 8).maskn(size * 8);
+      if (signed) {
+        value = value.fromTwos(size * 8).toTwos(256);
+      }
+      return value.toArrayLike(Buffer, 'be', 32);
+    },
+    decode: function decodeNumber(data, offset) {
+      const junkLength = 32 - size;
+      let value = new BN(data.slice(offset + junkLength, offset + 32));
+      if (signed) {
+        value = value.fromTwos(size * 8);
+      } else {
+        value = value.maskn(size * 8);
+      }
+      return {
+        consumed: 32,
+        value: new BN(value.toString(10)),
+      };
+    },
+  };
+}
+
+const coderBoolean = {
+  encode: function encodeBoolean(value) {
+    return uint256Coder.encode(value ? 1 : 0);
+  },
+  decode: function decodeBoolean(data, offset) {
+    const result = uint256Coder.decode(data, offset);
+    return {
+      consumed: result.consumed,
+      value: !result.value.isZero(),
+    };
+  },
+};
+
+function coderFixedBytes(length) {
+  return {
+    encode: function encodeFixedBytes(valueInput) {
+      let value = valueInput;
+      value = util.hexToBuffer(value);
+
+      if (value.length === 32) { return value; }
+
+      const result = Buffer.alloc(32);
+      result.fill(0);
+      value.copy(result);
+      return result;
+    },
+    decode: function decodeFixedBytes(data, offset) {
+      if (data.length !== 0 && data.length < offset + 32) { throw new Error(`while decoding fixed bytes, invalid bytes data length: ${length}`); }
+
+      return {
+        consumed: 32,
+        value: `0x${data.slice(offset, offset + length).toString('hex')}`,
+      };
+    },
+  };
+}
+
+const coderAddress = {
+  encode: function encodeAddress(valueInput) {
+    let value = valueInput;
+    const result = Buffer.alloc(32);
+    if (!util.isHexString(
+      value,
+      20)) { throw new Error('while encoding address, invalid address value, not alphanumeric 20 byte hex string'); }
+    value = util.hexToBuffer(value);
+    result.fill(0);
+    value.copy(result, 12);
+    return result;
+  },
+  decode: function decodeAddress(data, offset) {
+    if (data.length === 0) {
+      return {
+        consumed: 32,
+        value: '0x',
+      };
+    }
+    if (data.length !== 0 && data.length < offset + 32) { throw new Error(`while decoding address data, invalid address data, invalid byte length ${data.length}`); }
+    return {
+      consumed: 32,
+      value: `0x${data.slice(offset + 12, offset + 32).toString('hex')}`,
+    };
+  },
+};
+
+function encodeDynamicBytesHelper(value) {
+  const dataLength = parseInt(32 * Math.ceil(value.length / 32));
+  const padding = Buffer.alloc(dataLength - value.length);
+  padding.fill(0);
+
+  return Buffer.concat([
+    uint256Coder.encode(value.length),
+    value,
+    padding,
+  ]);
+}
+
+function decodeDynamicBytesHelper(data, offset) {
+  if (data.length !== 0 && data.length < offset + 32) {
+    throw new Error(`while decoding dynamic bytes data, invalid bytes length: ${data.length} should be less than ${offset + 32}`);
+  }
+
+  let length = uint256Coder.decode(data, offset).value;
+  length = length.toNumber();
+  if (data.length !== 0 && data.length < offset + 32 + length) {
+    throw new Error(`while decoding dynamic bytes data, invalid bytes length: ${data.length} should be less than ${offset + 32 + length}`);
+  }
+
+  return {
+    consumed: parseInt(32 + 32 * Math.ceil(length / 32), 10),
+    value: data.slice(offset + 32, offset + 32 + length),
+  };
+}
+
+const coderDynamicBytes = {
+  encode: function encodeDynamicBytes(value) {
+    return encodeDynamicBytesHelper(util.hexToBuffer(value));
+  },
+  decode: function decodeDynamicBytes(data, offset) {
+    const result = decodeDynamicBytesHelper(data, offset);
+    result.value = `0x${result.value.toString('hex')}`;
+    return result;
+  },
+  dynamic: true,
+};
+
+const coderString = {
+  encode: function encodeString(value) {
+    return encodeDynamicBytesHelper(Buffer.from(value, 'utf8'));
+  },
+  decode: function decodeString(data, offset) {
+    const result = decodeDynamicBytesHelper(data, offset);
+    result.value = result.value.toString('utf8');
+    return result;
+  },
+  dynamic: true,
+};
+
+function coderArray(coder, lengthInput) {
+  return {
+    encode: function encodeArray(value) {
+      let result = Buffer.alloc(0);
+      let length = lengthInput;
+
+      if (!Array.isArray(value)) { throw new Error('while encoding array, invalid array data, not type Object (Array)'); }
+
+      if (length === -1) {
+        length = value.length;
+        result = uint256Coder.encode(length);
+      }
+
+      if (length !== value.length) { throw new Error(`while encoding array, size mismatch array length ${length} does not equal ${value.length}`); }
+
+      value.forEach((resultValue) => {
+        result = Buffer.concat([
+          result,
+          coder.encode(resultValue),
+        ]);
+      });
+
+      return result;
+    },
+    decode: function decodeArray(data, offsetInput) {
+      let length = lengthInput;
+      let offset = offsetInput;
+      // @TODO:
+      // if (data.length < offset + length * 32) { throw new Error('invalid array'); }
+
+      let consumed = 0;
+      let decodeResult;
+
+      if (length === -1) {
+        decodeResult = uint256Coder.decode(data, offset);
+        length = decodeResult.value.toNumber();
+        consumed += decodeResult.consumed;
+        offset += decodeResult.consumed;
+      }
+
+      const value = [];
+
+      for (let i = 0; i < length; i++) {
+        const loopResult = coder.decode(data, offset);
+        consumed += loopResult.consumed;
+        offset += loopResult.consumed;
+        value.push(loopResult.value);
+      }
+
+      return {
+        consumed,
+        value,
+      };
+    },
+    dynamic: (lengthInput === -1),
+  };
+}
+
+// Break the type up into [staticType][staticArray]*[dynamicArray]? | [dynamicType] and
+// build the coder up from its parts
+const paramTypePart = new RegExp(/^((u?int|bytes)([0-9]*)|(address|bool|string)|(\[([0-9]*)]))/);
+
+function getParamCoder(typeInput) {
+  let type = typeInput;
+  let coder = null;
+  const invalidTypeErrorMessage = `while getting param coder type value ${JSON.stringify(type)} is either invalid or unsupported.`;
+
+  while (type) {
+    let part = type.match(paramTypePart);
+    if (!part) { throw new Error(invalidTypeErrorMessage); }
+    type = type.substring(part[0].length);
+
+    const prefix = (part[2] || part[4] || part[5]);
+    switch (prefix) {
+      case 'int':
+      case 'uint':
+        if (coder) { throw new Error(invalidTypeErrorMessage); }
+        const intSize = parseInt(part[3] || 256);
+        if (intSize === 0 || intSize > 256 || (intSize % 8) !== 0) {
+          throw new Error(`while getting param coder for type ${type}, invalid ${prefix}<N> width: ${type}`);
+        }
+        coder = coderNumber(intSize / 8, (prefix === 'int'));
+        break;
+      case 'bool':
+        if (coder) { throw new Error(invalidTypeErrorMessage); }
+        coder = coderBoolean;
+        break;
+      case 'string':
+        if (coder) { throw new Error(invalidTypeErrorMessage); }
+        coder = coderString;
+        break;
+      case 'bytes':
+        if (coder) { throw new Error(invalidTypeErrorMessage); }
+        if (part[3]) {
+          const size = parseInt(part[3]);
+          if (size === 0 || size > 32) {
+            throw new Error(`while getting param coder for prefix bytes, invalid type ${type}, size ${size} should be 0 or greater than 32`);
+          }
+          coder = coderFixedBytes(size);
+        } else {
+          coder = coderDynamicBytes;
+        }
+        break;
+      case 'address':
+        if (coder) { throw new Error(invalidTypeErrorMessage); }
+        coder = coderAddress;
+        break;
+      case '[]':
+        if (!coder || coder.dynamic) { throw new Error(invalidTypeErrorMessage); }
+        coder = coderArray(coder, -1);
+        break;
+      default:
+        // "[0-9+]"
+        if (!coder || coder.dynamic) { throw new Error(invalidTypeErrorMessage); }
+        const defaultSize = parseInt(part[6]);
+        coder = coderArray(coder, defaultSize);
+    }
+  }
+
+  if (!coder) { throw new Error(invalidTypeErrorMessage); }
+  return coder;
+}
+
+module.exports = {
+  coderNumber,
+  uint256Coder,
+  coderBoolean,
+  coderFixedBytes,
+  coderAddress,
+  coderDynamicBytes,
+  coderString,
+  coderArray,
+  paramTypePart,
+  getParamCoder,
+};
+
+}).call(this,require("buffer").Buffer)
+},{"../utils":181,"bn.js":21,"buffer":205}],167:[function(require,module,exports){
+(function (Buffer){
+const keccak = require('js-sha3').keccak_256;
+const uts46 = require('idna-uts46-hx');
+
+function namehash(name) {
+  let i, node = '';
+  for (i = 0; i < 32; i++) {
+    node += '00';
+  }
+
+  name = normalize(name);
+
+  if (name) {
+    const labels = name.split('.');
+
+    for (i = labels.length - 1; i >= 0; i--) {
+      const labelSha = keccak(labels[i]);
+      node = keccak(Buffer.from(node + labelSha, 'hex'));
+    }
+  }
+
+  return '0x' + node;
+}
+
+function normalize(name) {
+  return name ? uts46.toAscii(name, {useStd3ASCII: true, transitional: false}) : name;
+}
+
+exports.hash = namehash;
+exports.normalize = normalize;
+}).call(this,require("buffer").Buffer)
+},{"buffer":205,"idna-uts46-hx":154,"js-sha3":183}],168:[function(require,module,exports){
+module.exports = irc => (txHash, callback) => {
+  let count = 0;
+
+  const timeout = irc.options.timeout || 800000;
+  const interval = irc.options.interval || 7000;
+
+  const prom = new Promise((resolve, reject) => {
+    const txInterval = setInterval(() => {
+      irc.getTransactionReceipt(txHash, (err, result) => {
+        if (err) {
+          clearInterval(txInterval);
+          reject(err);
+        }
+
+        if (!err && result) {
+          clearInterval(txInterval);
+          resolve(result);
+        }
+      });
+
+      if (count >= timeout) {
+        clearInterval(txInterval);
+        const errMessage = `Receipt timeout waiting for tx hash: ${txHash}`;
+        reject(errMessage);
+      }
+
+      count += interval;
+    }, interval);
+  });
+
+  if (callback) {
+    prom.then(res => callback(null, res)).catch(err => callback(err, null));
+  }
+
+  return callback ? null : prom;
+};
+
+},{}],169:[function(require,module,exports){
+// workaround to use httpprovider in different envs
+const XHR2 = require('xhr2');
+
+/**
+ * InvalidResponseError helper for invalid errors.
+ */
+function invalidResponseError(result, host) {
+  const message = !!result && !!result.error && !!result.error.message
+    ? `${result.error.message}`
+    : `Invalid JSON RPC response from host provider ${host}: ${JSON.stringify(result, null, 2)}`;
+  return new Error(message);
+}
+
+/**
+ * HttpProvider should be used to send rpc calls over http
+ */
+function HttpProvider(host, timeout) {
+  if (!(this instanceof HttpProvider)) { throw new Error('the HttpProvider instance requires the "new" flag in order to function normally.'); }
+  if (typeof host !== 'string') { throw new Error('the HttpProvider instance requires that the host be specified'); }
+
+  const self = this;
+  self.host = host;
+  self.timeout = timeout || 0;
+}
+
+/**
+ * Should be used to make async request
+ *
+ * @method sendAsync
+ * @param {Object} payload
+ * @param {Function} callback triggered on end with (err, result)
+ */
+HttpProvider.prototype.sendAsync = function(payload, callback) {
+  const self = this;
+  const request = new XHR2();
+
+  request.timeout = self.timeout;
+  request.open('POST', self.host, true);
+  request.setRequestHeader('Content-Type', 'application/json');
+
+  request.onreadystatechange = () => {
+    if (request.readyState === 4 && request.timeout !== 1) {
+      let result = request.responseText;
+      let error = null;
+
+      try {
+        result = JSON.parse(result);
+      } catch (jsonError) {
+        error = invalidResponseError(request.responseText, self.host);
+      }
+
+      callback(error, result);
+    }
+  };
+
+  request.ontimeout = () => {
+    callback(
+      `CONNECTION TIMEOUT: http request timeout after ${self.timeout} ms. (i.e. your connect has timed out for whatever reason, check your provider).`,
+      null);
+  };
+
+  try {
+    request.send(JSON.stringify(payload));
+  } catch (error) {
+    callback(`CONNECTION ERROR: Couldn't connect to node '${self.host}': ${JSON.stringify(error, null, 2)}`, null);
+  }
+};
+
+module.exports = HttpProvider;
+
+},{"xhr2":197}],170:[function(require,module,exports){
+const format = require('./format');
+const utils = require('./utils');
+const IrcRPC = require('./rpc');
+const promiseToCallback = require('promise-to-callback');
+const HttpProvider = require('./provider');
+
+class IrcQuery {
+  constructor(provider, options) {
+    options = options || {};
+    provider = provider || HttpProvider('http:///localhost:8545/');
+    this.options = Object.assign({
+      debug: options.debug || false,
+      logger: options.logger || console,
+      jsonSpace: options.jsonSpace || 0,
+    });
+    this.rpc = new IrcRPC(provider, {});
+    this.setProvider = this.rpc.setProvider;
+  }
+
+  log(message) {
+    this.options.debug && this.options.logger.log(message);
+  };
+}
+
+Object.keys(format.schema.methods).forEach((rpcMethod) => {
+  Object.defineProperty(IrcQuery.prototype, rpcMethod.replace('irc_', ''), {
+    enumerable: true,
+    value: generateFnFor(rpcMethod),
+  });
+});
+
+function generateFnFor(rpcMethod) {
+  return function outputMethod() {
+    const args = [].slice.call(arguments);
+    const callback = utils.popCallback(args);
+    const promise = performCall.call(this, args, rpcMethod);
+
+    // if callback provided, convert promise to callback
+    if (callback) {
+      return promiseToCallback(promise)(callback);
+    }
+
+    // only return promise if no callback provided
+    return promise;
+  };
+}
+
+async function performCall(args, rpcMethod) {
+  const protoMethod = rpcMethod.replace('irc_', '');
+  const methodObj = format.schema.methods[rpcMethod];
+  const self = this;
+  const stringify = data => JSON.stringify(data, null, self.options.jsonSpace);
+
+  // validate arg length
+  if (args.length < methodObj[2]) {
+    throw new Error(`'${protoMethod}' requires at least ${methodObj[2]} input.`);
+  }
+  if (args.length > methodObj[0].length) {
+    throw new Error(`'${protoMethod}' requires at most ${methodObj[0].length} params.`);
+  }
+
+  // set default block
+  if (methodObj[3] && args.length < methodObj[3]) {
+    args.push('latest');
+  }
+
+  // format inputs
+  let inputs = null;
+  try {
+    inputs = format.formatInputs(rpcMethod, args);
+  } catch (err) {
+    throw new Error(`while formatting inputs '${stringify(args)}' for method '${protoMethod}', ${err}`);
+  }
+
+  // perform rpc call
+  const result = await self.rpc.sendAsync({method: rpcMethod, params: inputs}, null);
+  // format result
+  try {
+    return format.formatOutputs(rpcMethod, result);
+  } catch (err) {
+    throw new Error(`while formatting outputs '${stringify(result)}' for method '${protoMethod}', ${err}`);
+  }
+}
+
+module.exports = IrcQuery;
+},{"./format":164,"./provider":169,"./rpc":176,"./utils":181,"promise-to-callback":188}],171:[function(require,module,exports){
+module.exports={
+  "1": "0x314159265dd8dbb310642f98f50c066173c1259b",
+  "3": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
+}
+},{}],172:[function(require,module,exports){
+module.exports=[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      }
+    ],
+    "name": "resolver",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      }
+    ],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "resolver",
+        "type": "address"
+      }
+    ],
+    "name": "setResolver",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "label",
+        "type": "bytes32"
+      },
+      {
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "setSubnodeOwner",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "setOwner",
+    "outputs": [],
+    "type": "function"
+  }
+]
+},{}],173:[function(require,module,exports){
+module.exports=[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      }
+    ],
+    "name": "addr",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      }
+    ],
+    "name": "content",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      }
+    ],
+    "name": "name",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "kind",
+        "type": "bytes32"
+      }
+    ],
+    "name": "has",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "setAddr",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "hash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "setContent",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "name": "setName",
+    "outputs": [],
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "node",
+        "type": "bytes32"
+      },
+      {
+        "name": "contentType",
+        "type": "uint256"
+      }
+    ],
+    "name": "ABI",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "type": "function"
+  }
+]
+},{}],174:[function(require,module,exports){
+module.exports={
+  "ir-token": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "extendSupply",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "supply",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_spender",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "extend",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "costmin",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_spender",
+          "type": "address"
+        }
+      ],
+      "name": "allowanceOf",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "founder",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_tos",
+          "type": "address[]"
+        },
+        {
+          "name": "_values",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "mulTransfer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "costmax",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_licensee",
+          "type": "address"
+        },
+        {
+          "name": "_currency",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "bool"
+        }
+      ],
+      "name": "licensing",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_licensee",
+          "type": "address"
+        },
+        {
+          "name": "_currency",
+          "type": "address"
+        }
+      ],
+      "name": "licenseOf",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_currency",
+          "type": "address"
+        },
+        {
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "constant": true,
+      "inputs": [],
+      "name": "costpc",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [
+        {
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "name": "_symbol",
+          "type": "string"
+        },
+        {
+          "name": "_supply",
+          "type": "uint256"
+        },
+        {
+          "name": "_costmin",
+          "type": "uint256"
+        },
+        {
+          "name": "_costmax",
+          "type": "uint256"
+        },
+        {
+          "name": "_costpc",
+          "type": "uint8"
+        },
+        {
+          "name": "_extend",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "constructor"
+    }, {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    }, {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    }, {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_licensor",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_licensee",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_currency",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "bool"
+        }
+      ],
+      "name": "Licensing",
+      "type": "event"
+    }, {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_currency",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Withdraw",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "ExtendSupply",
+      "type": "event"
+    }
+  ]
+}
+},{}],175:[function(require,module,exports){
+module.exports={
+  "methods": {
+    "webu_clientVersion": [[], "S"],
+    "webu_sha3": [["S"], "D", 1],
+    "net_version": [[], "S"],
+    "net_peerCount": [[], "Q"],
+    "net_listening": [[], "B"],
+    "personal_sign": [["D", "D20", "S"], "D", 2],
+    "personal_ecRecover": [["D", "D"], "D20", 2],
+    "irc_protocolVersion": [[], "S"],
+    "irc_syncing": [[], "B|IrcSyncing"],
+    "irc_coinbase": [[], "D20"],
+    "irc_mining": [[], "B"],
+    "irc_hashrate": [[], "Q"],
+    "irc_gasPrice": [[], "Q"],
+    "irc_accounts": [[], ["D20"]],
+    "irc_blockNumber": [[], "Q"],
+    "irc_getBalance": [["D20", "Q|T"], "Q", 1, 2],
+    "irc_getStorageAt": [["D20", "Q", "Q|T"], "D", 2, 2],
+    "irc_getTransactionCount": [["D20", "Q|T"], "Q", 1, 2],
+    "irc_getBlockTransactionCountByHash": [["D32"], "Q", 1],
+    "irc_getBlockTransactionCountByNumber": [["Q|T"], "Q", 1],
+    "irc_getUncleCountByBlockHash": [["D32"], "Q", 1],
+    "irc_getUncleCountByBlockNumber": [["Q"], "Q", 1],
+    "irc_getCode": [["D20", "Q|T"], "D", 1, 2],
+    "irc_sign": [["D20", "D"], "D", 2],
+    "irc_signTypedData": [["Array|DATA", "D20"], "D", 1],
+    "irc_sendTransaction": [["SendTransaction"], "D", 1],
+    "irc_sendRawTransaction": [["D"], "D32", 1],
+    "irc_call": [["CallTransaction", "Q|T"], "D", 1, 2],
+    "irc_estimateGas": [["EstimateTransaction", "Q|T"], "Q", 1],
+    "irc_getBlockByHash": [["D32", "B"], "Block", 2],
+    "irc_getBlockByNumber": [["Q|T", "B"], "Block", 2],
+    "irc_getTransactionByHash": [["D32"], "Transaction", 1],
+    "irc_getTransactionByBlockHashAndIndex": [["D32", "Q"], "Transaction", 2],
+    "irc_getTransactionByBlockNumberAndIndex": [["Q|T", "Q"], "Transaction", 2],
+    "irc_getTransactionReceipt": [["D32"], "Receipt", 1],
+    "irc_getUncleByBlockHashAndIndex": [["D32", "Q"], "Block", 1],
+    "irc_getUncleByBlockNumberAndIndex": [["Q|T", "Q"], "Block", 2],
+    "irc_getCompilers": [[], ["S"]],
+    "irc_compileLLL": [["S"], "D", 1],
+    "irc_compileSolidity": [["S"], "D", 1],
+    "irc_compileSerpent": [["S"], "D", 1],
+    "irc_newFilter": [["Filter"], "Q", 1],
+    "irc_newBlockFilter": [[], "Q"],
+    "irc_newPendingTransactionFilter": [[], "Q"],
+    "irc_uninstallFilter": [["QP"], "B", 1],
+    "irc_getFilterChanges": [["QP"], ["FilterChange"], 1],
+    "irc_getFilterLogs": [["QP"], ["FilterChange"], 1],
+    "irc_getLogs": [["Filter"], ["FilterChange"], 1],
+    "irc_getWork": [[], ["D"]],
+    "irc_submitWork": [["D", "D32", "D32"], "B", 3],
+    "irc_submitHashrate": [["D", "D"], "B", 2],
+    "db_putString": [["S", "S", "S"], "B", 2],
+    "db_getString": [["S", "S"], "S", 2],
+    "db_putHex": [["S", "S", "D"], "B", 2],
+    "db_getHex": [["S", "S"], "D", 2],
+    "shh_post": [["SHHPost"], "B", 1],
+    "shh_version": [[], "S"],
+    "shh_newIdentity": [[], "D"],
+    "shh_hasIdentity": [["D"], "B"],
+    "shh_newGroup": [[], "D"],
+    "shh_addToGroup": [["D"], "B", 1],
+    "shh_newFilter": [["SHHFilter"], "Q", 1],
+    "shh_uninstallFilter": [["Q"], "B", 1],
+    "shh_getFilterChanges": [["Q"], ["SHHFilterChange"], 1],
+    "shh_getMessages": [["Q"], ["SHHFilterChange"], 1]
+  },
+  "tags": ["latest", "earliest", "pending"],
+  "objects": {
+    "IrcSyncing": {
+      "__required": [],
+      "startingBlock": "Q",
+      "currentBlock": "Q",
+      "highestBlock": "Q"
+    },
+    "SendTransaction": {
+      "__required": ["from", "data"],
+      "from": "D20",
+      "to": "D20",
+      "gas": "Q",
+      "gasPrice": "Q",
+      "value": "Q",
+      "data": "D",
+      "nonce": "Q"
+    },
+    "EstimateTransaction": {
+      "__required": [],
+      "from": "D20",
+      "to": "D20",
+      "gas": "Q",
+      "gasPrice": "Q",
+      "value": "Q",
+      "data": "D",
+      "nonce": "Q"
+    },
+    "CallTransaction": {
+      "__required": ["to"],
+      "from": "D20",
+      "to": "D20",
+      "gas": "Q",
+      "gasPrice": "Q",
+      "value": "Q",
+      "data": "D",
+      "nonce": "Q"
+    },
+    "Block": {
+      "__required": [],
+      "number": "Q",
+      "hash": "D32",
+      "parentHash": "D32",
+      "nonce": "D",
+      "sha3Uncles": "D",
+      "logsBloom": "D",
+      "transactionsRoot": "D",
+      "stateRoot": "D",
+      "receiptsRoot": "D",
+      "miner": "D",
+      "difficulty": "Q",
+      "totalDifficulty": "Q",
+      "extraData": "D",
+      "size": "Q",
+      "gasLimit": "Q",
+      "gasUsed": "Q",
+      "timestamp": "Q",
+      "transactions": ["DATA|Transaction"],
+      "uncles": ["D"]
+    },
+    "Transaction": {
+      "__required": [],
+      "hash": "D32",
+      "nonce": "Q",
+      "blockHash": "D32",
+      "blockNumber": "Q",
+      "transactionIndex": "Q",
+      "from": "D20",
+      "to": "D20",
+      "value": "Q",
+      "gasPrice": "Q",
+      "gas": "Q",
+      "input": "D"
+    },
+    "Receipt": {
+      "__required": [],
+      "transactionHash": "D32",
+      "transactionIndex": "Q",
+      "blockHash": "D32",
+      "blockNumber": "Q",
+      "cumulativeGasUsed": "Q",
+      "gasUsed": "Q",
+      "contractAddress": "D20",
+      "logs": ["FilterChange"]
+    },
+    "Filter": {
+      "__required": [],
+      "fromBlock": "Q|T",
+      "toBlock": "Q|T",
+      "address": "D20",
+      "topics": ["D"]
+    },
+    "FilterChange": {
+      "__required": [],
+      "removed": "B",
+      "logIndex": "Q",
+      "transactionIndex": "Q",
+      "transactionHash": "D32",
+      "blockHash": "D32",
+      "blockNumber": "Q",
+      "address": "D20",
+      "data": "Array|DATA",
+      "topics": ["D"]
+    },
+    "SHHPost": {
+      "__required": ["topics", "payload", "priority", "ttl"],
+      "from": "D",
+      "to": "D",
+      "topics": ["D"],
+      "payload": "D",
+      "priority": "Q",
+      "ttl": "Q"
+    },
+    "SHHFilter": {
+      "__required": ["topics"],
+      "to": "D",
+      "topics": ["D"]
+    },
+    "SHHFilterChange": {
+      "__required": [],
+      "hash": "D",
+      "from": "D",
+      "to": "D",
+      "expiry": "Q",
+      "ttl": "Q",
+      "sent": "Q",
+      "topics": ["D"],
+      "payload": "D",
+      "workProved": "Q"
+    },
+    "SHHMessage": {
+      "__required": [],
+      "hash": "D",
+      "from": "D",
+      "to": "D",
+      "expiry": "Q",
+      "ttl": "Q",
+      "sent": "Q",
+      "topics": ["D"],
+      "payload": "D",
+      "workProved": "Q"
+    }
+  }
+}
+
+},{}],176:[function(require,module,exports){
+const promiseToCallback = require('promise-to-callback');
+
+module.exports = IrcRPC;
+
+/**
+ * Constructs the IrcRPC instance
+ *
+ * @method IrcRPC
+ * @param {Object} cprovider the irc rpc provider web3 standard..
+ * @param {Object} options the options, if any
+ * @returns {Object} ircrpc instance
+ */
+function IrcRPC(cprovider, options) {
+  const self = this;
+  const optionsObject = options || {};
+
+  if (!(this instanceof IrcRPC)) {
+    throw new Error('the IrcRPC object requires the "new" flag in order to function normally.');
+  }
+
+  self.options = Object.assign({
+    jsonSpace: optionsObject.jsonSpace || 0,
+    max: optionsObject.max || 9999999999999,
+  });
+  self.idCounter = Math.floor(Math.random() * self.options.max);
+  self.setProvider = (provider) => {
+    if (typeof provider !== 'object') {
+      throw new Error(`the IrcRPC object requires that the first input 'provider' must be an object, got '${typeof provider}'.`);
+    }
+
+    self.currentProvider = provider;
+  };
+  self.setProvider(cprovider);
+}
+
+/**
+ * The main send async method
+ *
+ * @method sendAsync
+ * @param {Object} payload the rpc payload object
+ * @param {Function} callback the async standard callback
+ * @callback {Object|Array|Boolean|String} vary result instance output
+ */
+IrcRPC.prototype.sendAsync = function sendAsync(payload, callback) {
+  const self = this;
+  self.idCounter = self.idCounter % self.options.max;
+  const parsedPayload = createPayload(payload, self.idCounter++);
+
+  const promise = new Promise((resolve, reject) => {
+    self.currentProvider.sendAsync(parsedPayload, (err, response) => {
+      const responseObject = response || {};
+
+      if (err || responseObject.error) {
+        const payloadErrorMessage = `${(responseObject.error && 'rpc' || '')} error with payload ${JSON.stringify(
+          parsedPayload,
+          null,
+          self.options.jsonSpace)} ${err ? String(err) : (JSON.stringify(responseObject.error, null, self.options.jsonSpace))}`;
+        const payloadError = new Error(payloadErrorMessage);
+        payloadError.value = (err || responseObject.error);
+        reject(payloadError);
+        return;
+      }
+      resolve(responseObject.result);
+    });
+  });
+
+  if (callback) {
+    // connect promise resolve handlers to callback
+    return promiseToCallback(promise)(callback);
+  }
+
+  // only return promise if no callback specified
+  return promise;
+};
+
+/**
+ * A simple create payload method
+ *
+ * @method createPayload
+ * @param {Object} data the rpc payload data
+ * @param {String} id the rpc data payload ID
+ * @returns {Object} payload the completed payload object
+ */
+function createPayload(data, id) {
+  return Object.assign({}, {
+    id,
+    jsonrpc: '2.0',
+    params: [],
+  }, data);
+}
+
+},{"promise-to-callback":188}],177:[function(require,module,exports){
+prefixForNetwork = network => {
+  const net = parseInt(network);
+  let prefix;
+  switch (net) {
+    case 1: // main net
+      prefix = 'scan.';
+      break;
+    case 3: // test net
+      prefix = 'test.';
+      break;
+    default:
+      prefix = '';
+  }
+  return prefix;
+};
+
+module.exports.createAccountLink = (address, network) => {
+  const net = parseInt(network);
+  const prefix = prefixForNetwork(net);
+  return `https://${prefix}irchain.io/address/${address}`;
+};
+
+module.exports.createExplorerLink = (hash, network) => {
+  const net = parseInt(network);
+  const prefix = prefixForNetwork(net);
+  return `https://${prefix}irchain.io/tx/${hash}`;
+};
+
+},{}],178:[function(require,module,exports){
+module.exports = require('./res/schema.json');
+},{"./res/schema.json":175}],179:[function(require,module,exports){
+(function (Buffer){
+const rlp = require('rlp');
+const elliptic = require('elliptic');
+const keccak256 = require('js-sha3').keccak_256;
+const secp256k1 = new (elliptic.ec)('secp256k1');
+const stripHexPrefix = require('./utils').stripHexPrefix;
+const toBN = require('./utils').toBN;
+
+function stripZeros(buffer) {
+  let i;
+  for (i = 0; i < buffer.length; i++) {
+    if (buffer[i] !== 0) { break; }
+  }
+  return (i > 0) ? buffer.slice(i) : buffer;
+}
+
+function padToEven(str) {
+  return str.length % 2 ? `0${str}` : str;
+}
+
+function bnToBuffer(bn) {
+  return stripZeros(Buffer.from(padToEven(bn.toString(16)), 'hex'));
+}
+
+const transactionFields = [
+  {name: 'nonce', maxLength: 32, number: true},
+  {name: 'gasPrice', maxLength: 32, number: true},
+  {name: 'gasLimit', maxLength: 32, number: true},
+  {name: 'to', length: 20},
+  {name: 'value', maxLength: 32, number: true},
+  {name: 'data'},
+];
+
+/**
+ * ECDSA public key recovery from a rawTransaction
+ *
+ * @method recover
+ * @param {String|Buffer} rawTx either a hex string or buffer instance
+ * @param {Number} v
+ * @param {Buffer} r
+ * @param {Buffer} s
+ * @return {Buffer} publicKey
+ */
+
+function recover(rawTx, v, r, s) {
+  const rawTransaction = typeof(rawTx) === 'string' ? Buffer.from(stripHexPrefix(rawTx), 'hex') : rawTx;
+  const signedTransaction = rlp.decode(rawTransaction);
+  const raw = [];
+
+  transactionFields.forEach((fieldInfo, fieldIndex) => {
+    raw[fieldIndex] = signedTransaction[fieldIndex];
+  });
+
+  const publicKey = secp256k1.recoverPubKey(Buffer.from(keccak256(rlp.encode(raw)), 'hex'), {r, s}, v - 27);
+  return (Buffer.from(publicKey.encode('hex', false), 'hex')).slice(1);
+}
+
+/**
+ * Will sign a raw transaction and return it either as a serlized hex string or raw tx object.
+ *
+ * @method sign
+ * @param {Object} transaction a valid transaction object
+ * @param {String} privateKey a valid 32 byte prefixed hex string private key
+ * @param {Boolean} toObject **Optional**
+ * @returns {String|Object} output either a serilized hex string or signed tx object
+ */
+
+function sign(transaction, privateKey, toObject) {
+  if (typeof privateKey !== 'string') {
+    throw new Error('private key input must be a string');
+  }
+  if (typeof transaction !== 'object' || transaction === null) {
+    throw new Error(`transaction input must be a type 'object', got '${typeof(transaction)}'`);
+  }
+  if (!privateKey.match(/^(0x)[0-9a-fA-F]{64}$/)) {
+    throw new Error('invalid private key value, private key must be a prefixed hexified 32 byte string.');
+  }
+
+  const raw = [];
+
+  transactionFields.forEach((fieldInfo) => {
+    let value = Buffer.alloc(0);
+
+    // shim for field name gas
+    const txKey = (fieldInfo.name === 'gasLimit' && transaction.gas) ? 'gas' : fieldInfo.name;
+
+    if (typeof transaction[txKey] !== 'undefined') {
+      if (fieldInfo.number === true) {
+        value = bnToBuffer(toBN(transaction[txKey]));
+      } else {
+        value = Buffer.from(padToEven(stripHexPrefix(transaction[txKey])), 'hex');
+      }
+    }
+
+    // Fixed-width field
+    if (fieldInfo.length && value.length !== fieldInfo.length && value.length > 0) {
+      throw new Error(
+        `while signing raw transaction, invalid '${fieldInfo.name}', invalid length should be '${fieldInfo.length}' got '${value.length}'`);
+    }
+
+    // Variable-width (with a maximum)
+    if (fieldInfo.maxLength) {
+      value = stripZeros(value);
+      if (value.length > fieldInfo.maxLength) {
+        throw new Error(
+          `while signing raw transaction, invalid '${fieldInfo.name}' length, the max length is '${fieldInfo.maxLength}', got '${value.length}'`);
+      }
+    }
+
+    raw.push(value);
+  });
+
+  // private key is not stored in memory
+  const signature = secp256k1.keyFromPrivate(Buffer.from(privateKey.slice(2), 'hex')).
+                              sign(Buffer.from(keccak256(rlp.encode(raw)), 'hex'), {canonical: true});
+
+  raw.push(Buffer.from([27 + signature.recoveryParam]));
+  raw.push(bnToBuffer(signature.r));
+  raw.push(bnToBuffer(signature.s));
+
+  return toObject ? raw : `0x${rlp.encode(raw).toString('hex')}`;
+}
+
+module.exports = {
+  sign,
+  recover,
+};
+
+}).call(this,require("buffer").Buffer)
+},{"./utils":181,"buffer":205,"elliptic":124,"js-sha3":183,"rlp":194}],180:[function(require,module,exports){
+const BN = require('bn.js');
+const toBN = require('./utils').toBN;
+
+const zero = new BN(0);
+const negative1 = new BN(-1);
+
+// complete irchain unit map
+const unitMap = {
+  'wei': '1',
+  'kwei': '1000',
+  'mwei': '1000000',
+  'gwei': '1000000000',
+  'twei': '1000000000000',
+  'pwei': '1000000000000000',
+  'irc': '1000000000000000000',
+  'kirc': '1000000000000000000000',
+  'mirc': '1000000000000000000000000',
+  'girc': '1000000000000000000000000000',
+  'tirc': '1000000000000000000000000000000',
+  'pirc': '1000000000000000000000000000000000',
+};
+
+/**
+ * Returns value of unit in Wei
+ *
+ * @method getValueOfUnit
+ * @param {String} unitInput The unit to convert to, default ircer
+ * @returns {BN} value of the unit (in Wei)
+ * @throws error if the unit is not correct:w
+ */
+function getValueOfUnit(unitInput) {
+  const unit = unitInput ? unitInput.toLowerCase() : 'ircer';
+  let unitValue = unitMap[unit];
+
+  if (typeof unitValue !== 'string') {
+    throw new Error(`the unit provided ${unitInput} doesn't exists, please use the one of the following units ${JSON.stringify(
+      unitMap,
+      null,
+      2)}`);
+  }
+
+  return new BN(unitValue, 10);
+}
+
+function numberToString(arg) {
+  if (typeof arg === 'string') {
+    if (!arg.match(/^-?[0-9.]+$/)) {
+      throw new Error(`while converting number to string, invalid number value '${arg}', should be a number matching (^-?[0-9.]+).`);
+    }
+    return arg;
+  } else if (typeof arg === 'number') {
+    return String(arg);
+  } else if (typeof arg === 'object' && arg.toString && (arg.toTwos || arg.dividedToIntegerBy)) {
+    if (arg.toPrecision) {
+      return String(arg.toPrecision());
+    } else {
+      return arg.toString(10);
+    }
+  }
+  throw new Error(`while converting number to string, invalid number value '${arg}' type ${typeof arg}.`);
+}
+
+function fromWei(weiInput, unit, optionsInput) {
+  let wei = toBN(weiInput);
+  const negative = wei.lt(zero);
+  const base = getValueOfUnit(unit);
+  const baseLength = unitMap[unit].length - 1 || 1;
+  const options = optionsInput || {};
+
+  if (negative) {
+    wei = wei.mul(negative1);
+  }
+
+  let fraction = wei.mod(base).toString(10);
+
+  while (fraction.length < baseLength) {
+    fraction = `0${fraction}`;
+  }
+
+  if (!options.pad) {
+    fraction = fraction.match(/^([0-9]*[1-9]|0)(0*)/)[1];
+  }
+
+  let whole = wei.div(base).toString(10);
+
+  if (options.commify) {
+    whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  let value = `${whole}${fraction === '0' ? '' : `.${fraction}`}`;
+
+  if (negative) {
+    value = `-${value}`;
+  }
+
+  return value;
+}
+
+function toWei(ircerInput, unit) {
+  let ircer = numberToString(ircerInput);
+  const base = getValueOfUnit(unit);
+  const baseLength = unitMap[unit].length - 1 || 1;
+
+  // Is it negative?
+  const negative = (ircer.substring(0, 1) === '-');
+  if (negative) {
+    ircer = ircer.substring(1);
+  }
+
+  if (ircer === '.') { throw new Error(`while converting number ${ircerInput} to wei, invalid value`); }
+
+  // Split it into a whole and fractional part
+  const comps = ircer.split('.');
+  if (comps.length > 2) { throw new Error(`while converting number ${ircerInput} to wei,  too many decimal points`); }
+
+  let whole = comps[0], fraction = comps[1];
+
+  if (!whole) { whole = '0'; }
+  if (!fraction) { fraction = '0'; }
+  if (fraction.length > baseLength) { throw new Error(`while converting number ${ircerInput} to wei, too many decimal places`); }
+
+  while (fraction.length < baseLength) {
+    fraction += '0';
+  }
+
+  whole = new BN(whole);
+  fraction = new BN(fraction);
+  let wei = (whole.mul(base)).add(fraction);
+
+  if (negative) {
+    wei = wei.mul(negative1);
+  }
+
+  return new BN(wei.toString(10), 10);
+}
+
+module.exports = {
+  unitMap,
+  numberToString,
+  getValueOfUnit,
+  fromWei,
+  toWei,
+};
+
+},{"./utils":181,"bn.js":21}],181:[function(require,module,exports){
+(function (Buffer){
+const BN = require('bn.js');
+const keccak256 = require('js-sha3').keccak_256;
+
+/**
+ * Pads a `String` to have an even length
+ * @param {String} value
+ * @return {String} output
+ */
+function padToEven(value) {
+  if (typeof value !== 'string') {
+    throw new Error(`value must be string, is currently ${typeof value}.`);
+  }
+  if (value.length % 2 !== 0) {
+    value = `0${value}`;
+  }
+  return value;
+}
+
+/**
+ * Converts a `Number` into a hex `String`
+ * @param {Number} i
+ * @return {String}
+ */
+function intToHex(i) {
+  const hex = i.toString(16);
+  return `0x${hex}`;
+}
+
+/**
+ * Converts an `Number` to a `Buffer`
+ * @param {Number} i
+ * @return {Buffer}
+ */
+function toBuffer(i) {
+  const hex = intToHex(i);
+  return Buffer.from(padToEven(hex.slice(2)), 'hex');
+}
+
+/**
+ * Get the binary size of a string
+ * @param {String} str
+ * @return {Number}
+ */
+function getBinarySize(str) {
+  if (typeof str !== 'string') {
+    throw new Error(`while getting binary size, method getBinarySize requires input 'str' to be type String, got '${typeof str}'.`);
+  }
+
+  return Buffer.byteLength(str, 'utf8');
+}
+
+/**
+ * Returns TRUE if the first specified array contains all elements
+ * from the second one. FALSE otherwise.
+ *
+ * @param {array} superset
+ * @param {array} subset
+ * @param some
+ * @returns {boolean}
+ */
+function arrayContainsArray(superset, subset, some) {
+  if (Array.isArray(superset) !== true) { throw new Error(`method arrayContainsArray requires input 'superset' to be an array got type '${typeof superset}'`); }
+  if (Array.isArray(subset) !== true) { throw new Error(`method arrayContainsArray requires input 'subset' to be an array got type '${typeof subset}'`); }
+
+  return subset[Boolean(some) && 'some' || 'every']((value) => (superset.indexOf(value) >= 0));
+}
+
+/**
+ * Should be called to get utf8 from it's hex representation
+ *
+ * @method toUtf8
+ * @param {String} hex String in hex
+ * @returns {String} ascii string representation of hex value
+ */
+function toUtf8(hex) {
+  const bufferValue = Buffer.from(padToEven(stripHexPrefix(hex).replace(/^0+|0+$/g, '')), 'hex');
+
+  return bufferValue.toString('utf8');
+}
+
+/**
+ * Should be called to get ascii from it's hex representation
+ *
+ * @method toAscii
+ * @param {String} hex string in hex
+ * @returns {String} ascii string representation of hex value
+ */
+function toAscii(hex) {
+  let str = '';
+  let i = 0, l = hex.length;
+
+  if (hex.substring(0, 2) === '0x') {
+    i = 2;
+  }
+
+  for (; i < l; i += 2) {
+    const code = parseInt(hex.substr(i, 2), 16);
+    str += String.fromCharCode(code);
+  }
+
+  return str;
+}
+
+/**
+ * Should be called to get hex representation (prefixed by 0x) of utf8 string
+ *
+ * @method fromUtf8
+ * @param {String} stringValue
+ * @returns {String} hex representation of input string
+ */
+function fromUtf8(stringValue) {
+  const str = Buffer.from(stringValue, 'utf8');
+  return `0x${padToEven(str.toString('hex')).replace(/^0+|0+$/g, '')}`;
+}
+
+/**
+ * Should be called to get hex representation (prefixed by 0x) of ascii string
+ *
+ * @method fromAscii
+ * @param {String} stringValue
+ * @returns {String} hex representation of input string
+ */
+function fromAscii(stringValue) {
+  let hex = '';
+  for (let i = 0; i < stringValue.length; i++) {
+    const code = stringValue.charCodeAt(i);
+    const n = code.toString(16);
+    hex += n.length < 2 ? `0${n}` : n;
+  }
+  return `0x${hex}`;
+}
+
+/**
+ * getKeys([{a: 1, b: 2}, {a: 3, b: 4}], 'a') => [1, 3]
+ *
+ * @method getKeys get specific key from inner object array of objects
+ * @param {String} params
+ * @param {String} key
+ * @param {Boolean} allowEmpty
+ * @returns {Array} output just a simple array of output keys
+ */
+function getKeys(params, key, allowEmpty) {
+  if (!Array.isArray(params)) {
+    throw new Error(`method getKeys expecting type Array as 'params' input, got '${typeof params}'`);
+  }
+  if (typeof key !== 'string') {
+    throw new Error(`method getKeys expecting type String for input 'key' got '${typeof key}'.`);
+  }
+
+  const result = [];
+  for (let i = 0; i < params.length; i++) {
+    let value = params[i][key];
+    if (allowEmpty && !value) {
+      value = '';
+    } else if (typeof value !== 'string') {
+      throw new Error('invalid abi');
+    }
+    result.push(value);
+  }
+  return result;
+}
+
+/**
+ *
+ * @param {String|Buffer} valueInput
+ * @returns {Buffer}
+ */
+function hexToBuffer(valueInput) {
+  let value = valueInput;
+  if (!Buffer.isBuffer(value)) {
+    if (!isHexString(value, null)) {
+      const error = new Error(name ? (`invalid ${name}`) : 'invalid hex or buffer, must be a prefixed alphanumeric even length hex string');
+      error.reason = 'invalid hex string, hex must be prefixed and alphanumeric (e.g. 0x023..)';
+      error.value = value;
+      throw error;
+    }
+
+    value = value.substring(2);
+    if (value.length % 2 !== 0) {
+      value = `0${value}`;
+    }
+    value = Buffer.from(value, 'hex');
+  }
+  return value;
+}
+
+/**
+ * Is the string a hex string.
+ *
+ * @method check if string is hex string of specific length
+ * @param {String} value
+ * @param {Number} length
+ * @returns {Boolean} output the string is a hex string
+ */
+function isHexString(value, length) {
+  if (typeof(value) !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
+    return false;
+  }
+  return !(length && value.length !== 2 + 2 * length);
+}
+
+/**
+ * Returns a `Boolean` on whether or not the a `String` starts with '0x'
+ * @param {String} str the string input value
+ * @return {Boolean} a boolean if it is or is not hex prefixed
+ * @throws if the str input is not a string
+ */
+function isHexPrefixed(str) {
+  if (typeof str !== 'string') {
+    throw new Error(`value must be type string, is currently type ${typeof str}.`);
+  }
+  return str.slice(0, 2) === '0x';
+}
+
+/**
+ * Removes '0x' from a given `String` if present
+ * @param {String} str the string value
+ * @return {String|Object} a string by pass if necessary
+ */
+function stripHexPrefix(str) {
+  if (typeof str !== 'string') {
+    return str;
+  }
+  return isHexPrefixed(str) ? str.slice(2) : str;
+}
+
+/**
+ * Returns a BN object, converts a number value to a BN
+ * @param {String|Number|Object} `arg` input a string number, hex string number, number, BigNumber or BN object
+ * @return {BN} `output` BN object of the number
+ * @throws if the argument is not an array, object that isn't a bignumber, not a string number or number
+ */
+function toBN(arg) {
+  if (typeof arg === 'string' || typeof arg === 'number') {
+    const formattedString = String(arg).toLowerCase().trim();
+    const isHexPrefixed = formattedString.substr(0, 2) === '0x' || formattedString.substr(0, 3) === '-0x';
+    let multiplier = new BN(1);
+    let stringArg = stripHexPrefix(formattedString);
+    if (stringArg.substr(0, 1) === '-') {
+      stringArg = stripHexPrefix(stringArg.slice(1));
+      multiplier = new BN(-1, 10);
+    }
+    stringArg = stringArg === '' ? '0' : stringArg;
+
+    if ((!stringArg.match(/^-?[0-9]+$/) && stringArg.match(/^[0-9A-Fa-f]+$/))
+      || stringArg.match(/^[a-fA-F]+$/)
+      || (isHexPrefixed === true && stringArg.match(/^[0-9A-Fa-f]+$/))) {
+      return new BN(stringArg, 16).mul(multiplier);
+    }
+
+    if ((stringArg.match(/^-?[0-9]+$/) || stringArg === '') && isHexPrefixed === false) {
+      return new BN(stringArg, 10).mul(multiplier);
+    }
+  } else if (typeof arg === 'object' && arg.toString && (!arg.pop && !arg.push)) {
+    if (arg.toString(10).match(/^-?[0-9]+$/) && (arg.mul || arg.dividedToIntegerBy)) {
+      return new BN(arg.toString(10), 10);
+    }
+  }
+
+  throw new Error('[number-to-bn] while converting number ' + JSON.stringify(arg) + ' to BN.js instance, error: invalid number value. Value must be an integer, hex string, BN or BigNumber instance. Note, decimals are not supported.');
+}
+
+/**
+ * Pops the last element of args if which typeof function
+ * @param {Array} args
+ * @returns {boolean|Array}
+ */
+popCallback = (args) => typeof args[args.length - 1] === 'function' && args.pop();
+
+module.exports = {
+  keccak256,
+  arrayContainsArray,
+  getBinarySize,
+  BN,
+  toBN,
+  toBuffer,
+  isHexString,
+  hexToBuffer,
+  isHexPrefixed,
+  stripHexPrefix,
+  padToEven,
+  intToHex,
+  fromAscii,
+  fromUtf8,
+  toAscii,
+  toUtf8,
+  getKeys,
+  popCallback,
+};
+
+}).call(this,require("buffer").Buffer)
+},{"bn.js":21,"buffer":205,"js-sha3":183}],182:[function(require,module,exports){
 'use strict';
 var toString = Object.prototype.toString;
 
@@ -13005,7 +15988,7 @@ module.exports = function (x) {
 	return toString.call(x) === '[object Function]';
 };
 
-},{}],161:[function(require,module,exports){
+},{}],183:[function(require,module,exports){
 (function (process,global){
 /**
  * [js-sha3]{@link https://github.com/emn178/js-sha3}
@@ -13665,7 +16648,21 @@ module.exports = function (x) {
 })();
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":208}],162:[function(require,module,exports){
+},{"_process":208}],184:[function(require,module,exports){
+module.exports = IdIterator
+
+function IdIterator(opts){
+  opts = opts || {}
+  var max = opts.max || Number.MAX_SAFE_INTEGER
+  var idCounter = typeof opts.start !== 'undefined' ? opts.start : Math.floor(Math.random() * max)
+
+  return function createRandomId () {
+    idCounter = idCounter % max
+    return idCounter++
+  }
+
+}
+},{}],185:[function(require,module,exports){
 module.exports = assert;
 
 function assert(val, msg) {
@@ -13678,7 +16675,7 @@ assert.equal = function assertEqual(l, r, msg) {
     throw new Error(msg || ('Assertion failed: ' + l + ' != ' + r));
 };
 
-},{}],163:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 'use strict';
 
 var utils = exports;
@@ -13738,3232 +16735,7 @@ utils.encode = function encode(arr, enc) {
     return arr;
 };
 
-},{}],164:[function(require,module,exports){
-'use strict';
-var isFn = require('is-fn');
-var setImmediate = require('set-immediate-shim');
-
-module.exports = function (promise) {
-	if (!isFn(promise.then)) {
-		throw new TypeError('Expected a promise');
-	}
-
-	return function (cb) {
-		promise.then(function (data) {
-			setImmediate(cb, null, data);
-		}, function (err) {
-			setImmediate(cb, err);
-		});
-	};
-};
-
-},{"is-fn":160,"set-immediate-shim":170}],165:[function(require,module,exports){
-module.exports = window.crypto;
-},{}],166:[function(require,module,exports){
-module.exports = require('crypto');
-},{"crypto":165}],167:[function(require,module,exports){
-var randomHex = function(size, callback) {
-    var crypto = require('./crypto.js');
-    var isCallback = (typeof callback === 'function');
-
-    
-    if (size > 65536) {
-        if(isCallback) {
-            callback(new Error('Requested too many random bytes.'));
-        } else {
-            throw new Error('Requested too many random bytes.');
-        }
-    };
-
-
-    // is node
-    if (typeof crypto !== 'undefined' && crypto.randomBytes) {
-
-        if(isCallback) {
-            crypto.randomBytes(size, function(err, result){
-                if(!err) {
-                    callback(null, '0x'+ result.toString('hex'));
-                } else {
-                    callback(error);
-                }
-            })
-        } else {
-            return '0x'+ crypto.randomBytes(size).toString('hex');
-        }
-
-    // is browser
-    } else {
-        var cryptoLib;
-
-        if (typeof crypto !== 'undefined') {
-            cryptoLib = crypto;
-        } else if(typeof msCrypto !== 'undefined') {
-            cryptoLib = msCrypto;
-        }
-
-        if (cryptoLib && cryptoLib.getRandomValues) {
-            var randomBytes = cryptoLib.getRandomValues(new Uint8Array(size));
-            var returnValue = '0x'+ Array.from(randomBytes).map(function(arr){ return arr.toString(16); }).join('');
-
-            if(isCallback) {
-                callback(null, returnValue);
-            } else {
-                return returnValue;
-            }
-
-        // not crypto object
-        } else {
-            var error = new Error('No "crypto" object available. This Browser doesn\'t support generating secure random bytes.');
-
-            if(isCallback) {
-                callback(error);
-            } else {
-               throw error;
-            }
-        }
-    }
-};
-
-
-module.exports = randomHex;
-
-},{"./crypto.js":166}],168:[function(require,module,exports){
-const assert = require('assert')
-const Buffer = require('safe-buffer').Buffer
-/**
- * RLP Encoding based on: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP
- * This function takes in a data, convert it to buffer if not, and a length for recursion
- *
- * @param {Buffer,String,Integer,Array} data - will be converted to buffer
- * @returns {Buffer} - returns buffer of encoded data
- **/
-exports.encode = function (input) {
-  if (input instanceof Array) {
-    var output = []
-    for (var i = 0; i < input.length; i++) {
-      output.push(exports.encode(input[i]))
-    }
-    var buf = Buffer.concat(output)
-    return Buffer.concat([encodeLength(buf.length, 192), buf])
-  } else {
-    input = toBuffer(input)
-    if (input.length === 1 && input[0] < 128) {
-      return input
-    } else {
-      return Buffer.concat([encodeLength(input.length, 128), input])
-    }
-  }
-}
-
-function safeParseInt (v, base) {
-  if (v.slice(0, 2) === '00') {
-    throw (new Error('invalid RLP: extra zeros'))
-  }
-
-  return parseInt(v, base)
-}
-
-function encodeLength (len, offset) {
-  if (len < 56) {
-    return Buffer.from([len + offset])
-  } else {
-    var hexLength = intToHex(len)
-    var lLength = hexLength.length / 2
-    var firstByte = intToHex(offset + 55 + lLength)
-    return Buffer.from(firstByte + hexLength, 'hex')
-  }
-}
-
-/**
- * RLP Decoding based on: {@link https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP|RLP}
- * @param {Buffer,String,Integer,Array} data - will be converted to buffer
- * @returns {Array} - returns decode Array of Buffers containg the original message
- **/
-exports.decode = function (input, stream) {
-  if (!input || input.length === 0) {
-    return Buffer.from([])
-  }
-
-  input = toBuffer(input)
-  var decoded = _decode(input)
-
-  if (stream) {
-    return decoded
-  }
-
-  assert.equal(decoded.remainder.length, 0, 'invalid remainder')
-  return decoded.data
-}
-
-exports.getLength = function (input) {
-  if (!input || input.length === 0) {
-    return Buffer.from([])
-  }
-
-  input = toBuffer(input)
-  var firstByte = input[0]
-  if (firstByte <= 0x7f) {
-    return input.length
-  } else if (firstByte <= 0xb7) {
-    return firstByte - 0x7f
-  } else if (firstByte <= 0xbf) {
-    return firstByte - 0xb6
-  } else if (firstByte <= 0xf7) {
-    // a list between  0-55 bytes long
-    return firstByte - 0xbf
-  } else {
-    // a list  over 55 bytes long
-    var llength = firstByte - 0xf6
-    var length = safeParseInt(input.slice(1, llength).toString('hex'), 16)
-    return llength + length
-  }
-}
-
-function _decode (input) {
-  var length, llength, data, innerRemainder, d
-  var decoded = []
-  var firstByte = input[0]
-
-  if (firstByte <= 0x7f) {
-    // a single byte whose value is in the [0x00, 0x7f] range, that byte is its own RLP encoding.
-    return {
-      data: input.slice(0, 1),
-      remainder: input.slice(1)
-    }
-  } else if (firstByte <= 0xb7) {
-    // string is 0-55 bytes long. A single byte with value 0x80 plus the length of the string followed by the string
-    // The range of the first byte is [0x80, 0xb7]
-    length = firstByte - 0x7f
-
-    // set 0x80 null to 0
-    if (firstByte === 0x80) {
-      data = Buffer.from([])
-    } else {
-      data = input.slice(1, length)
-    }
-
-    if (length === 2 && data[0] < 0x80) {
-      throw new Error('invalid rlp encoding: byte must be less 0x80')
-    }
-
-    return {
-      data: data,
-      remainder: input.slice(length)
-    }
-  } else if (firstByte <= 0xbf) {
-    llength = firstByte - 0xb6
-    length = safeParseInt(input.slice(1, llength).toString('hex'), 16)
-    data = input.slice(llength, length + llength)
-    if (data.length < length) {
-      throw (new Error('invalid RLP'))
-    }
-
-    return {
-      data: data,
-      remainder: input.slice(length + llength)
-    }
-  } else if (firstByte <= 0xf7) {
-    // a list between  0-55 bytes long
-    length = firstByte - 0xbf
-    innerRemainder = input.slice(1, length)
-    while (innerRemainder.length) {
-      d = _decode(innerRemainder)
-      decoded.push(d.data)
-      innerRemainder = d.remainder
-    }
-
-    return {
-      data: decoded,
-      remainder: input.slice(length)
-    }
-  } else {
-    // a list  over 55 bytes long
-    llength = firstByte - 0xf6
-    length = safeParseInt(input.slice(1, llength).toString('hex'), 16)
-    var totalLength = llength + length
-    if (totalLength > input.length) {
-      throw new Error('invalid rlp: total length is larger than the data')
-    }
-
-    innerRemainder = input.slice(llength, totalLength)
-    if (innerRemainder.length === 0) {
-      throw new Error('invalid rlp, List has a invalid length')
-    }
-
-    while (innerRemainder.length) {
-      d = _decode(innerRemainder)
-      decoded.push(d.data)
-      innerRemainder = d.remainder
-    }
-    return {
-      data: decoded,
-      remainder: input.slice(totalLength)
-    }
-  }
-}
-
-function isHexPrefixed (str) {
-  return str.slice(0, 2) === '0x'
-}
-
-// Removes 0x from a given String
-function stripHexPrefix (str) {
-  if (typeof str !== 'string') {
-    return str
-  }
-  return isHexPrefixed(str) ? str.slice(2) : str
-}
-
-function intToHex (i) {
-  var hex = i.toString(16)
-  if (hex.length % 2) {
-    hex = '0' + hex
-  }
-
-  return hex
-}
-
-function padToEven (a) {
-  if (a.length % 2) a = '0' + a
-  return a
-}
-
-function intToBuffer (i) {
-  var hex = intToHex(i)
-  return Buffer.from(hex, 'hex')
-}
-
-function toBuffer (v) {
-  if (!Buffer.isBuffer(v)) {
-    if (typeof v === 'string') {
-      if (isHexPrefixed(v)) {
-        v = Buffer.from(padToEven(stripHexPrefix(v)), 'hex')
-      } else {
-        v = Buffer.from(v)
-      }
-    } else if (typeof v === 'number') {
-      if (!v) {
-        v = Buffer.from([])
-      } else {
-        v = intToBuffer(v)
-      }
-    } else if (v === null || v === undefined) {
-      v = Buffer.from([])
-    } else if (v.toArray) {
-      // converts a BN to a Buffer
-      v = Buffer.from(v.toArray())
-    } else {
-      throw new Error('invalid type')
-    }
-  }
-  return v
-}
-
-},{"assert":199,"safe-buffer":169}],169:[function(require,module,exports){
-/* eslint-disable node/no-deprecated-api */
-var buffer = require('buffer')
-var Buffer = buffer.Buffer
-
-// alternative to using Object.keys for old browsers
-function copyProps (src, dst) {
-  for (var key in src) {
-    dst[key] = src[key]
-  }
-}
-if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-  module.exports = buffer
-} else {
-  // Copy properties from require('buffer')
-  copyProps(buffer, exports)
-  exports.Buffer = SafeBuffer
-}
-
-function SafeBuffer (arg, encodingOrOffset, length) {
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-// Copy static methods from Buffer
-copyProps(Buffer, SafeBuffer)
-
-SafeBuffer.from = function (arg, encodingOrOffset, length) {
-  if (typeof arg === 'number') {
-    throw new TypeError('Argument must not be a number')
-  }
-  return Buffer(arg, encodingOrOffset, length)
-}
-
-SafeBuffer.alloc = function (size, fill, encoding) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  var buf = Buffer(size)
-  if (fill !== undefined) {
-    if (typeof encoding === 'string') {
-      buf.fill(fill, encoding)
-    } else {
-      buf.fill(fill)
-    }
-  } else {
-    buf.fill(0)
-  }
-  return buf
-}
-
-SafeBuffer.allocUnsafe = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return Buffer(size)
-}
-
-SafeBuffer.allocUnsafeSlow = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return buffer.SlowBuffer(size)
-}
-
-},{"buffer":205}],170:[function(require,module,exports){
-(function (setImmediate){
-'use strict';
-module.exports = typeof setImmediate === 'function' ? setImmediate :
-	function setImmediate() {
-		var args = [].slice.apply(arguments);
-		args.splice(1, 0, 0);
-		setTimeout.apply(null, args);
-	};
-
-}).call(this,require("timers").setImmediate)
-},{"timers":210}],171:[function(require,module,exports){
-module.exports = XMLHttpRequest;
-
-},{}],172:[function(require,module,exports){
-(function (Buffer){
-const coder = require('./lib/abi-coder');
-const uint256Coder = coder.uint256Coder;
-const getParamCoder = coder.getParamCoder;
-const util = require('./utils');
-
-function Result() {}
-
-function encodeParams(types, values) {
-  if (types.length !== values.length) {
-    throw new Error(`while encoding params, types/values mismatch, Your contract requires ${types.length} types (arguments), and you passed in ${values.length}`);
-  }
-
-  const parts = [];
-
-  types.forEach(function(type, index) {
-    const coder = getParamCoder(type);
-    parts.push({dynamic: coder.dynamic, value: coder.encode(values[index])});
-  });
-
-  function alignSize(size) {
-    return parseInt(32 * Math.ceil(size / 32));
-  }
-
-  let staticSize = 0, dynamicSize = 0;
-  parts.forEach(function(part) {
-    if (part.dynamic) {
-      staticSize += 32;
-      dynamicSize += alignSize(part.value.length);
-    } else {
-      staticSize += alignSize(part.value.length);
-    }
-  });
-
-  let offset = 0, dynamicOffset = staticSize;
-  const data = new Buffer(staticSize + dynamicSize);
-
-  parts.forEach(function(part) {
-    if (part.dynamic) {
-      uint256Coder.encode(dynamicOffset).copy(data, offset);
-      offset += 32;
-
-      part.value.copy(data, dynamicOffset);
-      dynamicOffset += alignSize(part.value.length);
-    } else {
-      part.value.copy(data, offset);
-      offset += alignSize(part.value.length);
-    }
-  });
-
-  return '0x' + data.toString('hex');
-}
-
-// decode bytecode data from output names and types
-function decodeParams(names, types, data, useNumberedParams = true) {
-  // Names is optional, so shift over all the parameters if not provided
-  if (arguments.length < 3) {
-    data = types;
-    types = names;
-    names = [];
-  }
-
-  data = util.hexToBuffer(data);
-  const values = new Result();
-
-  let offset = 0;
-  types.forEach(function(type, index) {
-    let result;
-    const coder = getParamCoder(type);
-
-    if (coder.dynamic) {
-      const dynamicOffset = uint256Coder.decode(data, offset);
-      result = coder.decode(data, dynamicOffset.value.toNumber());
-      offset += dynamicOffset.consumed;
-    } else {
-      result = coder.decode(data, offset);
-      offset += result.consumed;
-    }
-
-    if (useNumberedParams) {
-      values[index] = result.value;
-    }
-
-    if (names[index]) {
-      values[names[index]] = result.value;
-    }
-  });
-  return values;
-}
-
-// create an encoded method signature from an ABI object
-function encodeSignature(method) {
-  const signature = `${method.name}(${util.getKeys(method.inputs, 'type').join(',')})`;
-  return `0x${(new Buffer(util.keccak256(signature), 'hex')).slice(0, 4).toString('hex')}`;
-}
-
-// encode method ABI object with values in an array, output bytecode
-function encodeMethod(method, values) {
-  const paramsEncoded = encodeParams(util.getKeys(method.inputs, 'type'), values).substring(2);
-
-  return `${encodeSignature(method)}${paramsEncoded}`;
-}
-
-// decode method data bytecode, from method ABI object
-function decodeMethod(method, data) {
-  const outputNames = util.getKeys(method.outputs, 'name', true);
-  const outputTypes = util.getKeys(method.outputs, 'type');
-
-  return decodeParams(outputNames, outputTypes, util.hexToBuffer(data));
-}
-
-// decode method data bytecode, from method ABI object
-function encodeEvent(eventObject, values) {
-  return encodeMethod(eventObject, values);
-}
-
-function eventSignature(eventObject) {
-  const signature = `${eventObject.name}(${util.getKeys(eventObject.inputs, 'type').join(',')})`;
-
-  return `0x${util.keccak256(signature)}`;
-}
-
-// decode method data bytecode, from method ABI object
-function decodeEvent(eventObject, data, topics, useNumberedParams = true) {
-  const nonIndexed = eventObject.inputs.filter((input) => !input.indexed);
-  const nonIndexedNames = util.getKeys(nonIndexed, 'name', true);
-  const nonIndexedTypes = util.getKeys(nonIndexed, 'type');
-  const event = decodeParams(nonIndexedNames, nonIndexedTypes, util.hexToBuffer(data), useNumberedParams);
-  const topicOffset = eventObject.anonymous ? 0 : 1;
-
-  eventObject.inputs.filter((input) => input.indexed).map((input, i) => {
-    const topic = new Buffer(topics[i + topicOffset].slice(2), 'hex');
-    const coder = getParamCoder(input.type);
-    event[input.name] = coder.decode(topic, 0).value;
-  });
-
-  event._eventName = eventObject.name;
-
-  return event;
-}
-
-// Decode a specific log item with a specific event abi
-function decodeLogItem(eventObject, log, useNumberedParams = true) {
-  if (eventObject && log.topics[0] === eventSignature(eventObject)) {
-    return decodeEvent(eventObject, log.data, log.topics, useNumberedParams);
-  }
-}
-
-// Create a decoder for all events defined in an abi. It returns a function which is called
-// on an array of log entries such as received from getLogs or getTransactionReceipt and parses
-// any matching log entries
-function logDecoder(abi, useNumberedParams = true) {
-  const eventMap = {};
-  abi.filter(item => item.type === 'event').map(item => {
-    eventMap[eventSignature(item)] = item;
-  });
-  return function(logItems) {
-    return logItems.map(log => decodeLogItem(eventMap[log.topics[0]], log, useNumberedParams)).filter(i => i);
-  };
-}
-
-module.exports = {
-  encodeParams,
-  decodeParams,
-  encodeMethod,
-  decodeMethod,
-  encodeEvent,
-  decodeEvent,
-  decodeLogItem,
-  logDecoder,
-  eventSignature,
-  encodeSignature,
-};
-
-}).call(this,require("buffer").Buffer)
-},{"./lib/abi-coder":179,"./utils":193,"buffer":205}],173:[function(require,module,exports){
-(function (Buffer){
-const elliptic = require('elliptic');
-const keccak256 = require('js-sha3').keccak_256;
-const randomhex = require('randomhex');
-const secp256k1 = new (elliptic.ec)('secp256k1');
-const stripHexPrefix = require('./utils').stripHexPrefix;
-
-/**
- * Get the address from a public key
- *
- * @method getAddress
- * @param {String} addressInput
- * @returns {String} output the string is a hex string
- */
-function getAddress(addressInput) {
-  let address = addressInput;
-  let result = null;
-
-  if (typeof(address) !== 'string') { throw new Error(`invalid address value ${JSON.stringify(address)} not a valid hex string`); }
-
-  // Missing the 0x prefix
-  if (address.substring(0, 2) !== '0x' && address.substring(0, 2) !== 'XE') {
-    address = `0x${address}`;
-  }
-
-  if (address.match(/^(0x)?[0-9a-fA-F]{40}$/)) {
-    result = getChecksumAddress(address);
-
-    // It is a checksummed address with a bad checksum
-    if (address.match(/([A-F].*[a-f])|([a-f].*[A-F])/) && result !== address) {
-      throw new Error('invalid address checksum');
-    }
-
-    // Maybe ICAP? (we only support direct mode)
-  } else if (address.match(/^XE[0-9]{2}[0-9A-Za-z]{30,31}$/)) {
-    throw new Error('ICAP and IBAN addresses, not supported yet..');
-
-    /*
-    // It is an ICAP address with a bad checksum
-    if (address.substring(2, 4) !== ibanChecksum(address)) {
-      throw new Error('invalid address icap checksum');
-    }
-
-    result = (new BN(address.substring(4), 36)).toString(16);
-    while (result.length < 40) { result = '0' + result; }
-    result = getChecksumAddress('0x' + result);
-    */
-  } else {
-    throw new Error(`invalid address value ${JSON.stringify(address)} not a valid hex string`);
-  }
-
-  return result;
-}
-
-/**
- * Returns the public key for this private key.
- *
- * @method privateToPublic
- * @param {String} privateKey a valid private key hex
- * @returns {Object} publicKey the sepk 160 byte public key for this private key
- */
-function privateToPublic(privateKey) {
-  if (typeof privateKey !== 'string') { throw new Error(`private key must be type String, got ${typeof(privateKey)}`); }
-  if (!privateKey.match(/^(0x)?[0-9a-fA-F]{64}$/)) {
-    throw new Error('private key must be an alphanumeric hex string that is 32 bytes long.');
-  }
-
-  const privateKeyBuffer = new Buffer(stripHexPrefix(privateKey), 'hex');
-  return (new Buffer(secp256k1.keyFromPrivate(privateKeyBuffer).getPublic(false, 'hex'), 'hex')).slice(1);
-}
-
-/**
- * Returns the IrcChain standard address of a public sepk key.
- *
- * @method publicToAddress
- * @param {Object} publicKey a single public key Buffer object
- * @returns {String} address the 20 byte IrChain address
- */
-function publicToAddress(publicKey) {
-  if (!Buffer.isBuffer(publicKey)) {
-    throw new Error('public key must be a buffer object in order to get public key address');
-  }
-  return getAddress(keccak256(publicKey).slice(24));
-}
-
-/**
- * Returns an IrChain account address, private and public key based on the public key.
- *
- * @method privateToAccount
- * @param {String} privateKey a single string of entropy longer than 32 chars
- * @returns {Object} output the IrChain account address, and keys as hex strings
- */
-function privateToAccount(privateKey) {
-  const publicKey = privateToPublic(privateKey);
-
-  return {
-    privateKey: `0x${stripHexPrefix(privateKey)}`,
-    publicKey: `0x${publicKey.toString('hex')}`,
-    address: publicToAddress(publicKey),
-  };
-}
-
-/**
- * Create a single IrChain account address, private and public key.
- *
- * @method generate
- * @param {String} entropy a single string of entropy longer than 32 chars
- * @returns {Object} output the IrChain account address, and keys
- */
-function generate(entropy) {
-  if (typeof entropy !== 'string') { throw new Error(`while generating account, invalid input type: '${typeof(entropy)}' should be type 'String'.`); }
-  if (entropy.length < 32) { throw new Error(`while generating account, entropy value not random and long enough, should be at least 32 characters of random information, is only ${entropy.length}`); }
-
-  return privateToAccount(keccak256(`${randomhex(16)}${keccak256(`${randomhex(32)}${entropy}`)}${randomhex(32)}`));
-}
-
-/**
- * Get the checksum address of a address value
- *
- * @method getChecksumAddress
- * @param {String} addressInput
- * @returns {String} output hex string value
- */
-function getChecksumAddress(addressInput) {
-  var address = addressInput;
-
-  if (typeof(address) !== 'string' || !address.match(/^0x[0-9A-Fa-f]{40}$/)) {
-    throw new Error(`invalid address value ${JSON.stringify(address)} not a valid hex string`);
-  }
-
-  address = address.substring(2).toLowerCase();
-  const hashed = Buffer.from(keccak256(address), 'hex');
-
-  address = address.split('');
-  for (var i = 0; i < 40; i += 2) {
-    if ((hashed[i >> 1] >> 4) >= 8) {
-      address[i] = address[i].toUpperCase();
-    }
-    if ((hashed[i >> 1] & 0x0f) >= 8) {
-      address[i + 1] = address[i + 1].toUpperCase();
-    }
-  }
-  return `0x${address.join('')}`;
-}
-
-// exports
-module.exports = {
-  generate,
-  getAddress,
-  privateToAccount,
-  getChecksumAddress,
-  publicToAddress,
-  privateToPublic,
-};
-
-}).call(this,require("buffer").Buffer)
-},{"./utils":193,"buffer":205,"elliptic":128,"js-sha3":161,"randomhex":167}],174:[function(require,module,exports){
-const abi = require('./abi');
-const IrcFilter = require('./filter');
-const getKeys = require('./utils').getKeys;
-const keccak256 = require('js-sha3').keccak_256;
-const promiseToCallback = require('promise-to-callback');
-
-module.exports = IrcContract;
-
-function IrcContract(query) {
-  return function(abi, bytecode, defaultTx) {
-    // validate params
-    if (!Array.isArray(abi)) {
-      throw new Error(`Contract ABI must be type Array, got type ${typeof abi}`);
-    }
-    if (typeof bytecode !== 'undefined' && typeof bytecode !== 'string') {
-      throw new Error(`Contract bytecode must be type String, got type ${typeof bytecode}`);
-    }
-    if (typeof defaultTx !== 'undefined' && typeof defaultTx !== 'object') {
-      throw new Error(`Contract default tx object must be type Object, got type ${typeof abi}`);
-    }
-
-    // build contract object
-    return {
-      at: address => new Contract({address, query, bytecode, defaultTx, abi}),
-      new: () => {
-        const args = [].slice.call(arguments);
-        const callback = utils.popCallback(args);
-        const providedTx = hasTransactionObject(args) && args.pop();
-        const constructor = getConstructorFromABI(abi);
-        const assembleTx = Object.assign({}, defaultTx, providedTx);
-
-        // set contract deploy bytecode
-        if (bytecode) {
-          assembleTx.data = bytecode;
-        }
-        // append encoded constructor arguments
-        if (constructor) {
-          assembleTx.data += abi.encodeParams(getKeys(constructor.inputs, 'type'), args).substring(2);
-        }
-
-        return callback ? query.sendTransaction(assembleTx, callback) : query.sendTransaction(assembleTx);
-      },
-    };
-  };
-}
-
-function Contract(opts = {}) {
-  const self = this;
-  self.abi = opts.abi || [];
-  self.query = opts.query;
-  self.address = opts.address || '0x';
-  self.bytecode = opts.bytecode || '0x';
-  self.defaultTx = opts.defaultTx || {};
-  self.filters = new IrcFilter(self.query);
-
-  getCallableMethodsFromABI(self.abi).forEach((methodObject) => {
-    if (methodObject.type === 'function') {
-      self[methodObject.name] = createContractFunction(methodObject);
-    } else if (methodObject.type === 'event') {
-      self[methodObject.name] = createContractEvent(methodObject);
-    }
-  });
-
-  function createContractEvent(methodObject) {
-    return function contractEvent() {
-      const methodArgs = [].slice.call(arguments);
-
-      const filterInputTypes = getKeys(methodObject.inputs, 'type', false);
-      const filterTopic = `0x${keccak256(`${methodObject.name}(${filterInputTypes.join(',')})`)}`;
-      const filterTopics = [filterTopic];
-      const argsObject = Object.assign({}, methodArgs[0]) || {};
-
-      const defaultFilterObject = Object.assign({}, (methodArgs[0] || {}), {
-        to: self.address,
-        topics: filterTopics,
-      });
-      const filterOpts = Object.assign({}, argsObject, {
-        decoder: (logData) => abi.decodeEvent(methodObject, logData, filterTopics),
-        defaultFilterObject,
-      });
-
-      return new self.filters.Filter(filterOpts);
-    };
-  }
-
-  function createContractFunction(methodObject) {
-    return function contractFunction() {
-      let methodCallback;
-      const methodArgs = [].slice.call(arguments);
-      if (typeof methodArgs[methodArgs.length - 1] === 'function') {
-        methodCallback = methodArgs.pop();
-      }
-
-      const promise = performCall({methodObject, methodArgs});
-
-      if (methodCallback) {
-        return promiseToCallback(promise)(methodCallback);
-      }
-
-      return promise;
-    };
-  }
-
-  async function performCall({methodObject, methodArgs}) {
-    let queryMethod = 'call';
-    let providedTxObject = {};
-
-    if (hasTransactionObject(methodArgs)) providedTxObject = methodArgs.pop();
-    const methodTxObject = Object.assign({},
-      self.defaultTx,
-      providedTxObject, {
-        to: self.address,
-      });
-    methodTxObject.data = abi.encodeMethod(methodObject, methodArgs);
-
-    if (methodObject.constant === false) {
-      queryMethod = 'sendTransaction';
-    }
-
-    const queryResult = await self.query[queryMethod](methodTxObject);
-
-    if (queryMethod === 'call') {
-      // queryMethod is 'call', result is returned value
-      try {
-        return abi.decodeMethod(methodObject, queryResult);
-      } catch (decodeFormattingError) {
-        throw new Error(`while formatting incoming raw call data ${JSON.stringify(queryResult)} ${decodeFormattingError}`);
-      }
-    }
-    // queryMethod is 'sendTransaction', result is txHash
-    return queryResult;
-  }
-}
-
-const txObjectProperties = ['from', 'to', 'data', 'value', 'gasPrice', 'gas'];
-
-const hasTransactionObject = function(args) {
-  // bad/empty args: bad
-  if (!Array.isArray(args) || args.length === 0) {
-    return false;
-  }
-  const lastArg = args[args.length - 1];
-  // missing or non-object: bad
-  if (!lastArg) return false;
-  if (typeof lastArg !== 'object') {
-    return false;
-  }
-  // empty object: good
-  if (Object.keys(lastArg).length === 0) {
-    return true;
-  }
-  // txParams object: good
-  const keys = Object.keys(lastArg);
-  const hasMatchingKeys = txObjectProperties.some((value) => keys.includes(value));
-  if (hasMatchingKeys) {
-    return true;
-  }
-  // no match
-  return false;
-};
-
-const getConstructorFromABI = function(abi) {
-  return abi.filter((json) => (json.type === 'constructor'))[0];
-};
-
-const getCallableMethodsFromABI = function(abi) {
-  return abi.filter((json) => ((json.type === 'function' || json.type === 'event') && json.name.length > 0));
-};
-},{"./abi":172,"./filter":176,"./utils":193,"js-sha3":161,"promise-to-callback":164}],175:[function(require,module,exports){
-// External Deps
-const IrcQuery = require('./query');
-const IrcContract = require('./contract');
-const namehash = require('./lib/ens-name-hash');
-
-// ABIs
-const registryAbi = require('./res/ens/registry.json');
-const resolverAbi = require('./res/ens/resolver.json');
-
-// var (
-// MainnetGenesisHash = common.HexToHash("0xf29c3da3e1710517cbb3a555ab20981ec2c9abacbbcb914ab91e8c23edfbf4d0")
-// TestnetGenesisHash = common.HexToHash("0x389d168191585e7a14b01a654c02058053abf3ca3d167efb69a51dec86d9cfbc")
-// )
-// Map network to known ENS registries
-const networkMap = require('./res/ens/network-map');
-const emptyHash = '0x0000000000000000000000000000000000000000000000000000000000000000';
-const emptyAddr = '0x0000000000000000000000000000000000000000';
-
-const NotFoundError = new Error('ENS name not defined.');
-const BadCharacterError = new Error('Illegal Character for ENS.');
-
-class IrcEns {
-  static get networkMap() {return networkMap;} ;
-  static get namehash() {return namehash}
-
-  constructor(opts = {}) {
-    const {provider, network} = opts;
-    let {registryAddress} = opts;
-
-    // Validations
-    if (!provider) {
-      throw new Error('The IrcJsENS Constructor requires a provider.');
-    }
-
-    // Requires EITHER a network or a registryAddress
-    if (!network && !registryAddress) {
-      throw new Error('The IrcJsENS Constructor requires a network or registry address.');
-    }
-
-    this.provider = provider;
-    this.irc = new IrcQuery(this.provider);
-    this.contract = new IrcContract(this.irc);
-
-    // Link to Registry
-    this.Registry = this.contract(registryAbi);
-    if (!registryAddress && network) {
-      registryAddress = networkMap[network];
-    }
-    this.registry = this.Registry.at(registryAddress);
-
-    // Create Resolver class
-    this.Resolver = this.contract(resolverAbi);
-  }
-
-  lookup(name = '') {
-    return IrcEns.getNamehash(name)
-                 .then((node) => {
-                 if (node === emptyHash) {
-                   return Promise.reject(NotFoundError);
-                 }
-                 return this.resolveAddressForNode(node);
-               });
-  }
-
-  static getNamehash(name) {
-    try {
-      return Promise.resolve(namehash.hash(name));
-    } catch (e) {
-      return Promise.reject(BadCharacterError);
-    }
-  }
-
-  getOwner(name = '') {
-    return IrcEns.getNamehash(name)
-                 .then(node => this.getOwnerForNode(node));
-  }
-
-  getOwnerForNode(node) {
-    if (node === emptyHash) {
-      return Promise.reject(NotFoundError);
-    }
-    return this.registry.owner(node)
-               .then((result) => {
-                 const ownerAddress = result[0];
-                 if (ownerAddress === emptyAddr) {
-                   throw NotFoundError;
-                 }
-
-                 return ownerAddress;
-               });
-  }
-
-  getResolver(name = '') {
-    return IrcEns.getNamehash(name)
-                 .then(node => this.getResolverForNode(node));
-  }
-
-  getResolverAddress(name = '') {
-    return IrcEns.getNamehash(name)
-                 .then(node => this.getResolverAddressForNode(node));
-  }
-
-  getResolverForNode(node) {
-    if (!node.startsWith('0x')) {
-      node = `0x${node}`;
-    }
-
-    return this.getResolverAddressForNode(node)
-               .then((resolverAddress) => {
-                 return this.Resolver.at(resolverAddress);
-               });
-  }
-
-  getResolverAddressForNode(node) {
-    return this.registry.resolver(node)
-               .then((result) => {
-                 const resolverAddress = result[0];
-                 if (resolverAddress === emptyAddr) {
-                   throw NotFoundError;
-                 }
-                 return resolverAddress;
-               });
-  }
-
-  resolveAddressForNode(node) {
-    return this.getResolverForNode(node)
-               .then((resolver) => {
-                 return resolver.addr(node);
-               })
-               .then(result => result[0]);
-  }
-
-  reverse(address) {
-    if (!address) {
-      return Promise.reject(new Error('Must supply an address to reverse lookup.'));
-    }
-
-    if (address.startsWith('0x')) {
-      address = address.slice(2);
-    }
-
-    const name = `${address.toLowerCase()}.addr.reverse`;
-    const node = IrcEns.namehash(name);
-    return IrcEns.getNamehash(name)
-                 .then(node => this.getResolverForNode(node))
-                 .then(resolver => resolver.name(node))
-                 .then(results => results[0]);
-  }
-}
-
-module.exports = IrcEns;
-},{"./contract":174,"./lib/ens-name-hash":180,"./query":183,"./res/ens/network-map":184,"./res/ens/registry.json":185,"./res/ens/resolver.json":186}],176:[function(require,module,exports){
-function constructFilter(filterName, query) {
-  function Filter(options) {
-    const self = this;
-    self.filterId = null;
-    self.options = Object.assign({
-      delay: 300,
-      decoder: function decodeData(data) { return data; },
-      defaultFilterObject: {},
-    }, options || {});
-
-    self.watchers = {};
-    self.interval = setInterval(() => {
-      if (self.filterId !== null && Object.keys(self.watchers).length > 0) {
-        query.getFilterChanges(self.filterId, (changeError, changeResult) => {
-          const decodedChangeResults = [];
-          let decodingError = null;
-
-          if (!changeError) {
-            try {
-              changeResult.forEach((log, logIndex) => {
-                decodedChangeResults[logIndex] = changeResult[logIndex];
-                if (typeof changeResult[logIndex] === 'object') {
-                  decodedChangeResults[logIndex].data = self.options.decoder(decodedChangeResults[logIndex].data);
-                }
-              });
-            } catch (decodingErrorMesage) {
-              decodingError = new Error(`while decoding filter change event data from RPC '${JSON.stringify(decodedChangeResults)}': ${decodingErrorMesage}`);
-            }
-          }
-
-          Object.keys(self.watchers).forEach((id) => {
-            const watcher = self.watchers[id];
-            if (watcher.stop === true) {
-              delete self.watchers[id];
-              return;
-            }
-
-            if (decodingError) {
-              watcher.reject(decodingError);
-              watcher.callback(decodingError, null);
-            } else {
-              if (changeError) {
-                watcher.reject(changeError);
-              } else if (Array.isArray(decodedChangeResults) && changeResult.length > 0) {
-                watcher.resolve(decodedChangeResults);
-              }
-
-              watcher.callback(changeError, decodedChangeResults);
-            }
-          });
-        });
-      }
-    }, self.options.delay);
-  }
-
-  Filter.prototype.at = function atFilter(filterId) {
-    const self = this;
-    self.filterId = filterId;
-  };
-
-  Filter.prototype.watch = function watchFilter(watchCallbackInput) {
-    var callback = watchCallbackInput || function() {};
-    const self = this;
-    const id = Math.random().toString(36).substring(7);
-    const output = new Promise((resolve, reject) => {
-      self.watchers[id] = {resolve, reject, callback, stop: false};
-    });
-
-    output.stopWatching = function stopWatching() {
-      self.watchers[id].stop = true;
-    };
-
-    return output;
-  };
-
-  Filter.prototype.uninstall = function uninstallFilter(cb) {
-    const self = this;
-    const callback = cb || function emptyCallback() {};
-    self.watchers = Object.assign({});
-    clearInterval(self.interval);
-
-    return new Promise((resolve, reject) => {
-      query.uninstallFilter(self.filterId, (uninstallError, uninstallResilt) => {
-        if (uninstallError) {
-          reject(uninstallError);
-        } else {
-          resolve(uninstallResilt);
-        }
-
-        callback(uninstallError, uninstallResilt);
-      });
-    });
-  };
-
-  Filter.prototype.new = function newFilter() {
-    var callback = () => {};
-    const self = this;
-    const filterInputs = [];
-    const args = [].slice.call(arguments);
-    // pop callback if provided
-    if (typeof args[args.length - 1] === 'function') {
-      callback = args.pop();
-    }
-
-    // if a param object was presented, push that into the inputs
-    if (filterName === 'Filter') {
-      filterInputs.push(Object.assign(
-        self.options.defaultFilterObject,
-        (args[args.length - 1] || {})));
-    }
-
-    return new Promise((resolve, reject) => {
-      // add complex callback
-      filterInputs.push((setupError, filterId) => {
-        if (!setupError) {
-          self.filterId = filterId;
-          resolve(filterId);
-        } else {
-          reject(setupError);
-        }
-
-        callback(setupError, filterId);
-      });
-
-      // apply filter, call new.. filter method
-      query[`new${filterName}`].apply(query, filterInputs);
-    });
-  };
-
-  return Filter;
-}
-
-/**
- * IrcFilter constructor, intakes a query, helps manage filter event polling
- *
- * @method IrcFilter
- * @param {Object} query the `ircjs-query` or `irc-query` object
- * @returns {Object} output an IrcFilter instance
- * @throws error if new is not used
- */
-function IrcFilter(query) {
-  const self = this;
-  if (!(self instanceof IrcFilter)) {
-    throw new Error('the IrcFilter object must be instantiated with `new` flag...');
-  }
-  if (typeof query !== 'object') {
-    throw new Error('the IrcFilter object must be instantiated with an IrcQuery instance.');
-  }
-
-  self.Filter = constructFilter('Filter', query);
-  self.BlockFilter = constructFilter('BlockFilter', query);
-  self.PendingTransactionFilter = constructFilter('PendingTransactionFilter', query);
-}
-
-// export IrcFilter
-module.exports = IrcFilter;
-
-},{}],177:[function(require,module,exports){
-const schema = require('./schema');
-const util = require('./utils');
-const toBN = util.toBN;
-const stripHexPrefix = util.stripHexPrefix;
-const BN = require('bn.js');
-const padToEven = util.padToEven;
-const arrayContainsArray = util.arrayContainsArray;
-const getBinarySize = util.getBinarySize;
-const ten = new BN('10', 10);
-
-/**
- * Format quantity values, either encode to hex or decode to BigNumber
- * should intake null, stringNumber, number, BN
- *
- * @method formatQuantity
- * @param {String|BigNumber|Number} value quantity or tag to convert
- * @param {Boolean} encode to hex or decode to BigNumber
- * @param {Boolean} pad
- * @returns {String|BigNumber|Number} output to BigNumber or string
- * @throws error if value is a float
- */
-function formatQuantity(value, encode, pad) {
-  if (['string', 'number', 'object'].indexOf(typeof value) === -1 || value === null) {
-    return value;
-  }
-
-  const numberValue = toBN(value);
-  const numPadding = numberValue.lt(ten) && pad === true && !numberValue.isZero() ? '0' : '';
-
-  if (toBN(value).isNeg()) {
-    throw new Error(`while formatting quantity '${numberValue.toString(10)}', invalid negative number. Number must be positive or zero.`);
-  }
-
-  return encode ? `0x${numPadding}${numberValue.toString(16)}` : numberValue;
-}
-
-/**
- * Format quantity or tag, if tag bypass return, else format quantity
- * should intake null, stringNumber, number, BN, string tag
- *
- * @method formatQuantityOrTag
- * @param {String|BigNumber|Number} value quantity or tag to convert
- * @param {Boolean} encode encode the number to hex or decode to BigNumber
- * @returns {Object|String} output to BigNumber or string
- * @throws error if value is a float
- */
-function formatQuantityOrTag(value, encode) {
-  let output = value;
-
-  // if the value is a tag, bypass
-  if (schema.tags.indexOf(value) === -1) {
-    output = formatQuantity(value, encode, null);
-  }
-
-  return output;
-}
-
-/**
- * FormatData under strict conditions hex prefix
- *
- * @method formatData
- * @param {String} value the bytes data to be formatted
- * @param {Number} byteLength the required byte length (usually 20 or 32)
- * @returns {String} output output formatted data
- * @throws error if minimum length isnt met
- */
-function formatData(value, byteLength) {
-  var output = value;
-  var outputByteLength = 0;
-
-  // prefix only under strict conditions, else bypass
-  if (typeof value === 'string') {
-    output = `0x${padToEven(stripHexPrefix(value))}`;
-    outputByteLength = getBinarySize(output);
-  }
-
-  // format double padded zeros.
-  if (output === '0x00') { output = '0x0'; }
-
-  // throw if bytelength is not correct
-  if (typeof byteLength === 'number' && value !== null && output !== '0x' && output !== '0x0' // support empty values
-    && (!/^[0-9A-Fa-f]+$/.test(stripHexPrefix(output)) || outputByteLength !== 2 + byteLength * 2)) {
-    throw new Error(`hex string '${output}' must be an alphanumeric ${2 + byteLength * 2} utf8 byte hex (chars: a-fA-F) string, is ${outputByteLength} bytes`);
-  }
-
-  return output;
-}
-
-/**
- * Format object, even with random RPC caviets
- *
- * @method formatObject
- * @param {String|Array} formatter the unit to convert to, default ircer
- * @param {Object} value the object value
- * @param {Boolean} encode encode to hex or decode to BigNumber
- * @returns {Object} output object
- * @throws error if value is a float
- */
-function formatObject(formatter, value, encode) {
-  var output = Object.assign({}, value);
-  var formatObject = null;
-
-  // if the object is a string flag, then retreive the object
-  if (typeof formatter === 'string') {
-    if (formatter === 'Boolean|IrcSyncing') {
-      formatObject = Object.assign({}, schema.objects.IrcSyncing);
-    } else if (formatter === 'DATA|Transaction') {
-      formatObject = Object.assign({}, schema.objects.Transaction);
-    } else {
-      formatObject = Object.assign({}, schema.objects[formatter]);
-    }
-  }
-
-  // check if all required data keys are fulfilled
-  if (!arrayContainsArray(Object.keys(value), formatObject.__required)) {
-    throw new Error(`object ${JSON.stringify(value)} must contain properties: ${formatObject.__required.join(', ')}`);
-  }
-
-  // assume formatObject is an object, go through keys and format each
-  Object.keys(formatObject).forEach((valueKey) => {
-    if (valueKey !== '__required' && typeof value[valueKey] !== 'undefined') {
-      output[valueKey] = format(formatObject[valueKey], value[valueKey], encode);
-    }
-  });
-
-  return output;
-}
-
-/**
- * Format array
- *
- * @method formatArray
- * @param {String|Array} formatter the unit to convert to, default ircer
- * @param {Object} value the value in question
- * @param {Boolean} encode encode to hex or decode to BigNumber
- * @param {Number} lengthRequirement the required minimum array length
- * @returns {Object} output object
- * @throws error if minimum length isnt met
- */
-function formatArray(formatter, value, encode, lengthRequirement) {
-  const output = value.slice();
-  let formatObject = formatter;
-
-  // if the formatter is an array or data, then make format object an array data
-  if (formatter === 'Array|DATA') {
-    formatObject = ['D'];
-  }
-
-  // if formatter is a FilterChange and acts like a BlockFilter
-  // or PendingTx change format object to tx hash array
-  if (formatter === 'FilterChange' && typeof value[0] === 'string') {
-    formatObject = ['D32'];
-  }
-
-  // enforce minimum value length requirements
-  if (encode === true
-    && typeof lengthRequirement === 'number'
-    && value.length < lengthRequirement) {
-    throw new Error(`array ${JSON.stringify(value)} must contain at least ${lengthRequirement} params, but only contains ${value.length}.`);
-  }
-
-  // make new array, avoid mutation
-  formatObject = formatObject.slice();
-
-  // assume formatObject is an object, go through keys and format each
-  value.forEach((valueKey, valueIndex) => {
-    // use key zero as formatter for all values, unless otherwise specified
-    let formatObjectKey = 0;
-
-    // if format array is exact, check each argument against formatter argument
-    if (formatObject.length > 1) {
-      formatObjectKey = valueIndex;
-    }
-
-    output[valueIndex] = format(formatObject[formatObjectKey], valueKey, encode, null);
-  });
-
-  return output;
-}
-
-/**
- * Format various kinds of data to RPC spec or into digestable JS objects
- *
- * @method format
- * @param {String|Array} formatter the data formatter
- * @param {String|Array|Object|Null|Number} value the data value input
- * @param {Boolean} encode encode to hex or decode to BigNumbers, Strings, Booleans, Null
- * @param {Number} lengthRequirement the minimum data length requirement
- * @throws error if minimum length isnt met
- */
-function format(formatter, value, encode, lengthRequirement) {
-  let output = value;
-
-  // if formatter is quantity or quantity or tag
-  if (formatter === 'Q') {
-    output = formatQuantity(value, encode);
-  } else if (formatter === 'QP') {
-    output = formatQuantity(value, encode, true);
-  } else if (formatter === 'Q|T') {
-    output = formatQuantityOrTag(value, encode);
-  } else if (formatter === 'D') {
-    output = formatData(value); // dont format data flagged objects like compiler output
-  } else if (formatter === 'D20') {
-    output = formatData(value, 20); // dont format data flagged objects like compiler output
-  } else if (formatter === 'D32') {
-    output = formatData(value, 32); // dont format data flagged objects like compiler output
-  } else {
-    // if value is an object or array
-    if (typeof value === 'object'
-      && value !== null
-      && Array.isArray(value) === false) {
-      output = formatObject(formatter, value, encode);
-    } else if (Array.isArray(value)) {
-      output = formatArray(formatter, value, encode, lengthRequirement);
-    }
-  }
-
-  return output;
-}
-
-/**
- * Format RPC inputs generally to the node or TestRPC
- *
- * @method formatInputs
- * @param {Object} method the data formatter
- * @param {Array} inputs the data inputs
- * @returns {Array} output the formatted inputs array
- * @throws error if minimum length isnt met
- */
-function formatInputs(method, inputs) {
-  return format(schema.methods[method][0], inputs, true, schema.methods[method][2]);
-}
-
-/**
- * Format RPC outputs generally from the node or TestRPC
- *
- * @method formatOutputs
- * @param {Object} method the data formatter
- * @param {Array|String|Null|Boolean|Object} outputs the data inputs
- * @returns {Array|String|Null|Boolean|Object} output the formatted data
- */
-function formatOutputs(method, outputs) {
-  return format(schema.methods[method][1], outputs, false, null);
-}
-
-// export formatters
-module.exports = {
-  schema,
-  formatQuantity,
-  formatQuantityOrTag,
-  formatObject,
-  formatArray,
-  format,
-  formatInputs,
-  formatOutputs,
-};
-
-},{"./schema":190,"./utils":193,"bn.js":126}],178:[function(require,module,exports){
-(function (Buffer){
-const IrcEns = require('./ens');
-const IrcQuery = require('./query');
-const IrcFilter = require('./filter');
-const IrcContract = require('./contract');
-const HttpProvider = require('./provider');
-const abi = require('./abi');
-const account = require('./account');
-const format = require('./format');
-const schema = require('./schema');
-const signer = require('./signer');
-const unit = require('./unit');
-const utils = require('./utils');
-const scanLink = require('./scan-link');
-const keccak256 = require('js-sha3').keccak_256;
-const BN = require('bn.js');
-const getTxSuccess = require('./lib/get-tx-success');
-
-module.exports = Irc;
-
-/**
- * Returns the ircjs Irc instance.
- *
- * @method Irc
- * @param {Object} provider the webu standard provider object
- * @param {Object} options the Irc options object
- * @returns {Object} irc Irc object instance
- * @throws if the new flag is not used in construction
- */
-
-function Irc(provider, options) {
-  if (!(this instanceof Irc)) { throw new Error('the Irc object requires you construct it with the "new" flag.'); }
-  const self = this;
-  self.options = options || {};
-  const query = new IrcQuery(provider, self.options.query);
-  Object.keys(Object.getPrototypeOf(query)).forEach(
-    // FIXME  self[method] = (...args) => query[method].apply(query, args);
-    method => self[method] = query[method].bind(query));
-  self.filter = new IrcFilter(query);
-  self.contract = abi => (new IrcContract(query))(abi); // parentheses for helping IDE to type inference
-  self.currentProvider = query.rpc.currentProvider;
-  self.setProvider = query.setProvider;
-  self.getTxSuccess = getTxSuccess(self);
-}
-
-Irc.abi = abi;
-Irc.account = account;
-Irc.format = format;
-Irc.schema = schema;
-Irc.signer = signer;
-Irc.scanLink = scanLink;
-Irc.HttpProvider = HttpProvider;
-Irc.Contract = IrcContract;
-Irc.Query = IrcQuery;
-Irc.ENS = IrcEns;
-Irc.isAddress = (val) => utils.isHexString(val, 20);
-Irc.keccak256 = (val) => `0x${keccak256(val)}`;
-Irc.BN = BN;
-Irc.Buffer = Buffer;
-Irc.isHexString = utils.isHexString;
-Irc.fromWei = unit.fromWei;
-Irc.toWei = unit.toWei;
-Irc.toBN = utils.toBN;
-Irc.fromAscii = utils.fromAscii;
-Irc.toAscii = utils.toAscii;
-Irc.fromUtf8 = utils.fromUtf8;
-Irc.toUtf8 = utils.toUtf8;
-
-}).call(this,require("buffer").Buffer)
-},{"./abi":172,"./account":173,"./contract":174,"./ens":175,"./filter":176,"./format":177,"./lib/get-tx-success":181,"./provider":182,"./query":183,"./scan-link":189,"./schema":190,"./signer":191,"./unit":192,"./utils":193,"bn.js":126,"buffer":205,"js-sha3":161}],179:[function(require,module,exports){
-(function (Buffer){
-const BN = require('bn.js');
-const util = require('../utils');
-
-const uint256Coder = coderNumber(32, false);
-
-function coderNumber(size, signed) {
-  return {
-    encode: function encodeNumber(valueInput) {
-      let value = valueInput;
-
-      if (typeof value === 'object'
-        && value.toString
-        && (value.toTwos || value.dividedToIntegerBy)) {
-        value = (value.toString(10)).split('.')[0];
-      }
-
-      if (typeof value === 'string' || typeof value === 'number') {
-        value = String(value).split('.')[0];
-      }
-
-      value = util.toBN(value);
-      value = value.toTwos(size * 8).maskn(size * 8);
-      if (signed) {
-        value = value.fromTwos(size * 8).toTwos(256);
-      }
-      return value.toArrayLike(Buffer, 'be', 32);
-    },
-    decode: function decodeNumber(data, offset) {
-      const junkLength = 32 - size;
-      let value = new BN(data.slice(offset + junkLength, offset + 32));
-      if (signed) {
-        value = value.fromTwos(size * 8);
-      } else {
-        value = value.maskn(size * 8);
-      }
-      return {
-        consumed: 32,
-        value: new BN(value.toString(10)),
-      };
-    },
-  };
-}
-
-const coderBoolean = {
-  encode: function encodeBoolean(value) {
-    return uint256Coder.encode(value ? 1 : 0);
-  },
-  decode: function decodeBoolean(data, offset) {
-    const result = uint256Coder.decode(data, offset);
-    return {
-      consumed: result.consumed,
-      value: !result.value.isZero(),
-    };
-  },
-};
-
-function coderFixedBytes(length) {
-  return {
-    encode: function encodeFixedBytes(valueInput) {
-      let value = valueInput;
-      value = util.hexToBuffer(value);
-
-      if (value.length === 32) { return value; }
-
-      const result = new Buffer(32);
-      result.fill(0);
-      value.copy(result);
-      return result;
-    },
-    decode: function decodeFixedBytes(data, offset) {
-      if (data.length !== 0 && data.length < offset + 32) { throw new Error(`while decoding fixed bytes, invalid bytes data length: ${length}`); }
-
-      return {
-        consumed: 32,
-        value: `0x${data.slice(offset, offset + length).toString('hex')}`,
-      };
-    },
-  };
-}
-
-const coderAddress = {
-  encode: function encodeAddress(valueInput) {
-    let value = valueInput;
-    const result = new Buffer(32);
-    if (!util.isHexString(
-      value,
-      20)) { throw new Error('while encoding address, invalid address value, not alphanumeric 20 byte hex string'); }
-    value = util.hexToBuffer(value);
-    result.fill(0);
-    value.copy(result, 12);
-    return result;
-  },
-  decode: function decodeAddress(data, offset) {
-    if (data.length === 0) {
-      return {
-        consumed: 32,
-        value: '0x',
-      };
-    }
-    if (data.length !== 0 && data.length < offset + 32) { throw new Error(`while decoding address data, invalid address data, invalid byte length ${data.length}`); }
-    return {
-      consumed: 32,
-      value: `0x${data.slice(offset + 12, offset + 32).toString('hex')}`,
-    };
-  },
-};
-
-function encodeDynamicBytesHelper(value) {
-  const dataLength = parseInt(32 * Math.ceil(value.length / 32));
-  const padding = new Buffer(dataLength - value.length);
-  padding.fill(0);
-
-  return Buffer.concat([
-    uint256Coder.encode(value.length),
-    value,
-    padding,
-  ]);
-}
-
-function decodeDynamicBytesHelper(data, offset) {
-  if (data.length !== 0 && data.length < offset + 32) {
-    throw new Error(`while decoding dynamic bytes data, invalid bytes length: ${data.length} should be less than ${offset + 32}`);
-  }
-
-  let length = uint256Coder.decode(data, offset).value;
-  length = length.toNumber();
-  if (data.length !== 0 && data.length < offset + 32 + length) {
-    throw new Error(`while decoding dynamic bytes data, invalid bytes length: ${data.length} should be less than ${offset + 32 + length}`);
-  }
-
-  return {
-    consumed: parseInt(32 + 32 * Math.ceil(length / 32), 10),
-    value: data.slice(offset + 32, offset + 32 + length),
-  };
-}
-
-const coderDynamicBytes = {
-  encode: function encodeDynamicBytes(value) {
-    return encodeDynamicBytesHelper(util.hexToBuffer(value));
-  },
-  decode: function decodeDynamicBytes(data, offset) {
-    const result = decodeDynamicBytesHelper(data, offset);
-    result.value = `0x${result.value.toString('hex')}`;
-    return result;
-  },
-  dynamic: true,
-};
-
-const coderString = {
-  encode: function encodeString(value) {
-    return encodeDynamicBytesHelper(new Buffer(value, 'utf8'));
-  },
-  decode: function decodeString(data, offset) {
-    const result = decodeDynamicBytesHelper(data, offset);
-    result.value = result.value.toString('utf8');
-    return result;
-  },
-  dynamic: true,
-};
-
-function coderArray(coder, lengthInput) {
-  return {
-    encode: function encodeArray(value) {
-      let result = new Buffer(0);
-      let length = lengthInput;
-
-      if (!Array.isArray(value)) { throw new Error('while encoding array, invalid array data, not type Object (Array)'); }
-
-      if (length === -1) {
-        length = value.length;
-        result = uint256Coder.encode(length);
-      }
-
-      if (length !== value.length) { throw new Error(`while encoding array, size mismatch array length ${length} does not equal ${value.length}`); }
-
-      value.forEach((resultValue) => {
-        result = Buffer.concat([
-          result,
-          coder.encode(resultValue),
-        ]);
-      });
-
-      return result;
-    },
-    decode: function decodeArray(data, offsetInput) {
-      let length = lengthInput;
-      let offset = offsetInput;
-      // @TODO:
-      // if (data.length < offset + length * 32) { throw new Error('invalid array'); }
-
-      let consumed = 0;
-      let decodeResult;
-
-      if (length === -1) {
-        decodeResult = uint256Coder.decode(data, offset);
-        length = decodeResult.value.toNumber();
-        consumed += decodeResult.consumed;
-        offset += decodeResult.consumed;
-      }
-
-      const value = [];
-
-      for (let i = 0; i < length; i++) {
-        const loopResult = coder.decode(data, offset);
-        consumed += loopResult.consumed;
-        offset += loopResult.consumed;
-        value.push(loopResult.value);
-      }
-
-      return {
-        consumed,
-        value,
-      };
-    },
-    dynamic: (lengthInput === -1),
-  };
-}
-
-// Break the type up into [staticType][staticArray]*[dynamicArray]? | [dynamicType] and
-// build the coder up from its parts
-const paramTypePart = new RegExp(/^((u?int|bytes)([0-9]*)|(address|bool|string)|(\[([0-9]*)]))/);
-
-function getParamCoder(typeInput) {
-  let type = typeInput;
-  let coder = null;
-  const invalidTypeErrorMessage = `while getting param coder type value ${JSON.stringify(type)} is either invalid or unsupported.`;
-
-  while (type) {
-    let part = type.match(paramTypePart);
-    if (!part) { throw new Error(invalidTypeErrorMessage); }
-    type = type.substring(part[0].length);
-
-    const prefix = (part[2] || part[4] || part[5]);
-    switch (prefix) {
-      case 'int':
-      case 'uint':
-        if (coder) { throw new Error(invalidTypeErrorMessage); }
-        const intSize = parseInt(part[3] || 256);
-        if (intSize === 0 || intSize > 256 || (intSize % 8) !== 0) {
-          throw new Error(`while getting param coder for type ${type}, invalid ${prefix}<N> width: ${type}`);
-        }
-        coder = coderNumber(intSize / 8, (prefix === 'int'));
-        break;
-      case 'bool':
-        if (coder) { throw new Error(invalidTypeErrorMessage); }
-        coder = coderBoolean;
-        break;
-      case 'string':
-        if (coder) { throw new Error(invalidTypeErrorMessage); }
-        coder = coderString;
-        break;
-      case 'bytes':
-        if (coder) { throw new Error(invalidTypeErrorMessage); }
-        if (part[3]) {
-          const size = parseInt(part[3]);
-          if (size === 0 || size > 32) {
-            throw new Error(`while getting param coder for prefix bytes, invalid type ${type}, size ${size} should be 0 or greater than 32`);
-          }
-          coder = coderFixedBytes(size);
-        } else {
-          coder = coderDynamicBytes;
-        }
-        break;
-      case 'address':
-        if (coder) { throw new Error(invalidTypeErrorMessage); }
-        coder = coderAddress;
-        break;
-      case '[]':
-        if (!coder || coder.dynamic) { throw new Error(invalidTypeErrorMessage); }
-        coder = coderArray(coder, -1);
-        break;
-      default:
-        // "[0-9+]"
-        if (!coder || coder.dynamic) { throw new Error(invalidTypeErrorMessage); }
-        const defaultSize = parseInt(part[6]);
-        coder = coderArray(coder, defaultSize);
-    }
-  }
-
-  if (!coder) { throw new Error(invalidTypeErrorMessage); }
-  return coder;
-}
-
-module.exports = {
-  coderNumber,
-  uint256Coder,
-  coderBoolean,
-  coderFixedBytes,
-  coderAddress,
-  coderDynamicBytes,
-  coderString,
-  coderArray,
-  paramTypePart,
-  getParamCoder,
-};
-
-}).call(this,require("buffer").Buffer)
-},{"../utils":193,"bn.js":126,"buffer":205}],180:[function(require,module,exports){
-(function (Buffer){
-const keccak = require('js-sha3').keccak_256;
-const uts46 = require('idna-uts46-hx');
-
-function namehash(name) {
-  let i, node = '';
-  for (i = 0; i < 32; i++) {
-    node += '00';
-  }
-
-  name = normalize(name);
-
-  if (name) {
-    const labels = name.split('.');
-
-    for (i = labels.length - 1; i >= 0; i--) {
-      const labelSha = keccak(labels[i]);
-      node = keccak(new Buffer(node + labelSha, 'hex'));
-    }
-  }
-
-  return '0x' + node;
-}
-
-function normalize(name) {
-  return name ? uts46.toAscii(name, {useStd3ASCII: true, transitional: false}) : name;
-}
-
-exports.hash = namehash;
-exports.normalize = normalize;
-}).call(this,require("buffer").Buffer)
-},{"buffer":205,"idna-uts46-hx":158,"js-sha3":161}],181:[function(require,module,exports){
-module.exports = irc => (txHash, callback) => {
-  let count = 0;
-
-  const timeout = irc.options.timeout || 800000;
-  const interval = irc.options.interval || 7000;
-
-  const prom = new Promise((resolve, reject) => {
-    const txInterval = setInterval(() => {
-      irc.getTransactionReceipt(txHash, (err, result) => {
-        if (err) {
-          clearInterval(txInterval);
-          reject(err);
-        }
-
-        if (!err && result) {
-          clearInterval(txInterval);
-          resolve(result);
-        }
-      });
-
-      if (count >= timeout) {
-        clearInterval(txInterval);
-        const errMessage = `Receipt timeout waiting for tx hash: ${txHash}`;
-        reject(errMessage);
-      }
-
-      count += interval;
-    }, interval);
-  });
-
-  if (callback) {
-    prom.then(res => callback(null, res)).catch(err => callback(err, null));
-  }
-
-  return callback ? null : prom;
-};
-
-},{}],182:[function(require,module,exports){
-// workaround to use httpprovider in different envs
-const XHR2 = require('xhr2');
-
-/**
- * InvalidResponseError helper for invalid errors.
- */
-function invalidResponseError(result, host) {
-  const message = !!result && !!result.error && !!result.error.message
-    ? `${result.error.message}`
-    : `Invalid JSON RPC response from host provider ${host}: ${JSON.stringify(result, null, 2)}`;
-  return new Error(message);
-}
-
-/**
- * HttpProvider should be used to send rpc calls over http
- */
-function HttpProvider(host, timeout) {
-  if (!(this instanceof HttpProvider)) { throw new Error('the HttpProvider instance requires the "new" flag in order to function normally.'); }
-  if (typeof host !== 'string') { throw new Error('the HttpProvider instance requires that the host be specified'); }
-
-  const self = this;
-  self.host = host;
-  self.timeout = timeout || 0;
-}
-
-/**
- * Should be used to make async request
- *
- * @method sendAsync
- * @param {Object} payload
- * @param {Function} callback triggered on end with (err, result)
- */
-HttpProvider.prototype.sendAsync = function(payload, callback) {
-  const self = this;
-  const request = new XHR2();
-
-  request.timeout = self.timeout;
-  request.open('POST', self.host, true);
-  request.setRequestHeader('Content-Type', 'application/json');
-
-  request.onreadystatechange = () => {
-    if (request.readyState === 4 && request.timeout !== 1) {
-      let result = request.responseText;
-      let error = null;
-
-      try {
-        result = JSON.parse(result);
-      } catch (jsonError) {
-        error = invalidResponseError(request.responseText, self.host);
-      }
-
-      callback(error, result);
-    }
-  };
-
-  request.ontimeout = () => {
-    callback(
-      `CONNECTION TIMEOUT: http request timeout after ${self.timeout} ms. (i.e. your connect has timed out for whatever reason, check your provider).`,
-      null);
-  };
-
-  try {
-    request.send(JSON.stringify(payload));
-  } catch (error) {
-    callback(`CONNECTION ERROR: Couldn't connect to node '${self.host}': ${JSON.stringify(error, null, 2)}`, null);
-  }
-};
-
-module.exports = HttpProvider;
-
-},{"xhr2":171}],183:[function(require,module,exports){
-const format = require('./format');
-const utils = require('./utils');
-const IrcRPC = require('./rpc');
-const promiseToCallback = require('promise-to-callback');
-const HttpProvider = require('./provider');
-
-class IrcQuery {
-  constructor(provider, options) {
-    options = options || {};
-    provider = provider || HttpProvider('http:///localhost:8545/');
-    this.options = Object.assign({
-      debug: options.debug || false,
-      logger: options.logger || console,
-      jsonSpace: options.jsonSpace || 0,
-    });
-    this.rpc = new IrcRPC(provider, {});
-    this.setProvider = this.rpc.setProvider;
-  }
-
-  log(message) {
-    this.options.debug && this.options.logger.log(message);
-  };
-}
-
-Object.keys(format.schema.methods).forEach((rpcMethod) => {
-  Object.defineProperty(IrcQuery.prototype, rpcMethod.replace('irc_', ''), {
-    enumerable: true,
-    value: generateFnFor(rpcMethod),
-  });
-});
-
-function generateFnFor(rpcMethod) {
-  return function outputMethod() {
-    const args = [].slice.call(arguments);
-    const callback = utils.popCallback(args);
-    const promise = performCall.call(this, args, rpcMethod);
-
-    // if callback provided, convert promise to callback
-    if (callback) {
-      return promiseToCallback(promise)(callback);
-    }
-
-    // only return promise if no callback provided
-    return promise;
-  };
-}
-
-async function performCall(args, rpcMethod) {
-  const protoMethod = rpcMethod.replace('irc_', '');
-  const methodObj = format.schema.methods[rpcMethod];
-  const self = this;
-  const stringify = data => JSON.stringify(data, null, self.options.jsonSpace);
-
-  // validate arg length
-  if (args.length < methodObj[2]) {
-    throw new Error(`'${protoMethod}' requires at least ${methodObj[2]} input.`);
-  }
-  if (args.length > methodObj[0].length) {
-    throw new Error(`'${protoMethod}' requires at most ${methodObj[0].length} params.`);
-  }
-
-  // set default block
-  if (methodObj[3] && args.length < methodObj[3]) {
-    args.push('latest');
-  }
-
-  // format inputs
-  let inputs = null;
-  try {
-    inputs = format.formatInputs(rpcMethod, args);
-  } catch (err) {
-    throw new Error(`while formatting inputs '${stringify(args)}' for method '${protoMethod}', ${err}`);
-  }
-
-  // perform rpc call
-  const result = await self.rpc.sendAsync({method: rpcMethod, params: inputs}, null);
-  // format result
-  try {
-    return format.formatOutputs(rpcMethod, result);
-  } catch (err) {
-    throw new Error(`while formatting outputs '${stringify(result)}' for method '${protoMethod}', ${err}`);
-  }
-}
-
-module.exports = IrcQuery;
-},{"./format":177,"./provider":182,"./rpc":188,"./utils":193,"promise-to-callback":164}],184:[function(require,module,exports){
-module.exports={
-  "1": "0x314159265dd8dbb310642f98f50c066173c1259b",
-  "3": "0x112234455c3a32fd11230c42e7bccd4a84e02010"
-}
-},{}],185:[function(require,module,exports){
-module.exports=[
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "name": "resolver",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "name": "owner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "resolver",
-        "type": "address"
-      }
-    ],
-    "name": "setResolver",
-    "outputs": [],
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "label",
-        "type": "bytes32"
-      },
-      {
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "setSubnodeOwner",
-    "outputs": [],
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "owner",
-        "type": "address"
-      }
-    ],
-    "name": "setOwner",
-    "outputs": [],
-    "type": "function"
-  }
-]
-},{}],186:[function(require,module,exports){
-module.exports=[
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "name": "addr",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "name": "content",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      }
-    ],
-    "name": "name",
-    "outputs": [
-      {
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "kind",
-        "type": "bytes32"
-      }
-    ],
-    "name": "has",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "addr",
-        "type": "address"
-      }
-    ],
-    "name": "setAddr",
-    "outputs": [],
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "hash",
-        "type": "bytes32"
-      }
-    ],
-    "name": "setContent",
-    "outputs": [],
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "name",
-        "type": "string"
-      }
-    ],
-    "name": "setName",
-    "outputs": [],
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "node",
-        "type": "bytes32"
-      },
-      {
-        "name": "contentType",
-        "type": "uint256"
-      }
-    ],
-    "name": "ABI",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "payable": false,
-    "type": "function"
-  }
-]
 },{}],187:[function(require,module,exports){
-module.exports={
-  "methods": {
-    "webu_clientVersion": [[], "S"],
-    "webu_sha3": [["S"], "D", 1],
-    "net_version": [[], "S"],
-    "net_peerCount": [[], "Q"],
-    "net_listening": [[], "B"],
-    "personal_sign": [["D", "D20", "S"], "D", 2],
-    "personal_ecRecover": [["D", "D"], "D20", 2],
-    "irc_protocolVersion": [[], "S"],
-    "irc_syncing": [[], "B|IrcSyncing"],
-    "irc_coinbase": [[], "D20"],
-    "irc_mining": [[], "B"],
-    "irc_hashrate": [[], "Q"],
-    "irc_gasPrice": [[], "Q"],
-    "irc_accounts": [[], ["D20"]],
-    "irc_blockNumber": [[], "Q"],
-    "irc_getBalance": [["D20", "Q|T"], "Q", 1, 2],
-    "irc_getStorageAt": [["D20", "Q", "Q|T"], "D", 2, 2],
-    "irc_getTransactionCount": [["D20", "Q|T"], "Q", 1, 2],
-    "irc_getBlockTransactionCountByHash": [["D32"], "Q", 1],
-    "irc_getBlockTransactionCountByNumber": [["Q|T"], "Q", 1],
-    "irc_getUncleCountByBlockHash": [["D32"], "Q", 1],
-    "irc_getUncleCountByBlockNumber": [["Q"], "Q", 1],
-    "irc_getCode": [["D20", "Q|T"], "D", 1, 2],
-    "irc_sign": [["D20", "D"], "D", 2],
-    "irc_signTypedData": [["Array|DATA", "D20"], "D", 1],
-    "irc_sendTransaction": [["SendTransaction"], "D", 1],
-    "irc_sendRawTransaction": [["D"], "D32", 1],
-    "irc_call": [["CallTransaction", "Q|T"], "D", 1, 2],
-    "irc_estimateGas": [["EstimateTransaction", "Q|T"], "Q", 1],
-    "irc_getBlockByHash": [["D32", "B"], "Block", 2],
-    "irc_getBlockByNumber": [["Q|T", "B"], "Block", 2],
-    "irc_getTransactionByHash": [["D32"], "Transaction", 1],
-    "irc_getTransactionByBlockHashAndIndex": [["D32", "Q"], "Transaction", 2],
-    "irc_getTransactionByBlockNumberAndIndex": [["Q|T", "Q"], "Transaction", 2],
-    "irc_getTransactionReceipt": [["D32"], "Receipt", 1],
-    "irc_getUncleByBlockHashAndIndex": [["D32", "Q"], "Block", 1],
-    "irc_getUncleByBlockNumberAndIndex": [["Q|T", "Q"], "Block", 2],
-    "irc_getCompilers": [[], ["S"]],
-    "irc_compileLLL": [["S"], "D", 1],
-    "irc_compileSolidity": [["S"], "D", 1],
-    "irc_compileSerpent": [["S"], "D", 1],
-    "irc_newFilter": [["Filter"], "Q", 1],
-    "irc_newBlockFilter": [[], "Q"],
-    "irc_newPendingTransactionFilter": [[], "Q"],
-    "irc_uninstallFilter": [["QP"], "B", 1],
-    "irc_getFilterChanges": [["QP"], ["FilterChange"], 1],
-    "irc_getFilterLogs": [["QP"], ["FilterChange"], 1],
-    "irc_getLogs": [["Filter"], ["FilterChange"], 1],
-    "irc_getWork": [[], ["D"]],
-    "irc_submitWork": [["D", "D32", "D32"], "B", 3],
-    "irc_submitHashrate": [["D", "D"], "B", 2],
-    "db_putString": [["S", "S", "S"], "B", 2],
-    "db_getString": [["S", "S"], "S", 2],
-    "db_putHex": [["S", "S", "D"], "B", 2],
-    "db_getHex": [["S", "S"], "D", 2],
-    "shh_post": [["SHHPost"], "B", 1],
-    "shh_version": [[], "S"],
-    "shh_newIdentity": [[], "D"],
-    "shh_hasIdentity": [["D"], "B"],
-    "shh_newGroup": [[], "D"],
-    "shh_addToGroup": [["D"], "B", 1],
-    "shh_newFilter": [["SHHFilter"], "Q", 1],
-    "shh_uninstallFilter": [["Q"], "B", 1],
-    "shh_getFilterChanges": [["Q"], ["SHHFilterChange"], 1],
-    "shh_getMessages": [["Q"], ["SHHFilterChange"], 1]
-  },
-  "tags": ["latest", "earliest", "pending"],
-  "objects": {
-    "IrcSyncing": {
-      "__required": [],
-      "startingBlock": "Q",
-      "currentBlock": "Q",
-      "highestBlock": "Q"
-    },
-    "SendTransaction": {
-      "__required": ["from", "data"],
-      "from": "D20",
-      "to": "D20",
-      "gas": "Q",
-      "gasPrice": "Q",
-      "value": "Q",
-      "data": "D",
-      "nonce": "Q"
-    },
-    "EstimateTransaction": {
-      "__required": [],
-      "from": "D20",
-      "to": "D20",
-      "gas": "Q",
-      "gasPrice": "Q",
-      "value": "Q",
-      "data": "D",
-      "nonce": "Q"
-    },
-    "CallTransaction": {
-      "__required": ["to"],
-      "from": "D20",
-      "to": "D20",
-      "gas": "Q",
-      "gasPrice": "Q",
-      "value": "Q",
-      "data": "D",
-      "nonce": "Q"
-    },
-    "Block": {
-      "__required": [],
-      "number": "Q",
-      "hash": "D32",
-      "parentHash": "D32",
-      "nonce": "D",
-      "sha3Uncles": "D",
-      "logsBloom": "D",
-      "transactionsRoot": "D",
-      "stateRoot": "D",
-      "receiptsRoot": "D",
-      "miner": "D",
-      "difficulty": "Q",
-      "totalDifficulty": "Q",
-      "extraData": "D",
-      "size": "Q",
-      "gasLimit": "Q",
-      "gasUsed": "Q",
-      "timestamp": "Q",
-      "transactions": ["DATA|Transaction"],
-      "uncles": ["D"]
-    },
-    "Transaction": {
-      "__required": [],
-      "hash": "D32",
-      "nonce": "Q",
-      "blockHash": "D32",
-      "blockNumber": "Q",
-      "transactionIndex": "Q",
-      "from": "D20",
-      "to": "D20",
-      "value": "Q",
-      "gasPrice": "Q",
-      "gas": "Q",
-      "input": "D"
-    },
-    "Receipt": {
-      "__required": [],
-      "transactionHash": "D32",
-      "transactionIndex": "Q",
-      "blockHash": "D32",
-      "blockNumber": "Q",
-      "cumulativeGasUsed": "Q",
-      "gasUsed": "Q",
-      "contractAddress": "D20",
-      "logs": ["FilterChange"]
-    },
-    "Filter": {
-      "__required": [],
-      "fromBlock": "Q|T",
-      "toBlock": "Q|T",
-      "address": "D20",
-      "topics": ["D"]
-    },
-    "FilterChange": {
-      "__required": [],
-      "removed": "B",
-      "logIndex": "Q",
-      "transactionIndex": "Q",
-      "transactionHash": "D32",
-      "blockHash": "D32",
-      "blockNumber": "Q",
-      "address": "D20",
-      "data": "Array|DATA",
-      "topics": ["D"]
-    },
-    "SHHPost": {
-      "__required": ["topics", "payload", "priority", "ttl"],
-      "from": "D",
-      "to": "D",
-      "topics": ["D"],
-      "payload": "D",
-      "priority": "Q",
-      "ttl": "Q"
-    },
-    "SHHFilter": {
-      "__required": ["topics"],
-      "to": "D",
-      "topics": ["D"]
-    },
-    "SHHFilterChange": {
-      "__required": [],
-      "hash": "D",
-      "from": "D",
-      "to": "D",
-      "expiry": "Q",
-      "ttl": "Q",
-      "sent": "Q",
-      "topics": ["D"],
-      "payload": "D",
-      "workProved": "Q"
-    },
-    "SHHMessage": {
-      "__required": [],
-      "hash": "D",
-      "from": "D",
-      "to": "D",
-      "expiry": "Q",
-      "ttl": "Q",
-      "sent": "Q",
-      "topics": ["D"],
-      "payload": "D",
-      "workProved": "Q"
-    }
-  }
-}
-
-},{}],188:[function(require,module,exports){
-const promiseToCallback = require('promise-to-callback');
-
-module.exports = IrcRPC;
-
-/**
- * Constructs the IrcRPC instance
- *
- * @method IrcRPC
- * @param {Object} cprovider the irc rpc provider web3 standard..
- * @param {Object} options the options, if any
- * @returns {Object} ircrpc instance
- */
-function IrcRPC(cprovider, options) {
-  const self = this;
-  const optionsObject = options || {};
-
-  if (!(this instanceof IrcRPC)) {
-    throw new Error('the IrcRPC object requires the "new" flag in order to function normally.');
-  }
-
-  self.options = Object.assign({
-    jsonSpace: optionsObject.jsonSpace || 0,
-    max: optionsObject.max || 9999999999999,
-  });
-  self.idCounter = Math.floor(Math.random() * self.options.max);
-  self.setProvider = (provider) => {
-    if (typeof provider !== 'object') {
-      throw new Error(`the IrcRPC object requires that the first input 'provider' must be an object, got '${typeof provider}'.`);
-    }
-
-    self.currentProvider = provider;
-  };
-  self.setProvider(cprovider);
-}
-
-/**
- * The main send async method
- *
- * @method sendAsync
- * @param {Object} payload the rpc payload object
- * @param {Function} callback the async standard callback
- * @callback {Object|Array|Boolean|String} vary result instance output
- */
-IrcRPC.prototype.sendAsync = function sendAsync(payload, callback) {
-  const self = this;
-  self.idCounter = self.idCounter % self.options.max;
-  const parsedPayload = createPayload(payload, self.idCounter++);
-
-  const promise = new Promise((resolve, reject) => {
-    self.currentProvider.sendAsync(parsedPayload, (err, response) => {
-      const responseObject = response || {};
-
-      if (err || responseObject.error) {
-        const payloadErrorMessage = `${(responseObject.error && 'rpc' || '')} error with payload ${JSON.stringify(
-          parsedPayload,
-          null,
-          self.options.jsonSpace)} ${err ? String(err) : (JSON.stringify(responseObject.error, null, self.options.jsonSpace))}`;
-        const payloadError = new Error(payloadErrorMessage);
-        payloadError.value = (err || responseObject.error);
-        reject(payloadError);
-        return;
-      }
-      resolve(responseObject.result);
-    });
-  });
-
-  if (callback) {
-    // connect promise resolve handlers to callback
-    return promiseToCallback(promise)(callback);
-  }
-
-  // only return promise if no callback specified
-  return promise;
-};
-
-/**
- * A simple create payload method
- *
- * @method createPayload
- * @param {Object} data the rpc payload data
- * @param {String} id the rpc data payload ID
- * @returns {Object} payload the completed payload object
- */
-function createPayload(data, id) {
-  return Object.assign({}, {
-    id,
-    jsonrpc: '2.0',
-    params: [],
-  }, data);
-}
-
-},{"promise-to-callback":164}],189:[function(require,module,exports){
-prefixForNetwork = network => {
-  const net = parseInt(network);
-  let prefix;
-  switch (net) {
-    case 1: // main net
-      prefix = 'scan.';
-      break;
-    case 3: // test net
-      prefix = 'test.';
-      break;
-    default:
-      prefix = '';
-  }
-  return prefix;
-};
-
-module.exports.createAccountLink = (address, network) => {
-  const net = parseInt(network);
-  const prefix = prefixForNetwork(net);
-  return `https://${prefix}irchain.io/address/${address}`;
-};
-
-module.exports.createExplorerLink = (hash, network) => {
-  const net = parseInt(network);
-  const prefix = prefixForNetwork(net);
-  return `https://${prefix}irchain.io/tx/${hash}`;
-};
-
-},{}],190:[function(require,module,exports){
-module.exports = require('./res/schema.json');
-},{"./res/schema.json":187}],191:[function(require,module,exports){
-(function (Buffer){
-const rlp = require('rlp');
-const elliptic = require('elliptic');
-const keccak256 = require('js-sha3').keccak_256;
-const secp256k1 = new (elliptic.ec)('secp256k1');
-const stripHexPrefix = require('./utils').stripHexPrefix;
-const toBN = require('./utils').toBN;
-
-function stripZeros(buffer) {
-  let i;
-  for (i = 0; i < buffer.length; i++) {
-    if (buffer[i] !== 0) { break; }
-  }
-  return (i > 0) ? buffer.slice(i) : buffer;
-}
-
-function padToEven(str) {
-  return str.length % 2 ? `0${str}` : str;
-}
-
-function bnToBuffer(bn) {
-  return stripZeros(new Buffer(padToEven(bn.toString(16)), 'hex'));
-}
-
-const transactionFields = [
-  {name: 'nonce', maxLength: 32, number: true},
-  {name: 'gasPrice', maxLength: 32, number: true},
-  {name: 'gasLimit', maxLength: 32, number: true},
-  {name: 'to', length: 20},
-  {name: 'value', maxLength: 32, number: true},
-  {name: 'data'},
-];
-
-/**
- * ECDSA public key recovery from a rawTransaction
- *
- * @method recover
- * @param {String|Buffer} rawTx either a hex string or buffer instance
- * @param {Number} v
- * @param {Buffer} r
- * @param {Buffer} s
- * @return {Buffer} publicKey
- */
-
-function recover(rawTx, v, r, s) {
-  const rawTransaction = typeof(rawTx) === 'string' ? new Buffer(stripHexPrefix(rawTx), 'hex') : rawTx;
-  const signedTransaction = rlp.decode(rawTransaction);
-  const raw = [];
-
-  transactionFields.forEach((fieldInfo, fieldIndex) => {
-    raw[fieldIndex] = signedTransaction[fieldIndex];
-  });
-
-  const publicKey = secp256k1.recoverPubKey((new Buffer(keccak256(rlp.encode(raw)), 'hex')), {r, s}, v - 27);
-  return (new Buffer(publicKey.encode('hex', false), 'hex')).slice(1);
-}
-
-/**
- * Will sign a raw transaction and return it either as a serlized hex string or raw tx object.
- *
- * @method sign
- * @param {Object} transaction a valid transaction object
- * @param {String} privateKey a valid 32 byte prefixed hex string private key
- * @param {Boolean} toObject **Optional**
- * @returns {String|Object} output either a serilized hex string or signed tx object
- */
-
-function sign(transaction, privateKey, toObject) {
-  if (typeof privateKey !== 'string') {
-    throw new Error('private key input must be a string');
-  }
-  if (typeof transaction !== 'object' || transaction === null) {
-    throw new Error(`transaction input must be a type 'object', got '${typeof(transaction)}'`);
-  }
-  if (!privateKey.match(/^(0x)[0-9a-fA-F]{64}$/)) {
-    throw new Error('invalid private key value, private key must be a prefixed hexified 32 byte string.');
-  }
-
-  const raw = [];
-
-  transactionFields.forEach((fieldInfo) => {
-    var value = new Buffer(0);
-
-    // shim for field name gas
-    const txKey = (fieldInfo.name === 'gasLimit' && transaction.gas) ? 'gas' : fieldInfo.name;
-
-    if (typeof transaction[txKey] !== 'undefined') {
-      if (fieldInfo.number === true) {
-        value = bnToBuffer(toBN(transaction[txKey]));
-      } else {
-        value = new Buffer(padToEven(stripHexPrefix(transaction[txKey])), 'hex');
-      }
-    }
-
-    // Fixed-width field
-    if (fieldInfo.length && value.length !== fieldInfo.length && value.length > 0) {
-      throw new Error(`while signing raw transaction, invalid '${fieldInfo.name}', invalid length should be '${fieldInfo.length}' got '${value.length}'`);
-    }
-
-    // Variable-width (with a maximum)
-    if (fieldInfo.maxLength) {
-      value = stripZeros(value);
-      if (value.length > fieldInfo.maxLength) {
-        throw new Error(`while signing raw transaction, invalid '${fieldInfo.name}' length, the max length is '${fieldInfo.maxLength}', got '${value.length}'`);
-      }
-    }
-
-    raw.push(value);
-  });
-
-  // private key is not stored in memory
-  const signature = secp256k1.keyFromPrivate(new Buffer(privateKey.slice(2), 'hex'))
-                             .sign((new Buffer(keccak256(rlp.encode(raw)), 'hex')), {canonical: true});
-
-  raw.push(new Buffer([27 + signature.recoveryParam]));
-  raw.push(bnToBuffer(signature.r));
-  raw.push(bnToBuffer(signature.s));
-
-  return toObject ? raw : `0x${rlp.encode(raw).toString('hex')}`;
-}
-
-module.exports = {
-  sign,
-  recover,
-};
-
-}).call(this,require("buffer").Buffer)
-},{"./utils":193,"buffer":205,"elliptic":128,"js-sha3":161,"rlp":168}],192:[function(require,module,exports){
-const BN = require('bn.js');
-const toBN = require('./utils').toBN;
-
-const zero = new BN(0);
-const negative1 = new BN(-1);
-
-// complete irchain unit map
-const unitMap = {
-  'wei': '1',
-  'kwei': '1000',
-  'mwei': '1000000',
-  'gwei': '1000000000',
-  'twei': '1000000000000',
-  'pwei': '1000000000000000',
-  'irc': '1000000000000000000',
-  'kirc': '1000000000000000000000',
-  'mirc': '1000000000000000000000000',
-  'girc': '1000000000000000000000000000',
-  'tirc': '1000000000000000000000000000000',
-  'pirc': '1000000000000000000000000000000000',
-};
-
-/**
- * Returns value of unit in Wei
- *
- * @method getValueOfUnit
- * @param {String} unitInput The unit to convert to, default ircer
- * @returns {BN} value of the unit (in Wei)
- * @throws error if the unit is not correct:w
- */
-function getValueOfUnit(unitInput) {
-  const unit = unitInput ? unitInput.toLowerCase() : 'ircer';
-  let unitValue = unitMap[unit];
-
-  if (typeof unitValue !== 'string') {
-    throw new Error(`the unit provided ${unitInput} doesn't exists, please use the one of the following units ${JSON.stringify(
-      unitMap,
-      null,
-      2)}`);
-  }
-
-  return new BN(unitValue, 10);
-}
-
-function numberToString(arg) {
-  if (typeof arg === 'string') {
-    if (!arg.match(/^-?[0-9.]+$/)) {
-      throw new Error(`while converting number to string, invalid number value '${arg}', should be a number matching (^-?[0-9.]+).`);
-    }
-    return arg;
-  } else if (typeof arg === 'number') {
-    return String(arg);
-  } else if (typeof arg === 'object' && arg.toString && (arg.toTwos || arg.dividedToIntegerBy)) {
-    if (arg.toPrecision) {
-      return String(arg.toPrecision());
-    } else {
-      return arg.toString(10);
-    }
-  }
-  throw new Error(`while converting number to string, invalid number value '${arg}' type ${typeof arg}.`);
-}
-
-function fromWei(weiInput, unit, optionsInput) {
-  let wei = toBN(weiInput);
-  const negative = wei.lt(zero);
-  const base = getValueOfUnit(unit);
-  const baseLength = unitMap[unit].length - 1 || 1;
-  const options = optionsInput || {};
-
-  if (negative) {
-    wei = wei.mul(negative1);
-  }
-
-  let fraction = wei.mod(base).toString(10);
-
-  while (fraction.length < baseLength) {
-    fraction = `0${fraction}`;
-  }
-
-  if (!options.pad) {
-    fraction = fraction.match(/^([0-9]*[1-9]|0)(0*)/)[1];
-  }
-
-  let whole = wei.div(base).toString(10);
-
-  if (options.commify) {
-    whole = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-
-  let value = `${whole}${fraction === '0' ? '' : `.${fraction}`}`;
-
-  if (negative) {
-    value = `-${value}`;
-  }
-
-  return value;
-}
-
-function toWei(ircerInput, unit) {
-  let ircer = numberToString(ircerInput);
-  const base = getValueOfUnit(unit);
-  const baseLength = unitMap[unit].length - 1 || 1;
-
-  // Is it negative?
-  const negative = (ircer.substring(0, 1) === '-');
-  if (negative) {
-    ircer = ircer.substring(1);
-  }
-
-  if (ircer === '.') { throw new Error(`while converting number ${ircerInput} to wei, invalid value`); }
-
-  // Split it into a whole and fractional part
-  const comps = ircer.split('.');
-  if (comps.length > 2) { throw new Error(`while converting number ${ircerInput} to wei,  too many decimal points`); }
-
-  let whole = comps[0], fraction = comps[1];
-
-  if (!whole) { whole = '0'; }
-  if (!fraction) { fraction = '0'; }
-  if (fraction.length > baseLength) { throw new Error(`while converting number ${ircerInput} to wei, too many decimal places`); }
-
-  while (fraction.length < baseLength) {
-    fraction += '0';
-  }
-
-  whole = new BN(whole);
-  fraction = new BN(fraction);
-  let wei = (whole.mul(base)).add(fraction);
-
-  if (negative) {
-    wei = wei.mul(negative1);
-  }
-
-  return new BN(wei.toString(10), 10);
-}
-
-module.exports = {
-  unitMap,
-  numberToString,
-  getValueOfUnit,
-  fromWei,
-  toWei,
-};
-
-},{"./utils":193,"bn.js":126}],193:[function(require,module,exports){
-(function (Buffer){
-const BN = require('bn.js');
-const keccak256 = require('js-sha3').keccak_256;
-
-/**
- * Pads a `String` to have an even length
- * @param {String} value
- * @return {String} output
- */
-function padToEven(value) {
-  if (typeof value !== 'string') {
-    throw new Error(`value must be string, is currently ${typeof value}.`);
-  }
-  if (value.length % 2 !== 0) {
-    value = `0${value}`;
-  }
-  return value;
-}
-
-/**
- * Converts a `Number` into a hex `String`
- * @param {Number} i
- * @return {String}
- */
-function intToHex(i) {
-  const hex = i.toString(16);
-  return `0x${hex}`;
-}
-
-/**
- * Converts an `Number` to a `Buffer`
- * @param {Number} i
- * @return {Buffer}
- */
-function toBuffer(i) {
-  const hex = intToHex(i);
-  return new Buffer(padToEven(hex.slice(2)), 'hex');
-}
-
-/**
- * Get the binary size of a string
- * @param {String} str
- * @return {Number}
- */
-function getBinarySize(str) {
-  if (typeof str !== 'string') {
-    throw new Error(`while getting binary size, method getBinarySize requires input 'str' to be type String, got '${typeof str}'.`);
-  }
-
-  return Buffer.byteLength(str, 'utf8');
-}
-
-/**
- * Returns TRUE if the first specified array contains all elements
- * from the second one. FALSE otherwise.
- *
- * @param {array} superset
- * @param {array} subset
- * @param some
- * @returns {boolean}
- */
-function arrayContainsArray(superset, subset, some) {
-  if (Array.isArray(superset) !== true) { throw new Error(`method arrayContainsArray requires input 'superset' to be an array got type '${typeof superset}'`); }
-  if (Array.isArray(subset) !== true) { throw new Error(`method arrayContainsArray requires input 'subset' to be an array got type '${typeof subset}'`); }
-
-  return subset[Boolean(some) && 'some' || 'every']((value) => (superset.indexOf(value) >= 0));
-}
-
-/**
- * Should be called to get utf8 from it's hex representation
- *
- * @method toUtf8
- * @param {String} hex String in hex
- * @returns {String} ascii string representation of hex value
- */
-function toUtf8(hex) {
-  const bufferValue = new Buffer(padToEven(stripHexPrefix(hex).replace(/^0+|0+$/g, '')), 'hex');
-
-  return bufferValue.toString('utf8');
-}
-
-/**
- * Should be called to get ascii from it's hex representation
- *
- * @method toAscii
- * @param {String} hex string in hex
- * @returns {String} ascii string representation of hex value
- */
-function toAscii(hex) {
-  let str = '';
-  let i = 0, l = hex.length;
-
-  if (hex.substring(0, 2) === '0x') {
-    i = 2;
-  }
-
-  for (; i < l; i += 2) {
-    const code = parseInt(hex.substr(i, 2), 16);
-    str += String.fromCharCode(code);
-  }
-
-  return str;
-}
-
-/**
- * Should be called to get hex representation (prefixed by 0x) of utf8 string
- *
- * @method fromUtf8
- * @param {String} stringValue
- * @returns {String} hex representation of input string
- */
-function fromUtf8(stringValue) {
-  const str = new Buffer(stringValue, 'utf8');
-  return `0x${padToEven(str.toString('hex')).replace(/^0+|0+$/g, '')}`;
-}
-
-/**
- * Should be called to get hex representation (prefixed by 0x) of ascii string
- *
- * @method fromAscii
- * @param {String} stringValue
- * @returns {String} hex representation of input string
- */
-function fromAscii(stringValue) {
-  let hex = '';
-  for (let i = 0; i < stringValue.length; i++) {
-    const code = stringValue.charCodeAt(i);
-    const n = code.toString(16);
-    hex += n.length < 2 ? `0${n}` : n;
-  }
-  return `0x${hex}`;
-}
-
-/**
- * getKeys([{a: 1, b: 2}, {a: 3, b: 4}], 'a') => [1, 3]
- *
- * @method getKeys get specific key from inner object array of objects
- * @param {String} params
- * @param {String} key
- * @param {Boolean} allowEmpty
- * @returns {Array} output just a simple array of output keys
- */
-function getKeys(params, key, allowEmpty) {
-  if (!Array.isArray(params)) {
-    throw new Error(`method getKeys expecting type Array as 'params' input, got '${typeof params}'`);
-  }
-  if (typeof key !== 'string') {
-    throw new Error(`method getKeys expecting type String for input 'key' got '${typeof key}'.`);
-  }
-
-  const result = [];
-  for (let i = 0; i < params.length; i++) {
-    let value = params[i][key];
-    if (allowEmpty && !value) {
-      value = '';
-    } else if (typeof value !== 'string') {
-      throw new Error('invalid abi');
-    }
-    result.push(value);
-  }
-  return result;
-}
-
-/**
- *
- * @param {String|Buffer} valueInput
- * @returns {Buffer}
- */
-function hexToBuffer(valueInput) {
-  let value = valueInput;
-  if (!Buffer.isBuffer(value)) {
-    if (!isHexString(value, null)) {
-      const error = new Error(name ? (`invalid ${name}`) : 'invalid hex or buffer, must be a prefixed alphanumeric even length hex string');
-      error.reason = 'invalid hex string, hex must be prefixed and alphanumeric (e.g. 0x023..)';
-      error.value = value;
-      throw error;
-    }
-
-    value = value.substring(2);
-    if (value.length % 2 !== 0) {
-      value = `0${value}`;
-    }
-    value = new Buffer(value, 'hex');
-  }
-  return value;
-}
-
-/**
- * Is the string a hex string.
- *
- * @method check if string is hex string of specific length
- * @param {String} value
- * @param {Number} length
- * @returns {Boolean} output the string is a hex string
- */
-function isHexString(value, length) {
-  if (typeof(value) !== 'string' || !value.match(/^0x[0-9A-Fa-f]*$/)) {
-    return false;
-  }
-  return !(length && value.length !== 2 + 2 * length);
-}
-
-/**
- * Returns a `Boolean` on whether or not the a `String` starts with '0x'
- * @param {String} str the string input value
- * @return {Boolean} a boolean if it is or is not hex prefixed
- * @throws if the str input is not a string
- */
-function isHexPrefixed(str) {
-  if (typeof str !== 'string') {
-    throw new Error(`value must be type string, is currently type ${typeof str}.`);
-  }
-  return str.slice(0, 2) === '0x';
-}
-
-/**
- * Removes '0x' from a given `String` if present
- * @param {String} str the string value
- * @return {String|Object} a string by pass if necessary
- */
-function stripHexPrefix(str) {
-  if (typeof str !== 'string') {
-    return str;
-  }
-  return isHexPrefixed(str) ? str.slice(2) : str;
-}
-
-/**
- * Returns a BN object, converts a number value to a BN
- * @param {String|Number|Object} `arg` input a string number, hex string number, number, BigNumber or BN object
- * @return {BN} `output` BN object of the number
- * @throws if the argument is not an array, object that isn't a bignumber, not a string number or number
- */
-function toBN(arg) {
-  if (typeof arg === 'string' || typeof arg === 'number') {
-    const formattedString = String(arg).toLowerCase().trim();
-    const isHexPrefixed = formattedString.substr(0, 2) === '0x' || formattedString.substr(0, 3) === '-0x';
-    let multiplier = new BN(1);
-    let stringArg = stripHexPrefix(formattedString);
-    if (stringArg.substr(0, 1) === '-') {
-      stringArg = stripHexPrefix(stringArg.slice(1));
-      multiplier = new BN(-1, 10);
-    }
-    stringArg = stringArg === '' ? '0' : stringArg;
-
-    if ((!stringArg.match(/^-?[0-9]+$/) && stringArg.match(/^[0-9A-Fa-f]+$/))
-      || stringArg.match(/^[a-fA-F]+$/)
-      || (isHexPrefixed === true && stringArg.match(/^[0-9A-Fa-f]+$/))) {
-      return new BN(stringArg, 16).mul(multiplier);
-    }
-
-    if ((stringArg.match(/^-?[0-9]+$/) || stringArg === '') && isHexPrefixed === false) {
-      return new BN(stringArg, 10).mul(multiplier);
-    }
-  } else if (typeof arg === 'object' && arg.toString && (!arg.pop && !arg.push)) {
-    if (arg.toString(10).match(/^-?[0-9]+$/) && (arg.mul || arg.dividedToIntegerBy)) {
-      return new BN(arg.toString(10), 10);
-    }
-  }
-
-  throw new Error('[number-to-bn] while converting number ' + JSON.stringify(arg) + ' to BN.js instance, error: invalid number value. Value must be an integer, hex string, BN or BigNumber instance. Note, decimals are not supported.');
-}
-
-/**
- * Pops the last element of args if which typeof function
- * @param {Array} args
- * @returns {boolean|Array}
- */
-popCallback = (args) => typeof args[args.length - 1] === 'function' && args.pop();
-
-module.exports = {
-  keccak256,
-  arrayContainsArray,
-  getBinarySize,
-  BN,
-  toBN,
-  toBuffer,
-  isHexString,
-  hexToBuffer,
-  isHexPrefixed,
-  stripHexPrefix,
-  padToEven,
-  intToHex,
-  fromAscii,
-  fromUtf8,
-  toAscii,
-  toUtf8,
-  getKeys,
-  popCallback,
-};
-
-}).call(this,require("buffer").Buffer)
-},{"bn.js":126,"buffer":205,"js-sha3":161}],194:[function(require,module,exports){
-module.exports = IdIterator
-
-function IdIterator(opts){
-  opts = opts || {}
-  var max = opts.max || Number.MAX_SAFE_INTEGER
-  var idCounter = typeof opts.start !== 'undefined' ? opts.start : Math.floor(Math.random() * max)
-
-  return function createRandomId () {
-    idCounter = idCounter % max
-    return idCounter++
-  }
-
-}
-},{}],195:[function(require,module,exports){
 'use strict';
 
 const processFn = (fn, opts) => function () {
@@ -17049,7 +16821,96 @@ module.exports = (obj, opts) => {
 	return ret;
 };
 
-},{}],196:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
+'use strict';
+var isFn = require('is-fn');
+var setImmediate = require('set-immediate-shim');
+
+module.exports = function (promise) {
+	if (!isFn(promise.then)) {
+		throw new TypeError('Expected a promise');
+	}
+
+	return function (cb) {
+		promise.then(function (data) {
+			setImmediate(cb, null, data);
+		}, function (err) {
+			setImmediate(cb, err);
+		});
+	};
+};
+
+},{"is-fn":182,"set-immediate-shim":196}],189:[function(require,module,exports){
+module.exports = window.crypto;
+},{}],190:[function(require,module,exports){
+module.exports = require('crypto');
+},{"crypto":189}],191:[function(require,module,exports){
+var randomHex = function(size, callback) {
+    var crypto = require('./crypto.js');
+    var isCallback = (typeof callback === 'function');
+
+    
+    if (size > 65536) {
+        if(isCallback) {
+            callback(new Error('Requested too many random bytes.'));
+        } else {
+            throw new Error('Requested too many random bytes.');
+        }
+    };
+
+
+    // is node
+    if (typeof crypto !== 'undefined' && crypto.randomBytes) {
+
+        if(isCallback) {
+            crypto.randomBytes(size, function(err, result){
+                if(!err) {
+                    callback(null, '0x'+ result.toString('hex'));
+                } else {
+                    callback(error);
+                }
+            })
+        } else {
+            return '0x'+ crypto.randomBytes(size).toString('hex');
+        }
+
+    // is browser
+    } else {
+        var cryptoLib;
+
+        if (typeof crypto !== 'undefined') {
+            cryptoLib = crypto;
+        } else if(typeof msCrypto !== 'undefined') {
+            cryptoLib = msCrypto;
+        }
+
+        if (cryptoLib && cryptoLib.getRandomValues) {
+            var randomBytes = cryptoLib.getRandomValues(new Uint8Array(size));
+            var returnValue = '0x'+ Array.from(randomBytes).map(function(arr){ return arr.toString(16); }).join('');
+
+            if(isCallback) {
+                callback(null, returnValue);
+            } else {
+                return returnValue;
+            }
+
+        // not crypto object
+        } else {
+            var error = new Error('No "crypto" object available. This Browser doesn\'t support generating secure random bytes.');
+
+            if(isCallback) {
+                callback(error);
+            } else {
+               throw error;
+            }
+        }
+    }
+};
+
+
+module.exports = randomHex;
+
+},{"./crypto.js":190}],192:[function(require,module,exports){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -17086,7 +16947,7 @@ if (hadRuntime) {
   }
 }
 
-},{"./runtime":197}],197:[function(require,module,exports){
+},{"./runtime":193}],193:[function(require,module,exports){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -17815,6 +17676,316 @@ if (hadRuntime) {
   (function() { return this })() || Function("return this")()
 );
 
+},{}],194:[function(require,module,exports){
+const assert = require('assert')
+const Buffer = require('safe-buffer').Buffer
+/**
+ * RLP Encoding based on: https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP
+ * This function takes in a data, convert it to buffer if not, and a length for recursion
+ *
+ * @param {Buffer,String,Integer,Array} data - will be converted to buffer
+ * @returns {Buffer} - returns buffer of encoded data
+ **/
+exports.encode = function (input) {
+  if (input instanceof Array) {
+    var output = []
+    for (var i = 0; i < input.length; i++) {
+      output.push(exports.encode(input[i]))
+    }
+    var buf = Buffer.concat(output)
+    return Buffer.concat([encodeLength(buf.length, 192), buf])
+  } else {
+    input = toBuffer(input)
+    if (input.length === 1 && input[0] < 128) {
+      return input
+    } else {
+      return Buffer.concat([encodeLength(input.length, 128), input])
+    }
+  }
+}
+
+function safeParseInt (v, base) {
+  if (v.slice(0, 2) === '00') {
+    throw (new Error('invalid RLP: extra zeros'))
+  }
+
+  return parseInt(v, base)
+}
+
+function encodeLength (len, offset) {
+  if (len < 56) {
+    return Buffer.from([len + offset])
+  } else {
+    var hexLength = intToHex(len)
+    var lLength = hexLength.length / 2
+    var firstByte = intToHex(offset + 55 + lLength)
+    return Buffer.from(firstByte + hexLength, 'hex')
+  }
+}
+
+/**
+ * RLP Decoding based on: {@link https://github.com/ethereum/wiki/wiki/%5BEnglish%5D-RLP|RLP}
+ * @param {Buffer,String,Integer,Array} data - will be converted to buffer
+ * @returns {Array} - returns decode Array of Buffers containg the original message
+ **/
+exports.decode = function (input, stream) {
+  if (!input || input.length === 0) {
+    return Buffer.from([])
+  }
+
+  input = toBuffer(input)
+  var decoded = _decode(input)
+
+  if (stream) {
+    return decoded
+  }
+
+  assert.equal(decoded.remainder.length, 0, 'invalid remainder')
+  return decoded.data
+}
+
+exports.getLength = function (input) {
+  if (!input || input.length === 0) {
+    return Buffer.from([])
+  }
+
+  input = toBuffer(input)
+  var firstByte = input[0]
+  if (firstByte <= 0x7f) {
+    return input.length
+  } else if (firstByte <= 0xb7) {
+    return firstByte - 0x7f
+  } else if (firstByte <= 0xbf) {
+    return firstByte - 0xb6
+  } else if (firstByte <= 0xf7) {
+    // a list between  0-55 bytes long
+    return firstByte - 0xbf
+  } else {
+    // a list  over 55 bytes long
+    var llength = firstByte - 0xf6
+    var length = safeParseInt(input.slice(1, llength).toString('hex'), 16)
+    return llength + length
+  }
+}
+
+function _decode (input) {
+  var length, llength, data, innerRemainder, d
+  var decoded = []
+  var firstByte = input[0]
+
+  if (firstByte <= 0x7f) {
+    // a single byte whose value is in the [0x00, 0x7f] range, that byte is its own RLP encoding.
+    return {
+      data: input.slice(0, 1),
+      remainder: input.slice(1)
+    }
+  } else if (firstByte <= 0xb7) {
+    // string is 0-55 bytes long. A single byte with value 0x80 plus the length of the string followed by the string
+    // The range of the first byte is [0x80, 0xb7]
+    length = firstByte - 0x7f
+
+    // set 0x80 null to 0
+    if (firstByte === 0x80) {
+      data = Buffer.from([])
+    } else {
+      data = input.slice(1, length)
+    }
+
+    if (length === 2 && data[0] < 0x80) {
+      throw new Error('invalid rlp encoding: byte must be less 0x80')
+    }
+
+    return {
+      data: data,
+      remainder: input.slice(length)
+    }
+  } else if (firstByte <= 0xbf) {
+    llength = firstByte - 0xb6
+    length = safeParseInt(input.slice(1, llength).toString('hex'), 16)
+    data = input.slice(llength, length + llength)
+    if (data.length < length) {
+      throw (new Error('invalid RLP'))
+    }
+
+    return {
+      data: data,
+      remainder: input.slice(length + llength)
+    }
+  } else if (firstByte <= 0xf7) {
+    // a list between  0-55 bytes long
+    length = firstByte - 0xbf
+    innerRemainder = input.slice(1, length)
+    while (innerRemainder.length) {
+      d = _decode(innerRemainder)
+      decoded.push(d.data)
+      innerRemainder = d.remainder
+    }
+
+    return {
+      data: decoded,
+      remainder: input.slice(length)
+    }
+  } else {
+    // a list  over 55 bytes long
+    llength = firstByte - 0xf6
+    length = safeParseInt(input.slice(1, llength).toString('hex'), 16)
+    var totalLength = llength + length
+    if (totalLength > input.length) {
+      throw new Error('invalid rlp: total length is larger than the data')
+    }
+
+    innerRemainder = input.slice(llength, totalLength)
+    if (innerRemainder.length === 0) {
+      throw new Error('invalid rlp, List has a invalid length')
+    }
+
+    while (innerRemainder.length) {
+      d = _decode(innerRemainder)
+      decoded.push(d.data)
+      innerRemainder = d.remainder
+    }
+    return {
+      data: decoded,
+      remainder: input.slice(totalLength)
+    }
+  }
+}
+
+function isHexPrefixed (str) {
+  return str.slice(0, 2) === '0x'
+}
+
+// Removes 0x from a given String
+function stripHexPrefix (str) {
+  if (typeof str !== 'string') {
+    return str
+  }
+  return isHexPrefixed(str) ? str.slice(2) : str
+}
+
+function intToHex (i) {
+  var hex = i.toString(16)
+  if (hex.length % 2) {
+    hex = '0' + hex
+  }
+
+  return hex
+}
+
+function padToEven (a) {
+  if (a.length % 2) a = '0' + a
+  return a
+}
+
+function intToBuffer (i) {
+  var hex = intToHex(i)
+  return Buffer.from(hex, 'hex')
+}
+
+function toBuffer (v) {
+  if (!Buffer.isBuffer(v)) {
+    if (typeof v === 'string') {
+      if (isHexPrefixed(v)) {
+        v = Buffer.from(padToEven(stripHexPrefix(v)), 'hex')
+      } else {
+        v = Buffer.from(v)
+      }
+    } else if (typeof v === 'number') {
+      if (!v) {
+        v = Buffer.from([])
+      } else {
+        v = intToBuffer(v)
+      }
+    } else if (v === null || v === undefined) {
+      v = Buffer.from([])
+    } else if (v.toArray) {
+      // converts a BN to a Buffer
+      v = Buffer.from(v.toArray())
+    } else {
+      throw new Error('invalid type')
+    }
+  }
+  return v
+}
+
+},{"assert":199,"safe-buffer":195}],195:[function(require,module,exports){
+/* eslint-disable node/no-deprecated-api */
+var buffer = require('buffer')
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+
+},{"buffer":205}],196:[function(require,module,exports){
+(function (setImmediate){
+'use strict';
+module.exports = typeof setImmediate === 'function' ? setImmediate :
+	function setImmediate() {
+		var args = [].slice.apply(arguments);
+		args.splice(1, 0, 0);
+		setTimeout.apply(null, args);
+	};
+
+}).call(this,require("timers").setImmediate)
+},{"timers":210}],197:[function(require,module,exports){
+module.exports = XMLHttpRequest;
+
 },{}],198:[function(require,module,exports){
 module.exports = extend
 
@@ -18331,8 +18502,8 @@ var objectKeys = Object.keys || function (obj) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"util/":202}],200:[function(require,module,exports){
-arguments[4][159][0].apply(exports,arguments)
-},{"dup":159}],201:[function(require,module,exports){
+arguments[4][155][0].apply(exports,arguments)
+},{"dup":155}],201:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
@@ -19083,8 +19254,8 @@ function fromByteArray (uint8) {
 }
 
 },{}],204:[function(require,module,exports){
-arguments[4][110][0].apply(exports,arguments)
-},{"dup":110}],205:[function(require,module,exports){
+arguments[4][112][0].apply(exports,arguments)
+},{"dup":112}],205:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *

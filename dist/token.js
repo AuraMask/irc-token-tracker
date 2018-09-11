@@ -26,7 +26,7 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BN = require('irc.js').BN;
+var BN = require('bn.js');
 var util = require('./util');
 
 var Token = function () {
@@ -257,7 +257,7 @@ var Token = function () {
                   break;
                 }
 
-                val = result[0];
+                val = result[0].value;
 
                 this[key] = val;
                 return _context5.abrupt('return', val);

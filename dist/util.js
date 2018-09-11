@@ -1,6 +1,6 @@
 'use strict';
 
-var BN = require('irc.js').BN;
+var BN = require('bn.js');
 var zero = new BN(0);
 
 module.exports = {

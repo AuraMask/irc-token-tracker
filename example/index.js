@@ -16,7 +16,7 @@ window.setInterval(() => {
   const balances = tokenTracker.serialize();
   console.log('serialized', balances);
   infoParagraph.innerText = JSON.stringify(balances);
-}, 10000);
+}, 1000);
 console.dir(tokenTracker);
 
 // You can also subscribe to updates
