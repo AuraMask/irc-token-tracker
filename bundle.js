@@ -13,6 +13,10 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -57,6 +61,7 @@ var TokenTracker = function (_EventEmitter) {
     _this.userAddress = opts.userAddress || '0x0';
     _this.userDecimals = new BN('12', 16);
     _this.userBalance = new BN('0', 16);
+    _this.blockNumber = null;
     _this.provider = opts.provider;
     var pollingInterval = opts.pollingInterval || 4000;
     _this.blockTracker = new BlockTracker({
@@ -79,21 +84,22 @@ var TokenTracker = function (_EventEmitter) {
   (0, _createClass3.default)(TokenTracker, [{
     key: 'serialize',
     value: function serialize() {
-      var serialize = this.tokens.map(function (token) {
-        return token.serialize();
-      });
-      serialize.push({
-        address: '0x',
-        symbol: 'IRCER',
-        balance: this.userBalance.toString(),
-        string: util.stringifyBalance(this.userBalance, this.userDecimals)
-      });
-      return serialize;
+      return {
+        blockNumber: Number(this.blockNumber.number),
+        balancesData: [{
+          address: '0x',
+          symbol: 'IRCER',
+          balance: this.userBalance.toString(),
+          string: util.stringifyBalance(this.userBalance, this.userDecimals)
+        }].concat((0, _toConsumableArray3.default)(this.tokens.map(function (token) {
+          return token.serialize();
+        })))
+      };
     }
   }, {
     key: 'updateBalances',
     value: function () {
-      var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+      var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(block) {
         var _this2 = this;
 
         var oldBalances;
@@ -101,6 +107,9 @@ var TokenTracker = function (_EventEmitter) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                console.log(block);
+                this.blockNumber = block;
+
                 this.irc.getBalance(this.userAddress).then(function (balance) {
                   _this2.userBalance = balance;
                 });
@@ -119,7 +128,7 @@ var TokenTracker = function (_EventEmitter) {
                   _this2.emit('error', reason);
                 }));
 
-              case 3:
+              case 5:
               case 'end':
                 return _context.stop();
             }
@@ -127,7 +136,7 @@ var TokenTracker = function (_EventEmitter) {
         }, _callee, this);
       }));
 
-      function updateBalances() {
+      function updateBalances(_x2) {
         return _ref.apply(this, arguments);
       }
 
@@ -161,7 +170,7 @@ var TokenTracker = function (_EventEmitter) {
 }(EventEmitter);
 
 module.exports = TokenTracker;
-},{"./token":2,"./util":3,"babel-runtime/core-js/object/get-prototype-of":8,"babel-runtime/core-js/promise":10,"babel-runtime/helpers/asyncToGenerator":13,"babel-runtime/helpers/classCallCheck":14,"babel-runtime/helpers/createClass":15,"babel-runtime/helpers/inherits":16,"babel-runtime/helpers/possibleConstructorReturn":17,"babel-runtime/regenerator":20,"bn.js":21,"deep-equal":121,"events":206,"irc-block-tracker":157,"irc.js":165}],2:[function(require,module,exports){
+},{"./token":2,"./util":3,"babel-runtime/core-js/object/get-prototype-of":8,"babel-runtime/core-js/promise":10,"babel-runtime/helpers/asyncToGenerator":13,"babel-runtime/helpers/classCallCheck":14,"babel-runtime/helpers/createClass":15,"babel-runtime/helpers/inherits":16,"babel-runtime/helpers/possibleConstructorReturn":17,"babel-runtime/helpers/toConsumableArray":18,"babel-runtime/regenerator":20,"bn.js":21,"deep-equal":121,"events":206,"irc-block-tracker":157,"irc.js":165}],2:[function(require,module,exports){
 'use strict';
 
 var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
@@ -502,8 +511,9 @@ window.setInterval(() => {
 console.dir(tokenTracker);
 
 // You can also subscribe to updates
-tokenTracker.on('update', balances => {
-  console.log(`Your balance of ${balances[0].symbol} is ${balances[0].string}`);
+tokenTracker.on('update', serialize => {
+  const balancesData = serialize.balancesData;
+  console.log(`Your balance of ${balancesData[0].symbol} is ${balancesData[0].string}`);
 });
 
 window.tokenTracker = tokenTracker;

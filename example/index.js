@@ -19,8 +19,9 @@ window.setInterval(() => {
 console.dir(tokenTracker);
 
 // You can also subscribe to updates
-tokenTracker.on('update', balances => {
-  console.log(`Your balance of ${balances[0].symbol} is ${balances[0].string}`);
+tokenTracker.on('update', serialize => {
+  const balancesData = serialize.balancesData;
+  console.log(`Your balance of ${balancesData[0].symbol} is ${balancesData[0].string}`);
 });
 
 window.tokenTracker = tokenTracker;
