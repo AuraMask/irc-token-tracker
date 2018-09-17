@@ -39,8 +39,10 @@ var IrcContract = require('irc.js').Contract;
 var Token = require('./token');
 var BlockTracker = require('irc-block-tracker');
 var abi = require('irc.js').abi.stdTokenAbi;
+var util = require('./util');
 var EventEmitter = require('events').EventEmitter;
 var deepEqual = require('deep-equal');
+var BN = require('bn.js');
 
 var TokenTracker = function (_EventEmitter) {
   (0, _inherits3.default)(TokenTracker, _EventEmitter);
@@ -52,6 +54,8 @@ var TokenTracker = function (_EventEmitter) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (TokenTracker.__proto__ || (0, _getPrototypeOf2.default)(TokenTracker)).call(this));
 
     _this.userAddress = opts.userAddress || '0x0';
+    _this.userDecimals = new BN('12', 16);
+    _this.userBalance = new BN('0', 16);
     _this.provider = opts.provider;
     var pollingInterval = opts.pollingInterval || 4000;
     _this.blockTracker = new BlockTracker({
@@ -64,7 +68,6 @@ var TokenTracker = function (_EventEmitter) {
     _this.TokenContract = _this.contract(abi);
 
     var tokens = opts.tokens || [];
-
     _this.tokens = tokens.map(_this.createTokenFrom.bind(_this));
 
     _this.running = true;
@@ -75,9 +78,16 @@ var TokenTracker = function (_EventEmitter) {
   (0, _createClass3.default)(TokenTracker, [{
     key: 'serialize',
     value: function serialize() {
-      return this.tokens.map(function (token) {
+      var serialize = this.tokens.map(function (token) {
         return token.serialize();
       });
+      serialize.push({
+        address: '0x',
+        symbol: 'IRCER',
+        balance: this.userBalance.toString(),
+        string: util.stringifyBalance(this.userBalance, this.userDecimals)
+      });
+      return serialize;
     }
   }, {
     key: 'updateBalances',
@@ -90,6 +100,10 @@ var TokenTracker = function (_EventEmitter) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                this.irc.getBalance(this.userAddress).then(function (balance) {
+                  _this2.userBalance = balance;
+                });
+
                 oldBalances = this.serialize();
                 return _context.abrupt('return', _promise2.default.all(this.tokens.map(function (token) {
                   return token.updateBalance();
@@ -104,7 +118,7 @@ var TokenTracker = function (_EventEmitter) {
                   _this2.emit('error', reason);
                 }));
 
-              case 2:
+              case 3:
               case 'end':
                 return _context.stop();
             }

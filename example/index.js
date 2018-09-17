@@ -14,7 +14,6 @@ const tokenTracker = new TokenTracker({
 // You can use this method to check the state of the tokens
 window.setInterval(() => {
   const balances = tokenTracker.serialize();
-  console.log('serialized', balances);
   infoParagraph.innerText = JSON.stringify(balances);
 }, 1000);
 console.dir(tokenTracker);
